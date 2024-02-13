@@ -1,0 +1,436 @@
+﻿@model PLIMS.ViewModel.ViewModelAll
+@using PLIMS.Models
+
+@{
+    ViewBag.Title = "DailyReport";
+    //TbUser user = Utilities.GetCurrentUser();
+
+}
+
+
+@*Include Area*@
+<script src="~/Scripts/jquery-3.7.1.js"></script>
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- DataTables CSS -->
+<script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
+
+<!-- DataTables -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<!-- jQuery -->
+<script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+<link href="~/Content/main.css" rel="stylesheet" />
+
+<style type="text/css">
+
+
+    .form-control {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #808080;
+        border-radius: 2px;
+        box-sizing: border-box;
+    }
+
+    .create-button, .clear-button {
+        background-color: #A4ADB3;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+        color: white;
+        width: 100%;
+        height: 100%;
+    }
+
+    .search-button {
+        border: 0.4px solid black;
+        background-color: white;
+        border-radius: 2px;
+        cursor: pointer;
+        color: black;
+        width: 100%;
+        height: 100%;
+    }
+
+
+    .page-table-head, .page-table-data {
+        border: solid 1px grey;
+        text-align: center;
+    }
+</style>
+
+
+
+<div class="row" style="height:10px"></div>
+<h2 class="page-name">Daily Report</h2>
+
+@* Textbox for search *@
+<form method="GET" asp-controller="Report" action="Line">
+
+    <div style="background-color: #fcfcfc; border-radius: 2px; padding: 10px;">
+        <div class="row">
+            <div class="col-6">
+                <input type="date" name="DateStart"/>
+            </div>
+            <div class="col-6">
+                <input type="date" name="DateEnd" />
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-6">
+                Line ID:
+                <input class="form-control" name="EmployeeID" id="EmployeeID">
+                <datalist>
+                    @foreach (var item in Model.tbEmployeeMaster)
+                    {
+
+                        <option>@Html.DisplayFor(modelItem => item.EmployeeID) </option>
+                    }
+                </datalist>
+            </div>
+
+            <div class="col-6">
+                Line Name :
+                <input class="form-control" name="LineName" id="LineName">
+                <datalist>
+                    @foreach (var item in Model.tbLine)
+                    {
+                        <option>@Html.DisplayFor(modelItem => item.LineName)</option>
+                    }
+                </datalist>
+            </div>
+
+        </div>
+
+        <br />
+
+
+    </div>
+
+    <div class="row" style="height:40px">
+
+        <div class="col" style="width:15% ">
+            <button class="clear-button" type="submit" action="LineClear">
+                Clear
+            </button>
+        </div>
+        <div class="col-3" style="width:55% ">
+
+        </div>
+        <div class="col" style="width:15% ">
+            <button class="search-button" type="submit" action="Line">
+                Search
+            </button>
+        </div>
+        <div class="col" style="width:15% ">
+            @*<button id="Create" type="button" class="btnme" data-bs-toggle="modal" data-target="" style="width: 100%; background-color: firebrick; justify-content: flex-end " onclick="modalcreate();">
+                    Create
+                </button>*@
+            <button type="button" class="create-button" data-bs-toggle="modal" data-bs-target="#CreateModal" style=" justify-content: flex-end ">Create</button>
+
+        </div>
+    </div>
+</form>
+</br>
+
+@*<div id="table_info" class="box"></div>*@
+
+@*Diaplay data*@
+<table id="table_id" class="page-table">
+    <thead style="background-color:gainsboro ;border:solid 1px grey">
+        <tr>
+
+            <th class="page-table-head" style="border:solid 0.5px grey">
+                Line ID
+            </th>
+            <th class="page-table-head">
+                Line Name
+            </th>
+            <th class="page-table-head">
+                Status
+            </th>
+            <th class="page-table-head" colspan="2">
+                Action
+
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.tbLine)
+        {
+            <tr>
+                @Html.HiddenFor(modelItem => item.LineID)
+
+                <td id="LineID" class="page-table-data" style="border:solid 1px grey">
+                    @Html.DisplayFor(modelItem => item.LineID)
+                </td>
+                <td id="LineName" class="page-table-data" style="border:solid 1px grey">
+                    @Html.DisplayFor(modelItem => item.LineName)
+                </td>
+
+
+                <td class="page-table-data" style="border:solid 1px grey">
+
+                    @if (item.Status == 1)
+                    {
+                        <span id="open">Active</span>
+
+                    }
+                    @if (item.Status == 0)
+                    {
+                        <span id="closed" style="color:red">Inactive</span>
+
+                    }
+                </td>
+
+                <td class="page-table-data" style="border:solid 1px grey">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#EditModal" id="Edit" onclick="EditFn(@item.LineID)">Edit</a>
+
+
+                </td>
+                <td class="page-table-data" style="border:solid 1px grey">
+                    <a href="#" id="Inactive" onclick="InactiveFn(@item.LineID)">Inactive</a>
+
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+<div style="height:20px">
+
+</div>
+
+
+<div style=" background-color: #fcfcfc; border-radius: 2px; padding: 10px;">
+    <h6> Import/Export Line  </h6>
+</div>
+<div data-ride="carousel" data-interval="6000" style="background-color: #fcfcfc; border-radius: 2px; padding: 10px;">
+
+    @using (Html.BeginForm("LineUpload", "Master", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return myFunction()" }))
+    {
+        <div class="row">
+            <div class="col-2" style="width:10% ">
+                Export File :
+            </div>
+            <div class="col-2" style="width:15% ">
+                <a type="button" id="btnExport" class="export-button" href="@Url.Action("LineDownloadExcel", "Master")">Export Master</a>
+            </div>
+        </div>
+
+        <div class="row" style="height:10px">
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-2" style="width:10% ">
+                Import File :
+            </div>
+            <div class="col" style="width:15% ">
+                <input type="file" id="FileUpload" name="FileUpload" class="" />
+                @*<input type="file" name="file" id="file" onclick="myFunction()" />*@
+            </div>
+        </div>
+
+        <div class="row" style="height:10px">
+        </div>
+        <div class="row" style="height:10px">
+            <div class="col-2" style="width:10% ">
+                <span class="text-danger">@ViewBag.Message</span>
+            </div>
+            <div class="col-2" style="width: 15%">
+                <button type="submit" value="Upload" id="btnSubmit" name="submit" class="import-button"> Import Master</button>
+            </div>
+        </div>
+
+
+    }
+</div>
+
+
+@*Modal Create*@
+<div class="modal fade" id="CreateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" controller="Master" action="CreateLine">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Line Create</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Line ID:</label>
+                        @{
+                            int value = @Model.tbLine.Count() + 1;
+                            <input type="text" class="form-control" name="Lineid" id="Lineid" style="background-color:gainsboro" value="@value">
+                        }
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Line Name:</label>
+                        <input type="text" class="form-control" name="Linename" id="Linename">
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Status</label>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancle</button>
+                    <button type="Submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+@*Modal Edit*@
+<div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" controller="Master" action="LineUpdate">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Line Edit</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Line ID:</label>
+                        @{
+
+                            <input type="text" class="form-control" style="background-color:gainsboro" name="LineID" id="ModalLineID" readonly>
+                        }
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Line Name:</label>
+                        <input type="text" class="form-control" name="LineName" id="ModalLineName">
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" Name="Status" id="ModalStatus">
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Status</label>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="Submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" charset="utf8">
+
+    //trick data
+    function eventFired(type) {
+        let n = document.querySelector('#table_info');
+        //n.innerHTML +=
+        //    '<div>' + type + ' event - ' + new Date().getTime() + '</div>';
+        //n.scrollTop = n.scrollHeight;
+    }
+
+    $(document).ready(function () {
+        $("#table_id #checkall").click(function () {
+            if ($("#table_id #checkall").is(':checked')) {
+                $("#table_id input[type=checkbox]").each(function () {
+                    $(this).prop("checked", true);
+                });
+
+            } else {
+                $("#table_id input[type=checkbox]").each(function () {
+                    $(this).prop("checked", false);
+                });
+            }
+        });
+
+        $("[data-toggle=tooltip]").tooltip();
+    });
+
+    new DataTable('#table_id')
+        .on('search.dt', () => eventFired('Search'))
+        .on('page.dt', () => eventFired('Page'));
+    //.on('order.dt', () => eventFired('Order'))
+
+
+
+
+    new DataTable('#table_id')
+        .on('order.dt', () => eventFired('Order'))
+        .on('search.dt', () => eventFired('Search'))
+        .on('page.dt', () => eventFired('Page'));
+
+    //Edit to modal
+    function EditFn(id) {
+        $.ajax({
+            url: '/Master/LineEdit/' + id,
+            type: 'GET',
+            contentType: 'application/json;charset=UTF-8',
+            dataType: 'json',
+            success: function (response) {
+                if (response == null || response == undefined) {
+
+                    alert("This data can't read1!")
+                }
+                else if (response.length == 0) {
+
+                    alert("This data can't id!" + id)
+                }
+                else {
+                    // alert("id =" + response.LineID + " , LineName = " + response.LineName + ",Status = " + response.Status)
+                    $('#ModalLineID').val(response.LineID);
+                    $('#ModalLineName').val(response.LineName);
+                    $('#ModalStatus').prop('checked', response.Status == 1)
+                    $('#EditModal').modal('show');
+
+
+                }
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+
+        });
+    }
+
+
+
+    //Function Inactive
+    function InactiveFn(id) {
+        $.ajax({
+            url: '/Master/LineInactive/' + id,
+            type: 'GET',
+            contentType: 'application/json;charset=UTF-8',
+            dataType: 'json',
+            success: function (response) {
+                alert("Inactive Finish");
+            },
+            error: function (response) {
+                alert("Inactive something went wrong.");
+            }
+
+        });
+    }
+
+
+</script>

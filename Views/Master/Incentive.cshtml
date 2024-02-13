@@ -1,0 +1,710 @@
+﻿@model PLIMS.ViewModel.ViewModelAll
+
+@{
+    ViewBag.Title = "Incentive";
+    //TbUser user = Utilities.GetCurrentUser();
+}
+
+
+
+
+@*Include Area*@
+<script src="~/Scripts/jquery-3.7.1.js"></script>
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- DataTables CSS -->
+<script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
+
+<!-- DataTables -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<!-- jQuery -->
+<script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+<link href="~/Content/main.css" rel="stylesheet" />
+
+
+<style type="text/css">
+
+    .btnme {
+        background-color: #04AA6D; /* Green */
+        border: none;
+        color: white;
+        padding: 12px 26px;
+        text-align: center;
+        text-decoration: none;
+        display: inIncentive-block;
+        font-size: 16px;
+        width: 100px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inIncentive-block;
+        border: 1px solid #808080;
+        border-radius: 2px;
+        box-sizing: border-box;
+    }
+
+    .create-button, .clear-button, .import-button {
+        background-color: #A4ADB3;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+        color: white;
+        width: 100%;
+        height: 100%;
+    }
+
+    .search-button {
+        border: 0.4px solid black;
+        background-color: white;
+        border-radius: 2px;
+        cursor: pointer;
+        color: black;
+        width: 100%;
+        height: 100%;
+    }
+
+
+    .page-table-head, .page-table-data {
+        border: solid 1px grey;
+        text-align: center;
+    }
+</style>
+
+
+<div class="row" style="height:10px"></div>
+<h2 class="page-name">Incentive Management</h2>
+@* Textbox for search *@
+<form method="GET" asp-controller="Master" action="Incentive">
+
+    <div style="background-color: #fcfcfc; border-radius: 2px; padding: 10px;">
+        <div class="row">
+
+            <div class="col-6">
+                Plant Name:
+                <input class="form-control" name="PlantName" id="PlantName">
+                <datalist>
+
+                    @foreach (var item in Model.tbPlants)
+                    {
+
+                        <option>@Html.DisplayFor(modelItem => item.PlantName) </option>
+                    }
+                </datalist>
+            </div>
+
+            <div class="col-6">
+                Line Name :
+                <input class="form-control" name="LineName" id="LineName">
+                <datalist>
+                    @foreach (var item in Model.tbLine)
+                    {
+                        <option>@Html.DisplayFor(modelItem => item.LineName)</option>
+                    }
+                </datalist>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-6">
+                Product Name:
+                <input class="form-control" name="ProductName" id="ProductName">
+                <datalist id="BrowsersProduct">
+                    @foreach (var item in Model.tbProduct)
+                    {
+
+                        <option>@Html.DisplayFor(modelItem => item.ProductName) </option>
+                    }
+                </datalist>
+            </div>
+
+            <div class="col-6">
+                Section Name :
+                <input class="form-control" name="SectionName" id="SectionName">
+                <datalist id="BrowsersSection">
+                    @foreach (var item in Model.tbSection)
+                    {
+                        <option>@Html.DisplayFor(modelItem => item.SectionName)</option>
+                    }
+                </datalist>
+            </div>
+
+        </div>
+
+
+
+        <br />
+
+
+    </div>
+
+    <div class="row" style="height:35px">
+
+        <div class="col" style="width:15% ">
+            <button class="clear-button" type="submit" action="IncentiveClear">
+                Clear
+            </button>
+        </div>
+        <div class="col-3" style="width:55% ">
+
+        </div>
+        <div class="col" style="width:15% ">
+            <button class="search-button" type="submit" action="Incentive">
+                Search
+            </button>
+        </div>
+        <div class="col" style="width:15% ">
+            <button type="button" class="create-button" data-bs-toggle="modal" data-bs-target="#CreateModal" style="justify-content: flex-end">Create</button>
+
+        </div>
+    </div>
+</form>
+
+
+</br>
+
+
+<div id="table_info" class="box"></div>
+
+@*Diaplay data*@
+<table id="table_id" class="display">
+    <thead>
+        <tr>
+            @* <th><input type="checkbox" id="checkall" /></th>*@
+            <th class="page-table-head">
+                Incentive ID
+            </th>
+            <th class="page-table-head">
+                Incentive Name
+            </th>
+            <th class="page-table-head">
+                Plant Name
+            </th>
+            <th class="page-table-head">
+                Line Name
+            </th>
+            <th class="page-table-head">
+                Product Name
+            </th>
+
+            <th class="page-table-head">
+                Section Name
+            </th>
+            <th class="page-table-head">
+                Min
+            </th>
+            <th class="page-table-head">
+                Max
+            </th>
+            <th class="page-table-head">
+                Rate
+            </th>
+            <th class="page-table-head">
+                Grade
+            </th>
+            <th class="page-table-head">
+                Status
+            </th>
+            <th class="page-table-head" colspan="2">
+                Action
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.View_Incentives)
+        {
+            <tr>
+                @Html.HiddenFor(modelItem => item.IncentiveID)
+                @*<td><input type="checkbox" class="checkthis" /></td>*@
+                <td id="IncentiveId" class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.IncentiveID)
+                </td>
+                <td id="IncentiveName" class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.IncentiveName)
+                </td>
+                <td id="PlantName" class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.PlantName)
+                </td>
+                <td id="LineName" class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.LineName)
+                </td>
+                <td id="ProdcutName" class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td id="SectionName" class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.SectionName)
+                </td>
+                <td id="Max" class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.Min)
+                </td>
+                <td id="SectionName" class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.Max)
+                </td>
+                <td id="SectionName" class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.Rate)
+                </td>
+                <td id="SectionName" class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.Grade)
+                </td>
+                <td class="page-table-data">
+
+                    @if (item.Status == 1)
+                    {
+                        <span id="open">Active</span>
+
+                    }
+                    @if (item.Status == 0)
+                    {
+                        <span id="closed">Inactive</span>
+
+                    }
+
+                </td>
+
+                <td class="page-table-data">
+                    @*   @Html.ActionLink("Edit", "Edit", new { id = item.IncentiveID })*@
+
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#EditModal" id="Edit" onclick="EditFn(@item.IncentiveID)">Edit</a>
+
+
+                </td>
+                <td class="page-table-data">
+                    <a href="#" id="Inactive" onclick="InactiveFn(@item.IncentiveID)">Inactive</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<div style=" background-color: #fcfcfc; border-radius: 2px; padding: 10px;">
+    <h6> Import/Export Incentive  </h6>
+</div>
+<div data-ride="carousel" data-interval="6000" style="background-color: #fcfcfc; border-radius: 2px; padding: 10px;">
+
+    @using (Html.BeginForm("IncentiveUpload", "Master", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return myFunction()" }))
+    {
+        <div class="row">
+            <div class="col-2" style="width:10% ">
+                Export File :
+            </div>
+            <div class="col" style="width:15% ">
+                <a type="button" id="btnExport" class="export-button" href="@Url.Action("IncentiveDownloadExcel", "Master")">Export Master</a>
+            </div>
+        </div>
+
+        <div class="row" style="height:10px">
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-2" style="width:10% ">
+                Import File :
+            </div>
+            <div class="col" style="width:15% ">
+                <input type="file" id="FileUpload" name="FileUpload" class="" />
+            </div>
+        </div>
+
+        <div class="row" style="height:10px">
+        </div>
+        <div class="row" style="height:10px">
+            <div class="col-2" style="width:10% ">
+                <span class="text-danger">@ViewBag.Message</span>
+            </div>
+            <div class="col-2" style="width: 15%">
+                <button type="submit" value="Upload" id="btnSubmit" name="submit" class="import-button"> Import Master</button>
+            </div>
+        </div>
+
+
+    }
+</div>
+
+<div class="row" style="height:10px">
+
+</div>
+
+
+@*Modal Create*@
+<div class="modal fade" id="CreateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" controller="Master" action="IncentiveCreate">
+                <div class="modal-header" style="background-color:blue">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Incentive Create</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @* Incentive ID *@
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Incentive ID:</label>
+                        @{
+                            int value = Model.tbIncentiveMaster.Count() + 1;
+
+                            <input type="text" class="form-control" id="IncentiveID" Name="IncentiveID" readonly style="background-color:gainsboro" value="@value">
+                        }
+                    </div>
+
+                    @* Incentive Name*@
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Incentive Name:</label>
+                        <input class="form-control" name="IncentiveName" id="IncentiveName">
+                    </div>
+
+                    @* Plant Name*@
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Plant Name:</label>
+                        <input class="form-control" name="PlantName" id="PlantName">
+                        <datalist id="PlantName">
+                            @foreach (var item in Model.tbPlants)
+                            {
+
+                                <option>@Html.DisplayFor(modelItem => item.PlantName) </option>
+                            }
+                        </datalist>
+                    </div>
+
+                    @* Line Name*@
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Line Name:</label>
+                        <input class="form-control" name="LineName" id="LineName">
+                        <datalist id="LineName">
+                            @foreach (var item in Model.tbLine)
+                            {
+
+                                <option>@Html.DisplayFor(modelItem => item.LineName) </option>
+                            }
+                        </datalist>
+                    </div>
+
+                    @* Product Name*@
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Product Name:</label>
+                        <input class="form-control" name="ProductName" id="ProductName">
+                        <datalist id="ProductName">
+                            @foreach (var item in Model.tbProduct)
+                            {
+
+                                <option>@Html.DisplayFor(modelItem => item.ProductName) </option>
+                            }
+                        </datalist>
+                    </div>
+
+
+                    @* Section Name*@
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Section Name:</label>
+                        <input class="form-control" name="SectionName" id="SectionName">
+                        <datalist id="SectionName">
+                            @foreach (var item in Model.tbSection)
+                            {
+
+                                <option>@Html.DisplayFor(modelItem => item.SectionName) </option>
+                            }
+                        </datalist>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="recipient-STD" class="col-form-label">STD:</label>
+                        <input type="text" class="form-control" id="STD" Name="STD">
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="recipient-MIN" class="col-form-label">MIN:</label>
+                                <input type="text" class="form-control" id="MIN" Name="MIN">
+                            </div>
+                            <div class="col-6">
+                                <label for="recipient-MAX" class="col-form-label">MAX:</label>
+                                <input type="text" class="form-control" id="MAX" Name="MAX">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="recipient-Rate" class="col-form-label">Rate:</label>
+                                <input type="text" class="form-control" id="Rate" Name="Rate">
+                            </div>
+                            <div class="col-6">
+                                <label for="recipient-Greade" class="col-form-label">Grade:</label>
+                                <input type="text" class="form-control" id="Grade" Name="Grade">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="recipient-MonthYear" class="col-form-label">MonthYear:</label>
+                        <input type="date" class="form-control" id="MonthYear" Name="MonthYear">
+                    </div>
+
+                    <div class="mb-3">
+
+                        @*<div class="form-check form-switch">*@
+                        <input class="form-check-input" type="checkbox" id="Status" name="Status" checked>
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Status</label>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="Submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@*Modal Edit*@
+<div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="post" action="IncentiveUpdate" controller="Master">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:blue">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Incentive Edit</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                @* Incentive ID *@
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Incentive ID:</label>
+                        <input type="text" class="form-control" id="ModalIncentiveid" Name="IncentiveID" readonly style="background-color:gainsboro">
+                    </div>
+
+                    @* Incentive Name*@
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Incentive Name:</label>
+                        <input class="form-control" name="IncentiveName" id="ModalIncentiveName">
+                    </div>
+
+                    @* Plant Name*@
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Plant Name:</label>
+                        <select class="form-control" name="PlantName" id="ModalPlantName">
+
+                            @foreach (var item in Model.tbPlants)
+                            {
+
+                                <option>@Html.DisplayFor(modelItem => item.PlantName) </option>
+                            }
+                        </select>
+                    </div>
+
+                    @* Line Name*@
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Line Name:</label>
+                        <input class="form-control" name="LineName" id="ModalLineName">
+                        <datalist id="LineName">
+                            @foreach (var item in Model.tbLine)
+                            {
+
+                                <option>@Html.DisplayFor(modelItem => item.LineName) </option>
+                            }
+                        </datalist>
+                    </div>
+
+                    @* Product Name*@
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Product Name:</label>
+                        <input class="form-control" name="ProductName" id="ModalProductName">
+                        <datalist id="ProductName">
+                            @foreach (var item in Model.tbProduct)
+                            {
+
+                                <option>@Html.DisplayFor(modelItem => item.ProductName) </option>
+                            }
+                        </datalist>
+                    </div>
+
+
+                    @* Section Name*@
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Section Name:</label>
+                        <input class="form-control" name="SectionName" id="ModalSectionName">
+                        <datalist id="SectionName">
+                            @foreach (var item in Model.tbSection)
+                            {
+
+                                <option>@Html.DisplayFor(modelItem => item.SectionName) </option>
+                            }
+                        </datalist>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="recipient-STD" class="col-form-label">STD:</label>
+                        <input type="text" class="form-control" id="ModalSTD" Name="STD">
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="recipient-MIN" class="col-form-label">MIN:</label>
+                                <input type="text" class="form-control" id="ModalMIN" Name="MIN">
+                            </div>
+                            <div class="col-6">
+                                <label for="recipient-MAX" class="col-form-label">MAX:</label>
+                                <input type="text" class="form-control" Name="MAX" id="ModalMAX">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="recipient-Rate" class="col-form-label">Rate:</label>
+                                <input type="text" class="form-control" id="ModalRate" Name="Rate">
+                            </div>
+                            <div class="col-6">
+                                <label for="recipient-Greade" class="col-form-label">Grade:</label>
+                                <input type="text" class="form-control" id="ModalGrade" Name="Grade">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+
+                        @*<div class="form-check form-switch">*@
+                        <input class="form-check-input" type="checkbox" id="Status" Name="Status" checked>
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Status</label>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="Submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script type="text/javascript" charset="utf8">
+
+    //trick data
+    function eventFired(type) {
+        let n = document.querySelector('#table_info');
+        //n.innerHTML +=
+        //    '<div>' + type + ' event - ' + new Date().getTime() + '</div>';
+        //n.scrollTop = n.scrollHeight;
+    }
+
+    $(document).ready(function () {
+        $("#table_id #checkall").click(function () {
+            if ($("#table_id #checkall").is(':checked')) {
+                $("#table_id input[type=checkbox]").each(function () {
+                    $(this).prop("checked", true);
+                });
+
+            } else {
+                $("#table_id input[type=checkbox]").each(function () {
+                    $(this).prop("checked", false);
+                });
+            }
+        });
+
+        $("[data-toggle=tooltip]").tooltip();
+    });
+
+    new DataTable('#table_id')
+        .on('search.dt', () => eventFired('Search'))
+        .on('page.dt', () => eventFired('Page'));
+    //.on('order.dt', () => eventFired('Order'))
+
+
+
+
+
+    //Edit to modal
+    function EditFn(id) {
+        $.ajax({
+            url: '/Master/IncentiveEdit/' + id,
+            type: 'GET',
+            contentType: 'application/json;charset=UTF-8',
+            dataType: 'json',
+            success: function (response) {
+                if (response == null || response == undefined) {
+
+                    alert("This Incentive can't read!")
+                }
+                else if (response.length == 0) {
+
+                    alert("This Incentive can't id!" + id)
+                }
+                else {
+
+                    //alert("id =" + response.PlantID + " , PlantName = " + response.PlantName + ",Status = " + response.Status)
+                    $('#ModalIncentiveName').val(response.IncentiveID);
+                    $('#ModalPlantName').val(response.PlantName);
+                    $('#ModalLineName').val(response.LineName);
+                    $('#ModalProductName').val(response.ProductName);
+                    $('#ModalSTD').val(response.STD);
+                    $('#ModalMax').val(response.Max);
+                    $('#ModalMin').val(response.Min);
+                    $('#ModalRate').val(response.Rate);
+                    $('#ModalGrade').val(response.Grade);
+                    $('#ModalMonthYear').val(response.MonthYear);
+                    $('#ModalStatus').prop('checked', response.Status == 1)
+                    $('#EditModal').modal('show');
+
+
+                }
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+
+        });
+    }
+
+
+
+
+    //Function Inactive
+    function InactiveFn(id) {
+        $.ajax({
+            url: '/Master/IncentiveInactive/' + id,
+            type: 'GET',
+            contentType: 'application/json;charset=UTF-8',
+            dataType: 'json',
+            success: function (response) {
+                alert("Inactive Finish");
+                $("body").html(result);
+            },
+            error: function (response) {
+                alert("Inactive something went wrong.");
+            }
+
+        });
+    }
+
+
+</script>
+
+
+
+
+

@@ -1,0 +1,457 @@
+﻿@model  PLIMS.ViewModel.ViewModelAll
+
+@{
+    ViewBag.Title = "Services Clock-Out";
+}
+
+
+<h2>Services Clock-Out Function</h2>
+
+@*Include Area*@
+<script src="~/Scripts/jquery-3.7.1.js"></script>
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- DataTables CSS -->
+<script type="text/javascript" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
+
+<!-- DataTables -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<!-- jQuery -->
+<script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+<link href="~/Content/main.css" rel="stylesheet" />
+
+<style type="text/css">
+
+    .form-control {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inIncentive-block;
+        border: 0.1px solid #808080;
+        border-radius: 2px;
+        box-sizing: border-box;
+    }
+
+    .create-button, .clear-button {
+        background-color: #A4ADB3;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+        color: white;
+        width: 100%;
+        height: 100%;
+    }
+
+    .search-button {
+        border: 0.4px solid black;
+        background-color: white;
+        border-radius: 2px;
+        cursor: pointer;
+        color: black;
+        width: 100%;
+        height: 100%;
+    }
+    .label {
+        display: inline-block;
+        text-align:right;
+        align-self:center
+    }
+</style>
+
+
+@*Button Link*@
+<div class="employee-button-container">
+    <a href="@Url.Action("EmployeeClockIn", "Employee")" class="clock-in-button clock-in-button-text">Clock in</a>
+    <a href="@Url.Action("EmployeeClockOut", "Employee")" class="clock-out-button clock-out-button-text">Clock out</a>
+    <a href="@Url.Action("EmployeeClockIn", "Employee")" class="break-time-button break-time-button-text">Break time</a>
+    <a href="@Url.Action("EmployeeClockIn", "Employee")" class="leave-holiday-button leave-holiday-button-text">Leave/Holiday</a>
+    <a href="@Url.Action("EmployeeClockIn", "Employee")" class="service-clock-in-button service-clock-in-button-text">Service clock in</a>
+    <a href="@Url.Action("EmployeeClockIn", "Employee")" class="service-clock-out-button service-clock-out-button-text">Service clock out</a>
+</div>
+
+<div class="row" style="height:10px"></div>
+
+<form method="GET" asp-controller="Employee" action="ServicesClockOut">
+
+    <div class="row" style="background-color: #fcfcfc; border-radius: 2px; padding: 10px;">
+
+        <div class="col" style="border: solid 1px #d5d5d5 ;position: relative; margin-left:5px">
+            <div class="row" style="height:10px">
+            </div>
+
+            @*Fillter Process*@
+            <div class="row" style="padding-left:2em ; padding-right:2em ">
+                <div class="col-3 label">
+                    <label> Line Name:</label> 
+                </div>
+                <div  class="col">
+                    <input class="form-control" name="LineName" id="LineName" placeholder="Please select">
+                    <datalist id="BrowsersID">
+
+                        @foreach (var item in Model.tbLine)
+                        {
+
+                            <option>@Html.DisplayFor(modelItem => item.LineName) </option>
+                        }
+                    </datalist>
+                </div>
+           
+            </div>
+
+
+            <div class="row" style="padding-left:2em ; padding-right:2em">
+                <div class="col-3 label">
+                    <label> Employee ID:</label>
+                </div>
+                <div class="col">
+                    <input class="form-control" list="BrowsersName" name="EmployeeID" id="EmployeeID" placeholder="Please select">
+                    <datalist id="BrowsersName">
+                        @foreach (var item in Model.tbEmployeeMaster)
+                        {
+                            <option>@Html.DisplayFor(modelItem => item.EmployeeID)</option>
+                        }
+                    </datalist>
+                </div>
+                
+            </div>
+            <div class="row" style="height:90px">
+            </div>
+            <div class="row" style="height:90px">
+            </div>
+            <div class="row" style="height:40px ;">
+                <div class="col-5">
+                    <button class="clear-button" type="submit" action="EmployeeClockoutClear">
+                        Clear
+                    </button>
+                </div>
+                <div class="col-2"></div>
+                <div class="col-5">
+                    <button class="clear-button" type="submit" action="EmployeeClockoutFillter">
+                        Fillter
+                    </button>
+                </div>
+            </div>
+            <div class="row" style="height:10px">
+            </div>
+
+        </div>
+
+        @*<div class="col-md-1"></div>*@
+
+        @*Services Clock - In  Process*@
+        <div class="col" style="border: solid 1px #d5d5d5; position: relative; margin-left: 5px ">
+
+            <div class="row" style="height:10px">
+            </div>
+
+            <div class="row" style="padding-left:2em ; padding-right:2em">
+               <div class="col-3 label">
+                   <label> Clock Out Time : </label>
+               </div> 
+               <div class="col">
+                   <input class="form-control" type="time" list="BrowsersID" name="ClockIn" id="ClockIn">
+               </div>
+               
+            </div>
+
+
+            <div class="row" style="padding-left:2em ; padding-right:2em">
+                <div class="col-3 label">
+                    <label> Clock Out Date : </label>
+                </div>
+                <div class="col">
+                    <input class="form-control" type="Date" list="BrowsersName" name="TransactionDate" id="TransactionDate">
+                </div>
+                   
+
+                </div>
+
+            <div class="row" style="padding-left:2em ; padding-right:2em">
+
+                <div class="col-3 label">
+                    <label>  Section Name : </label>
+                </div>
+                <div class="col">
+                    <input class="form-control" list="BrowsersName" name="SectionName" id="SectionName">
+
+                    <datalist id="BrowsersName">
+                        @foreach (var item in Model.tbSection)
+                        {
+                            <option>@Html.DisplayFor(modelItem => item.SectionName)</option>
+                        }
+                    </datalist>
+                </div>
+                  
+                </div>
+
+            <div class="row" style="padding-left:2em ; padding-right:2em">
+                <div class="col-3 label">
+                    <label>  Services Name : </label>
+                </div>
+
+                <div class="col">
+                    <input class="form-control" list="BrowsersName" name="ServicesName" id="ServicesName">
+                    <datalist id="BrowsersName">
+                        @foreach (var item in Model.tbService)
+                        {
+                            <option>@Html.DisplayFor(modelItem => item.ServicesName)</option>
+                        }
+                    </datalist>
+                </div>
+               
+            </div>
+            <div class="row" style="padding-left: 4em; padding-right: 1em ;width:100%;">
+                <table class="page-table">
+                    <thead style="background-color:gainsboro">
+                        <tr>
+                            <th class="section-table-head">
+                               Section
+                            </th>
+                            <th class="section-table-head">
+                                Services
+                            </th>
+                            <th class="section-table-head">
+                                Action
+                            </th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.tbSection)
+                        {
+                            <tr>
+                                @Html.HiddenFor(modelItem => item.SectionID)
+                                <td class="Section-table-data">
+                                    @Html.DisplayFor(modelItem => item.SectionID)
+                                </td>
+                                <td class="Section-table-data">
+                                    @Html.DisplayFor(modelItem => item.SectionName)
+                                </td>
+                                <td class="Section-table-data">
+                                    <a href="#" id="btnEdit" data-id="@item.SectionID" onclick="EditFn(@item.SectionID)">Edit</a>
+
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+
+
+                <div class="row" style="padding-left:20em ;height: 50px">
+                    <div class="col-7"></div>
+                    <div class="col-3" style="width:100% ;height:90%">
+                        <button type="button" class="create-button" data-bs-toggle="modal" data-bs-target="#CreateModal" style="justify-content: flex-end">Create</button>
+
+                    </div>
+                </div>
+
+
+                <div class="row" style="height:10px">
+                </div>
+
+            </div>
+
+
+
+        <br />
+
+
+    </div>
+
+    <div class="row" style="height:45px">
+    </div>
+</form>
+
+
+
+
+@*Diaplay data*@
+<table id="table_id" class="page-table">
+    <thead>
+        <tr>
+            <th class="page-table-head"><input type="checkbox" id="checkall" /></th>
+            <th class="page-table-head">
+                Employee ID
+            </th>
+            <th class="page-table-head">
+                Employee Name
+            </th>
+            <th class="page-table-head">
+                Line
+            </th>
+            <th class="page-table-head">
+                Section
+            </th>
+            <th class="page-table-head">
+                Date
+            </th>
+            <th class="page-table-head">
+                Start Time
+            </th>
+            <th class="page-table-head">
+                End Time
+            </th>
+            <th class="page-table-head">
+                Clock -Out
+            </th>
+            <th class="page-table-head">
+                Working Status
+            </th>
+            <th class="page-table-head">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.view_Employee)
+        {
+            <tr>
+                @Html.HiddenFor(modelItem => item.EmployeeID)
+                <td class="page-table-data"><input type="checkbox" class="checkthis" /></td>
+                <td class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.EmployeeID)
+                </td>
+                <td class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.EmployeeName)
+                </td>
+                <td class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.PlantName)
+                </td>
+                <td class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.LineName)
+                </td>
+                <td class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.SectionName)
+                </td>
+
+                <td class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+                <td class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+                <td class="page-table-data">
+                     @Html.DisplayFor(modelItem => item.ClockIn)
+                </td>
+                <td class="page-table-data">
+                     @Html.DisplayFor(modelItem => item.WorkingStatus)
+                </td>
+
+
+                <td class="page-table-data">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#EditModal" id="btnEdit" data-id="@item.EmployeeID" onclick="EditFn(@item.EmployeeID)">Edit</a>
+
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="row" style="height:100px"></div>
+
+
+
+
+<script>
+
+
+    function eventFired(type) {
+        let n = document.querySelector('#demo_info');
+    }
+
+    $(document).ready(function () {
+        $("#table_id #checkall").click(function () {
+            if ($("#table_id #checkall").is(':checked')) {
+                $("#table_id input[type=checkbox]").each(function () {
+                    $(this).prop("checked", true);
+                });
+
+            } else {
+                $("#table_id input[type=checkbox]").each(function () {
+                    $(this).prop("checked", false);
+                });
+            }
+        });
+
+        $("[data-toggle=tooltip]").tooltip();
+    });
+
+
+    new DataTable('#table_id')
+        .on('page.dt', () => eventFired('Page'));
+
+
+
+    //Edit to modal
+    function EditFn(id) {
+        $.ajax({
+            url: '/Employee/EmployeeClockInEdit/' + id,
+            type: 'GET',
+            contentType: 'application/json;charset=UTF-8',
+            dataType: 'json',
+            success: function (response) {
+                if (response == null || response == undefined) {
+
+                    alert("This data can't read1!")
+                }
+                else if (response.length == 0) {
+
+                    alert("This data can't id!" + id)
+                }
+                else {
+                    var today = new Date();
+                    var thisdate = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
+                    alert("id =" + thisdate + " , PlantName = " + response.EmployeeID + ",Status = " + response.EmployeeID)
+                    $('#ModalEmployeeID').val(response.EmployeeID);
+                    $('#ModalEmployeeName').val(response.EmployeeName);
+                    $('#ModalLineName').val(response.LineName);
+                    $('#ModalSectiontName').val(response.SectionName);
+                    $('#ModalClockIn').val(response.ClockIn);
+                    $('#ModalTransactionDate').val(thisdate);
+                    $('#ModalWorkingStatus').prop('checked', response.WorkingStatus == 1)
+                    $('#EditModal').modal('show');
+
+
+                }
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+
+        });
+    }
+
+
+
+
+
+
+    function EmployeeClockInCreate() {
+        $.ajax({
+            url: '/Employee/EmployeeClockInCreate/' + Emp,
+            type: 'GET',
+            contentType: 'application/json;charset=UTF-8',
+            dataType: 'json',
+            success: function (response) {
+                alert("Generate Finish");
+                $("body").html(result);
+            },
+            error: function (response) {
+                alert("Geneate something went wrong.");
+            }
+
+        });
+    }
+
+</script>

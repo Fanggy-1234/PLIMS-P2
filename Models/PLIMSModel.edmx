@@ -1,0 +1,1760 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PhlimsDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TbDefect">
+          <Key>
+            <PropertyRef Name="DefectId" />
+          </Key>
+          <Property Name="DefectId" Type="int" Nullable="false" />
+          <Property Name="DefectName" Type="nvarchar" MaxLength="255" />
+          <Property Name="DefectPlant" Type="int" />
+          <Property Name="DefectLine" Type="int" />
+          <Property Name="DefectSection" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="10" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="TbEmployeeMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="EmployeeID" Type="nvarchar" MaxLength="20" />
+          <Property Name="EmployeeName" Type="nvarchar" MaxLength="100" />
+          <Property Name="PlantID" Type="int" />
+          <Property Name="LineID" Type="int" />
+          <Property Name="SectionID" Type="int" />
+          <Property Name="ShiftID" Type="int" />
+          <Property Name="QRCodePerUnit" Type="int" />
+          <Property Name="QRCodePerEmployee" Type="int" />
+          <Property Name="Type" Type="nvarchar" MaxLength="8" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CreateDate" Type="datetime2" Precision="7" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdateDate" Type="datetime2" Precision="7" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TbEmptransaction">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+          </Key>
+          <Property Name="TransactionNo" Type="int" Nullable="false" />
+          <Property Name="TransactionDate" Type="datetime2" Precision="7" />
+          <Property Name="EmployeeID" Type="nvarchar" MaxLength="15" />
+          <Property Name="Shift" Type="int" />
+          <Property Name="Line" Type="int" />
+          <Property Name="Section" Type="int" />
+          <Property Name="WorkingStatus" Type="nvarchar" MaxLength="10" />
+          <Property Name="ClockIn" Type="nvarchar" MaxLength="5" />
+          <Property Name="ClockOut" Type="nvarchar" MaxLength="5" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TbIncentiveMaster">
+          <Key>
+            <PropertyRef Name="IncentiveID" />
+          </Key>
+          <Property Name="IncentiveID" Type="int" Nullable="false" />
+          <Property Name="IncentiveName" Type="nvarchar" MaxLength="100" />
+          <Property Name="PlantID" Type="int" />
+          <Property Name="LineID" Type="int" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="SectionID" Type="int" />
+          <Property Name="Min" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="Max" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="Rate" Type="decimal" Precision="6" Scale="4" />
+          <Property Name="Grade" Type="nvarchar" MaxLength="2" />
+          <Property Name="MonthYear" Type="nvarchar" MaxLength="10" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CreateDate" Type="datetime2" Precision="7" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdateDate" Type="datetime2" Precision="7" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TbLine">
+          <Key>
+            <PropertyRef Name="LineID" />
+          </Key>
+          <Property Name="LineID" Type="int" Nullable="false" />
+          <Property Name="LineName" Type="nvarchar" MaxLength="200" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="TbPage">
+          <Key>
+            <PropertyRef Name="PageID" />
+          </Key>
+          <Property Name="PageID" Type="int" Nullable="false" />
+          <Property Name="PageName" Type="nvarchar" MaxLength="200" />
+          <Property Name="PageStatus" Type="int" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TbPermission">
+          <Key>
+            <PropertyRef Name="PermissionID" />
+          </Key>
+          <Property Name="PermissionID" Type="int" Nullable="false" />
+          <Property Name="RoleID" Type="int" />
+          <Property Name="PageID" Type="int" />
+          <Property Name="RoleAction" Type="nvarchar" MaxLength="4" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TbPlant">
+          <Key>
+            <PropertyRef Name="PlantID" />
+          </Key>
+          <Property Name="PlantID" Type="int" Nullable="false" />
+          <Property Name="PlantName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="TbPLPS">
+          <Key>
+            <PropertyRef Name="PLPSID" />
+          </Key>
+          <Property Name="PLPSID" Type="int" Nullable="false" />
+          <Property Name="PlantID" Type="int" />
+          <Property Name="LineID" Type="int" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="SectionID" Type="int" />
+          <Property Name="STD" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="PercentSTD" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="PercentYield" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="Size" Type="nvarchar" MaxLength="1" />
+          <Property Name="QTYPerQRCode" Type="int" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="3" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="10" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="TbProduct">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="200" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="TbReason">
+          <Key>
+            <PropertyRef Name="ReasonID" />
+          </Key>
+          <Property Name="ReasonID" Type="int" Nullable="false" />
+          <Property Name="ReasonName" Type="nvarchar" MaxLength="255" />
+          <Property Name="PlantID" Type="int" />
+          <Property Name="LineID" Type="int" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="SectionID" Type="int" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="10" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="TbRole">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="RoleStatus" Type="int" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TbSection">
+          <Key>
+            <PropertyRef Name="SectionID" />
+          </Key>
+          <Property Name="SectionID" Type="int" Nullable="false" />
+          <Property Name="SectionName" Type="nvarchar" MaxLength="200" />
+          <Property Name="Delaytime" Type="nvarchar" MaxLength="1" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="TbServices">
+          <Key>
+            <PropertyRef Name="ServicesID" />
+          </Key>
+          <Property Name="ServicesID" Type="int" Nullable="false" />
+          <Property Name="ServicesName" Type="nchar" MaxLength="10" />
+          <Property Name="Ser_PlantID" Type="int" />
+          <Property Name="Ser_LineID" Type="int" />
+          <Property Name="MonthYear" Type="nvarchar" MaxLength="10" />
+          <Property Name="ServicesRate" Type="nchar" MaxLength="10" />
+          <Property Name="ServicesStatus" Type="int" />
+          <Property Name="CreateDate" Type="datetime2" Precision="7" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdateDate" Type="datetime2" Precision="7" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TbShift">
+          <Key>
+            <PropertyRef Name="ShiftID" />
+          </Key>
+          <Property Name="ShiftID" Type="int" Nullable="false" />
+          <Property Name="ShiftName" Type="nvarchar" MaxLength="200" />
+          <Property Name="StartTime" Type="varchar" MaxLength="5" />
+          <Property Name="EndTime" Type="varchar" MaxLength="5" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="TbUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserLastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserPassword" Type="nvarchar" MaxLength="10" />
+          <Property Name="UserPermission" Type="int" />
+          <Property Name="UserEmpID" Type="nvarchar" MaxLength="20" />
+          <Property Name="Status" Type="int" />
+          <Property Name="UserEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="PasswordLastUpdate" Type="date" />
+          <Property Name="Lineconcern" Type="nvarchar" MaxLength="255" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="10" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PhlimsDatabase.dbo.View_Employee' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_Employee">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ClockIn" />
+            <PropertyRef Name="ClockOut" />
+            <PropertyRef Name="WorkingStatus" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="EmployeeID" Type="nvarchar" MaxLength="15" />
+          <Property Name="EmployeeName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CreateDate" Type="datetime2" Precision="7" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdateDate" Type="datetime2" Precision="7" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="PlantName" Type="nvarchar" MaxLength="100" />
+          <Property Name="LineName" Type="nvarchar" MaxLength="200" />
+          <Property Name="SectionName" Type="nvarchar" MaxLength="200" />
+          <Property Name="ShiftName" Type="nvarchar" MaxLength="200" />
+          <Property Name="StartTime" Type="varchar" MaxLength="5" />
+          <Property Name="EndTime" Type="varchar" MaxLength="5" />
+          <Property Name="ClockIn" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="ClockOut" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="WorkingStatus" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="QRCodePerUnit" Type="int" />
+          <Property Name="QRCodePerEmployee" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PhlimsDatabase.dbo.View_EmployeeClocktime' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_EmployeeClocktime">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="WorkingStatus" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="EmployeeID" Type="nvarchar" MaxLength="15" />
+          <Property Name="EmployeeName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CreateDate" Type="datetime2" Precision="7" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdateDate" Type="datetime2" Precision="7" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="PlantName" Type="nvarchar" MaxLength="100" />
+          <Property Name="LineName" Type="nvarchar" MaxLength="200" />
+          <Property Name="SectionName" Type="nvarchar" MaxLength="200" />
+          <Property Name="ShiftName" Type="nvarchar" MaxLength="200" />
+          <Property Name="StartTime" Type="varchar" MaxLength="5" />
+          <Property Name="EndTime" Type="varchar" MaxLength="5" />
+          <Property Name="ClockIn" Type="nvarchar" MaxLength="5" />
+          <Property Name="ClockOut" Type="nvarchar" MaxLength="5" />
+          <Property Name="WorkingStatus" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="QRCodePerUnit" Type="int" />
+          <Property Name="QRCodePerEmployee" Type="int" />
+          <Property Name="TransactionNo" Type="int" />
+          <Property Name="TransactionDate" Type="datetime2" Precision="7" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PhlimsDatabase.dbo.View_EmployeeJoin' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_EmployeeJoin">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="EmployeeName" Type="nvarchar" MaxLength="100" />
+          <Property Name="PlantID" Type="int" />
+          <Property Name="LineID" Type="int" />
+          <Property Name="SectionID" Type="int" />
+          <Property Name="ShiftID" Type="int" />
+          <Property Name="QRCode" Type="nvarchar" MaxLength="1" />
+          <Property Name="TransactionDate" Type="datetime2" Precision="7" />
+          <Property Name="Expr1" Type="nchar" MaxLength="10" />
+          <Property Name="Shift" Type="int" />
+          <Property Name="Line" Type="int" />
+          <Property Name="WorkingStatus" Type="int" />
+          <Property Name="ClockIn" Type="nvarchar" MaxLength="5" />
+          <Property Name="ClockOut" Type="nvarchar" MaxLength="5" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PhlimsDatabase.dbo.View_Incentive' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_Incentive">
+          <Key>
+            <PropertyRef Name="IncentiveID" />
+          </Key>
+          <Property Name="IncentiveID" Type="int" Nullable="false" />
+          <Property Name="IncentiveName" Type="nvarchar" MaxLength="100" />
+          <Property Name="PlantName" Type="nvarchar" MaxLength="100" />
+          <Property Name="LineName" Type="nvarchar" MaxLength="200" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="200" />
+          <Property Name="SectionName" Type="nvarchar" MaxLength="200" />
+          <Property Name="Status" Type="int" />
+          <Property Name="Min" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="Max" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="Rate" Type="decimal" Precision="6" Scale="4" />
+          <Property Name="Grade" Type="nvarchar" MaxLength="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PhlimsDatabase.dbo.View_PagePermission' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_PagePermission">
+          <Key>
+            <PropertyRef Name="PermissionID" />
+          </Key>
+          <Property Name="PermissionID" Type="int" Nullable="false" />
+          <Property Name="PageName" Type="nvarchar" MaxLength="200" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="RoleAction" Type="nvarchar" MaxLength="4" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PhlimsDatabase.dbo.View_PermissionMaster' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_PermissionMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="UserEmpID" Type="nvarchar" MaxLength="15" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserLastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserPassword" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserEmail" Type="nvarchar" MaxLength="150" />
+          <Property Name="EmployeeID" Type="nvarchar" MaxLength="15" />
+          <Property Name="PlantID" Type="int" />
+          <Property Name="PlantName" Type="nvarchar" MaxLength="100" />
+          <Property Name="LineName" Type="nvarchar" MaxLength="200" />
+          <Property Name="SectionName" Type="nvarchar" MaxLength="200" />
+          <Property Name="UserPermission" Type="int" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="PageID" Type="int" />
+          <Property Name="PageName" Type="nvarchar" MaxLength="200" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PhlimsDatabase.dbo.View_PLPS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_PLPS">
+          <Key>
+            <PropertyRef Name="PLPSID" />
+          </Key>
+          <Property Name="PLPSID" Type="int" Nullable="false" />
+          <Property Name="PlantName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="200" />
+          <Property Name="SectionName" Type="nvarchar" MaxLength="200" />
+          <Property Name="LineName" Type="nvarchar" MaxLength="200" />
+          <Property Name="STD" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="PercentSTD" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="PercentYield" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="Size" Type="nvarchar" MaxLength="1" />
+          <Property Name="QTYPerQRCode" Type="int" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="3" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="10" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PhlimsDatabase.dbo.View_Reason' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_Reason">
+          <Key>
+            <PropertyRef Name="ReasonID" />
+          </Key>
+          <Property Name="ReasonID" Type="int" Nullable="false" />
+          <Property Name="ReasonName" Type="nvarchar" MaxLength="255" />
+          <Property Name="PlantName" Type="nvarchar" MaxLength="100" />
+          <Property Name="LineName" Type="nvarchar" MaxLength="200" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="200" />
+          <Property Name="SectionName" Type="nvarchar" MaxLength="200" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="10" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="10" />
+          <Property Name="PlantID" Type="int" />
+          <Property Name="LineID" Type="int" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="SectionID" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PhlimsDatabase.dbo.View_Services' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_Services">
+          <Key>
+            <PropertyRef Name="ServicesID" />
+          </Key>
+          <Property Name="ServicesID" Type="int" Nullable="false" />
+          <Property Name="ServicesName" Type="nchar" MaxLength="10" />
+          <Property Name="ServicesRate" Type="nchar" MaxLength="10" />
+          <Property Name="ServicesStatus" Type="int" />
+          <Property Name="MonthYear" Type="nvarchar" MaxLength="10" />
+          <Property Name="UpdateDate" Type="datetime2" Precision="7" />
+          <Property Name="CreateDate" Type="datetime2" Precision="7" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ser_PlantName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Ser_LineName" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PhlimsDatabase.dbo.View_ServicesClocktime' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_ServicesClocktime">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="WorkingStatus" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="EmployeeID" Type="nvarchar" MaxLength="15" />
+          <Property Name="EmployeeName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CreateDate" Type="datetime2" Precision="7" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdateDate" Type="datetime2" Precision="7" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="PlantName" Type="nvarchar" MaxLength="100" />
+          <Property Name="LineName" Type="nvarchar" MaxLength="200" />
+          <Property Name="SectionName" Type="nvarchar" MaxLength="200" />
+          <Property Name="ShiftName" Type="nvarchar" MaxLength="200" />
+          <Property Name="StartTime" Type="varchar" MaxLength="5" />
+          <Property Name="EndTime" Type="varchar" MaxLength="5" />
+          <Property Name="ClockIn" Type="nvarchar" MaxLength="5" />
+          <Property Name="ClockOut" Type="nvarchar" MaxLength="5" />
+          <Property Name="WorkingStatus" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="QRCodePerUnit" Type="int" />
+          <Property Name="QRCodePerEmployee" Type="int" />
+          <Property Name="TransactionNo" Type="int" />
+          <Property Name="TransactionDate" Type="datetime2" Precision="7" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PhlimsDatabase.dbo.View_User' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="UserEmpID" Type="nvarchar" MaxLength="15" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserLastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserPassword" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserEmail" Type="nvarchar" MaxLength="150" />
+          <Property Name="PlantName" Type="nvarchar" MaxLength="100" />
+          <Property Name="LineName" Type="nvarchar" MaxLength="200" />
+          <Property Name="SectionName" Type="nvarchar" MaxLength="200" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityContainer Name="PhlimsDatabaseModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TbDefect" EntityType="Self.TbDefect" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TbEmployeeMaster" EntityType="Self.TbEmployeeMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TbEmptransaction" EntityType="Self.TbEmptransaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TbIncentiveMaster" EntityType="Self.TbIncentiveMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TbLine" EntityType="Self.TbLine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TbPage" EntityType="Self.TbPage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TbPermission" EntityType="Self.TbPermission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TbPlant" EntityType="Self.TbPlant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TbPLPS" EntityType="Self.TbPLPS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TbProduct" EntityType="Self.TbProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TbReason" EntityType="Self.TbReason" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TbRole" EntityType="Self.TbRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TbSection" EntityType="Self.TbSection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TbServices" EntityType="Self.TbServices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TbShift" EntityType="Self.TbShift" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TbUser" EntityType="Self.TbUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="View_Employee" EntityType="Self.View_Employee" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Employee].[ID] AS [ID], 
+    [View_Employee].[EmployeeID] AS [EmployeeID], 
+    [View_Employee].[EmployeeName] AS [EmployeeName], 
+    [View_Employee].[Status] AS [Status], 
+    [View_Employee].[CreateDate] AS [CreateDate], 
+    [View_Employee].[CreateBy] AS [CreateBy], 
+    [View_Employee].[UpdateDate] AS [UpdateDate], 
+    [View_Employee].[UpdateBy] AS [UpdateBy], 
+    [View_Employee].[PlantName] AS [PlantName], 
+    [View_Employee].[LineName] AS [LineName], 
+    [View_Employee].[SectionName] AS [SectionName], 
+    [View_Employee].[ShiftName] AS [ShiftName], 
+    [View_Employee].[StartTime] AS [StartTime], 
+    [View_Employee].[EndTime] AS [EndTime], 
+    [View_Employee].[ClockIn] AS [ClockIn], 
+    [View_Employee].[ClockOut] AS [ClockOut], 
+    [View_Employee].[WorkingStatus] AS [WorkingStatus], 
+    [View_Employee].[QRCodePerUnit] AS [QRCodePerUnit], 
+    [View_Employee].[QRCodePerEmployee] AS [QRCodePerEmployee]
+    FROM [dbo].[View_Employee] AS [View_Employee]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_EmployeeClocktime" EntityType="Self.View_EmployeeClocktime" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_EmployeeClocktime].[ID] AS [ID], 
+    [View_EmployeeClocktime].[EmployeeID] AS [EmployeeID], 
+    [View_EmployeeClocktime].[EmployeeName] AS [EmployeeName], 
+    [View_EmployeeClocktime].[Status] AS [Status], 
+    [View_EmployeeClocktime].[CreateDate] AS [CreateDate], 
+    [View_EmployeeClocktime].[CreateBy] AS [CreateBy], 
+    [View_EmployeeClocktime].[UpdateDate] AS [UpdateDate], 
+    [View_EmployeeClocktime].[UpdateBy] AS [UpdateBy], 
+    [View_EmployeeClocktime].[PlantName] AS [PlantName], 
+    [View_EmployeeClocktime].[LineName] AS [LineName], 
+    [View_EmployeeClocktime].[SectionName] AS [SectionName], 
+    [View_EmployeeClocktime].[ShiftName] AS [ShiftName], 
+    [View_EmployeeClocktime].[StartTime] AS [StartTime], 
+    [View_EmployeeClocktime].[EndTime] AS [EndTime], 
+    [View_EmployeeClocktime].[ClockIn] AS [ClockIn], 
+    [View_EmployeeClocktime].[ClockOut] AS [ClockOut], 
+    [View_EmployeeClocktime].[WorkingStatus] AS [WorkingStatus], 
+    [View_EmployeeClocktime].[QRCodePerUnit] AS [QRCodePerUnit], 
+    [View_EmployeeClocktime].[QRCodePerEmployee] AS [QRCodePerEmployee], 
+    [View_EmployeeClocktime].[TransactionNo] AS [TransactionNo], 
+    [View_EmployeeClocktime].[TransactionDate] AS [TransactionDate]
+    FROM [dbo].[View_EmployeeClocktime] AS [View_EmployeeClocktime]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_EmployeeJoin" EntityType="Self.View_EmployeeJoin" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_EmployeeJoin].[EmployeeID] AS [EmployeeID], 
+    [View_EmployeeJoin].[EmployeeName] AS [EmployeeName], 
+    [View_EmployeeJoin].[PlantID] AS [PlantID], 
+    [View_EmployeeJoin].[LineID] AS [LineID], 
+    [View_EmployeeJoin].[SectionID] AS [SectionID], 
+    [View_EmployeeJoin].[ShiftID] AS [ShiftID], 
+    [View_EmployeeJoin].[QRCode] AS [QRCode], 
+    [View_EmployeeJoin].[TransactionDate] AS [TransactionDate], 
+    [View_EmployeeJoin].[Expr1] AS [Expr1], 
+    [View_EmployeeJoin].[Shift] AS [Shift], 
+    [View_EmployeeJoin].[Line] AS [Line], 
+    [View_EmployeeJoin].[WorkingStatus] AS [WorkingStatus], 
+    [View_EmployeeJoin].[ClockIn] AS [ClockIn], 
+    [View_EmployeeJoin].[ClockOut] AS [ClockOut]
+    FROM [dbo].[View_EmployeeJoin] AS [View_EmployeeJoin]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_Incentive" EntityType="Self.View_Incentive" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Incentive].[IncentiveID] AS [IncentiveID], 
+    [View_Incentive].[IncentiveName] AS [IncentiveName], 
+    [View_Incentive].[PlantName] AS [PlantName], 
+    [View_Incentive].[LineName] AS [LineName], 
+    [View_Incentive].[ProductName] AS [ProductName], 
+    [View_Incentive].[SectionName] AS [SectionName], 
+    [View_Incentive].[Status] AS [Status], 
+    [View_Incentive].[Min] AS [Min], 
+    [View_Incentive].[Max] AS [Max], 
+    [View_Incentive].[Rate] AS [Rate], 
+    [View_Incentive].[Grade] AS [Grade]
+    FROM [dbo].[View_Incentive] AS [View_Incentive]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_PagePermission" EntityType="Self.View_PagePermission" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_PagePermission].[PermissionID] AS [PermissionID], 
+    [View_PagePermission].[PageName] AS [PageName], 
+    [View_PagePermission].[RoleName] AS [RoleName], 
+    [View_PagePermission].[RoleAction] AS [RoleAction]
+    FROM [dbo].[View_PagePermission] AS [View_PagePermission]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_PermissionMaster" EntityType="Self.View_PermissionMaster" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_PermissionMaster].[ID] AS [ID], 
+    [View_PermissionMaster].[UserEmpID] AS [UserEmpID], 
+    [View_PermissionMaster].[UserName] AS [UserName], 
+    [View_PermissionMaster].[UserLastName] AS [UserLastName], 
+    [View_PermissionMaster].[UserPassword] AS [UserPassword], 
+    [View_PermissionMaster].[UserEmail] AS [UserEmail], 
+    [View_PermissionMaster].[EmployeeID] AS [EmployeeID], 
+    [View_PermissionMaster].[PlantID] AS [PlantID], 
+    [View_PermissionMaster].[PlantName] AS [PlantName], 
+    [View_PermissionMaster].[LineName] AS [LineName], 
+    [View_PermissionMaster].[SectionName] AS [SectionName], 
+    [View_PermissionMaster].[UserPermission] AS [UserPermission], 
+    [View_PermissionMaster].[RoleName] AS [RoleName], 
+    [View_PermissionMaster].[PageID] AS [PageID], 
+    [View_PermissionMaster].[PageName] AS [PageName], 
+    [View_PermissionMaster].[Status] AS [Status]
+    FROM [dbo].[View_PermissionMaster] AS [View_PermissionMaster]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_PLPS" EntityType="Self.View_PLPS" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_PLPS].[PLPSID] AS [PLPSID], 
+    [View_PLPS].[PlantName] AS [PlantName], 
+    [View_PLPS].[ProductName] AS [ProductName], 
+    [View_PLPS].[SectionName] AS [SectionName], 
+    [View_PLPS].[LineName] AS [LineName], 
+    [View_PLPS].[STD] AS [STD], 
+    [View_PLPS].[PercentSTD] AS [PercentSTD], 
+    [View_PLPS].[PercentYield] AS [PercentYield], 
+    [View_PLPS].[Size] AS [Size], 
+    [View_PLPS].[QTYPerQRCode] AS [QTYPerQRCode], 
+    [View_PLPS].[Unit] AS [Unit], 
+    [View_PLPS].[Status] AS [Status], 
+    [View_PLPS].[CreateDate] AS [CreateDate], 
+    [View_PLPS].[CreateBy] AS [CreateBy], 
+    [View_PLPS].[UpdateDate] AS [UpdateDate], 
+    [View_PLPS].[UpdateBy] AS [UpdateBy]
+    FROM [dbo].[View_PLPS] AS [View_PLPS]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_Reason" EntityType="Self.View_Reason" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Reason].[ReasonID] AS [ReasonID], 
+    [View_Reason].[ReasonName] AS [ReasonName], 
+    [View_Reason].[PlantName] AS [PlantName], 
+    [View_Reason].[LineName] AS [LineName], 
+    [View_Reason].[ProductName] AS [ProductName], 
+    [View_Reason].[SectionName] AS [SectionName], 
+    [View_Reason].[Status] AS [Status], 
+    [View_Reason].[CreateDate] AS [CreateDate], 
+    [View_Reason].[CreateBy] AS [CreateBy], 
+    [View_Reason].[UpdateDate] AS [UpdateDate], 
+    [View_Reason].[UpdateBy] AS [UpdateBy], 
+    [View_Reason].[PlantID] AS [PlantID], 
+    [View_Reason].[LineID] AS [LineID], 
+    [View_Reason].[ProductID] AS [ProductID], 
+    [View_Reason].[SectionID] AS [SectionID]
+    FROM [dbo].[View_Reason] AS [View_Reason]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_Services" EntityType="Self.View_Services" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Services].[ServicesID] AS [ServicesID], 
+    [View_Services].[ServicesName] AS [ServicesName], 
+    [View_Services].[ServicesRate] AS [ServicesRate], 
+    [View_Services].[ServicesStatus] AS [ServicesStatus], 
+    [View_Services].[MonthYear] AS [MonthYear], 
+    [View_Services].[UpdateDate] AS [UpdateDate], 
+    [View_Services].[CreateDate] AS [CreateDate], 
+    [View_Services].[CreateBy] AS [CreateBy], 
+    [View_Services].[UpdateBy] AS [UpdateBy], 
+    [View_Services].[Ser_PlantName] AS [Ser_PlantName], 
+    [View_Services].[Ser_LineName] AS [Ser_LineName]
+    FROM [dbo].[View_Services] AS [View_Services]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_ServicesClocktime" EntityType="Self.View_ServicesClocktime" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_ServicesClocktime].[ID] AS [ID], 
+    [View_ServicesClocktime].[EmployeeID] AS [EmployeeID], 
+    [View_ServicesClocktime].[EmployeeName] AS [EmployeeName], 
+    [View_ServicesClocktime].[Status] AS [Status], 
+    [View_ServicesClocktime].[CreateDate] AS [CreateDate], 
+    [View_ServicesClocktime].[CreateBy] AS [CreateBy], 
+    [View_ServicesClocktime].[UpdateDate] AS [UpdateDate], 
+    [View_ServicesClocktime].[UpdateBy] AS [UpdateBy], 
+    [View_ServicesClocktime].[PlantName] AS [PlantName], 
+    [View_ServicesClocktime].[LineName] AS [LineName], 
+    [View_ServicesClocktime].[SectionName] AS [SectionName], 
+    [View_ServicesClocktime].[ShiftName] AS [ShiftName], 
+    [View_ServicesClocktime].[StartTime] AS [StartTime], 
+    [View_ServicesClocktime].[EndTime] AS [EndTime], 
+    [View_ServicesClocktime].[ClockIn] AS [ClockIn], 
+    [View_ServicesClocktime].[ClockOut] AS [ClockOut], 
+    [View_ServicesClocktime].[WorkingStatus] AS [WorkingStatus], 
+    [View_ServicesClocktime].[QRCodePerUnit] AS [QRCodePerUnit], 
+    [View_ServicesClocktime].[QRCodePerEmployee] AS [QRCodePerEmployee], 
+    [View_ServicesClocktime].[TransactionNo] AS [TransactionNo], 
+    [View_ServicesClocktime].[TransactionDate] AS [TransactionDate]
+    FROM [dbo].[View_ServicesClocktime] AS [View_ServicesClocktime]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_User" EntityType="Self.View_User" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_User].[ID] AS [ID], 
+    [View_User].[UserEmpID] AS [UserEmpID], 
+    [View_User].[UserName] AS [UserName], 
+    [View_User].[UserLastName] AS [UserLastName], 
+    [View_User].[UserPassword] AS [UserPassword], 
+    [View_User].[UserEmail] AS [UserEmail], 
+    [View_User].[PlantName] AS [PlantName], 
+    [View_User].[LineName] AS [LineName], 
+    [View_User].[SectionName] AS [SectionName], 
+    [View_User].[RoleName] AS [RoleName], 
+    [View_User].[Status] AS [Status]
+    FROM [dbo].[View_User] AS [View_User]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PhlimsDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="PhlimsDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="PhlimsDatabaseModel.sysdiagram" />
+          <EntitySet Name="TbProducts" EntityType="PhlimsDatabaseModel.TbProduct" />
+          <EntitySet Name="TbSections" EntityType="PhlimsDatabaseModel.TbSection" />
+          <EntitySet Name="TbShifts" EntityType="PhlimsDatabaseModel.TbShift" />
+          <EntitySet Name="TbServices" EntityType="PhlimsDatabaseModel.TbService" />
+          <EntitySet Name="View_Services" EntityType="PhlimsDatabaseModel.View_Services" />
+          <EntitySet Name="TbPlants" EntityType="PhlimsDatabaseModel.TbPlant" />
+          <EntitySet Name="TbIncentiveMasters" EntityType="PhlimsDatabaseModel.TbIncentiveMaster" />
+          <EntitySet Name="TbUsers" EntityType="PhlimsDatabaseModel.TbUser" />
+          <EntitySet Name="TbDefects" EntityType="PhlimsDatabaseModel.TbDefect" />
+          <EntitySet Name="View_Incentive" EntityType="PhlimsDatabaseModel.View_Incentive" />
+          <EntitySet Name="TbReasons" EntityType="PhlimsDatabaseModel.TbReason" />
+          <EntitySet Name="View_Reason" EntityType="PhlimsDatabaseModel.View_Reason" />
+          <EntitySet Name="TbLines" EntityType="PhlimsDatabaseModel.TbLine" />
+          <EntitySet Name="TbEmployeeMasters" EntityType="PhlimsDatabaseModel.TbEmployeeMaster" />
+          <EntitySet Name="View_Employee" EntityType="PhlimsDatabaseModel.View_Employee" />
+          <EntitySet Name="View_PermissionMaster" EntityType="PhlimsDatabaseModel.View_PermissionMaster" />
+          <EntitySet Name="View_User" EntityType="PhlimsDatabaseModel.View_User" />
+          <EntitySet Name="View_EmployeeJoin" EntityType="PhlimsDatabaseModel.View_EmployeeJoin" />
+          <EntitySet Name="TbPLPS" EntityType="PhlimsDatabaseModel.TbPLPS" />
+          <EntitySet Name="View_PLPS" EntityType="PhlimsDatabaseModel.View_PLPS" />
+          <EntitySet Name="TbEmptransactions" EntityType="PhlimsDatabaseModel.TbEmptransaction" />
+          <EntitySet Name="View_EmployeeClocktime" EntityType="PhlimsDatabaseModel.View_EmployeeClocktime" />
+          <EntitySet Name="View_ServicesClocktime" EntityType="PhlimsDatabaseModel.View_ServicesClocktime" />
+          <EntitySet Name="TbPages" EntityType="PhlimsDatabaseModel.TbPage" />
+          <EntitySet Name="TbRoles" EntityType="PhlimsDatabaseModel.TbRole" />
+          <EntitySet Name="TbPermissions" EntityType="PhlimsDatabaseModel.TbPermission" />
+          <EntitySet Name="View_PagePermission" EntityType="PhlimsDatabaseModel.View_PagePermission" />
+        </EntityContainer>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TbProduct">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="ProductName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TbSection">
+          <Key>
+            <PropertyRef Name="SectionID" />
+          </Key>
+          <Property Name="SectionID" Type="Int32" Nullable="false" />
+          <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Delaytime" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TbShift">
+          <Key>
+            <PropertyRef Name="ShiftID" />
+          </Key>
+          <Property Name="ShiftID" Type="Int32" Nullable="false" />
+          <Property Name="ShiftName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StartTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="EndTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TbService">
+          <Key>
+            <PropertyRef Name="ServicesID" />
+          </Key>
+          <Property Name="ServicesID" Type="Int32" Nullable="false" />
+          <Property Name="ServicesName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Ser_PlantID" Type="Int32" />
+          <Property Name="Ser_LineID" Type="Int32" />
+          <Property Name="MonthYear" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ServicesRate" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ServicesStatus" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="7" />
+          <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="7" />
+          <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="View_Services">
+          <Key>
+            <PropertyRef Name="ServicesID" />
+          </Key>
+          <Property Name="ServicesID" Type="Int32" Nullable="false" />
+          <Property Name="ServicesName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ServicesRate" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ServicesStatus" Type="Int32" />
+          <Property Name="MonthYear" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="7" />
+          <Property Name="CreateDate" Type="DateTime" Precision="7" />
+          <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ser_PlantName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Ser_LineName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TbPlant">
+          <Key>
+            <PropertyRef Name="PlantID" />
+          </Key>
+          <Property Name="PlantID" Type="Int32" Nullable="false" />
+          <Property Name="PlantName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TbIncentiveMaster">
+          <Key>
+            <PropertyRef Name="IncentiveID" />
+          </Key>
+          <Property Name="IncentiveID" Type="Int32" Nullable="false" />
+          <Property Name="IncentiveName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PlantID" Type="Int32" />
+          <Property Name="LineID" Type="Int32" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="SectionID" Type="Int32" />
+          <Property Name="Min" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="Max" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="Rate" Type="Decimal" Precision="6" Scale="4" />
+          <Property Name="Grade" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="MonthYear" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="7" />
+          <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="7" />
+          <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TbUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserPassword" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="UserPermission" Type="Int32" />
+          <Property Name="UserEmpID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="UserEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordLastUpdate" Type="DateTime" Precision="0" />
+          <Property Name="Lineconcern" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TbDefect">
+          <Key>
+            <PropertyRef Name="DefectId" />
+          </Key>
+          <Property Name="DefectId" Type="Int32" Nullable="false" />
+          <Property Name="DefectName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DefectPlant" Type="Int32" />
+          <Property Name="DefectLine" Type="Int32" />
+          <Property Name="DefectSection" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="View_Incentive">
+          <Key>
+            <PropertyRef Name="IncentiveID" />
+          </Key>
+          <Property Name="IncentiveID" Type="Int32" Nullable="false" />
+          <Property Name="IncentiveName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PlantName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LineName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ProductName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="Min" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="Max" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="Rate" Type="Decimal" Precision="6" Scale="4" />
+          <Property Name="Grade" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TbReason">
+          <Key>
+            <PropertyRef Name="ReasonID" />
+          </Key>
+          <Property Name="ReasonID" Type="Int32" Nullable="false" />
+          <Property Name="ReasonName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PlantID" Type="Int32" />
+          <Property Name="LineID" Type="Int32" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="SectionID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="View_Reason">
+          <Key>
+            <PropertyRef Name="ReasonID" />
+          </Key>
+          <Property Name="ReasonID" Type="Int32" Nullable="false" />
+          <Property Name="ReasonName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PlantName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LineName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ProductName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PlantID" Type="Int32" />
+          <Property Name="LineID" Type="Int32" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="SectionID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TbLine">
+          <Key>
+            <PropertyRef Name="LineID" />
+          </Key>
+          <Property Name="LineID" Type="Int32" Nullable="false" />
+          <Property Name="LineName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TbEmployeeMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PlantID" Type="Int32" />
+          <Property Name="LineID" Type="Int32" />
+          <Property Name="SectionID" Type="Int32" />
+          <Property Name="ShiftID" Type="Int32" />
+          <Property Name="QRCodePerUnit" Type="Int32" />
+          <Property Name="QRCodePerEmployee" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="7" />
+          <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="7" />
+          <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="View_Employee">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ClockIn" />
+            <PropertyRef Name="ClockOut" />
+            <PropertyRef Name="WorkingStatus" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="7" />
+          <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="7" />
+          <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PlantName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LineName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ShiftName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StartTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="EndTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ClockIn" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ClockOut" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="WorkingStatus" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="QRCodePerUnit" Type="Int32" />
+          <Property Name="QRCodePerEmployee" Type="Int32" />
+        </EntityType>
+        <EntityType Name="View_PermissionMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="PlantID" Type="Int32" />
+          <Property Name="PlantName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LineName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UserPermission" Type="Int32" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PageID" Type="Int32" />
+          <Property Name="PageName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UserEmpID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="UserEmail" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+        </EntityType>
+        <EntityType Name="View_User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserEmail" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="PlantName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LineName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UserEmpID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+        </EntityType>
+        <EntityType Name="View_EmployeeJoin">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PlantID" Type="Int32" />
+          <Property Name="LineID" Type="Int32" />
+          <Property Name="SectionID" Type="Int32" />
+          <Property Name="ShiftID" Type="Int32" />
+          <Property Name="QRCode" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="TransactionDate" Type="DateTime" Precision="7" />
+          <Property Name="Expr1" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Shift" Type="Int32" />
+          <Property Name="Line" Type="Int32" />
+          <Property Name="WorkingStatus" Type="Int32" />
+          <Property Name="ClockIn" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="ClockOut" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TbPLPS">
+          <Key>
+            <PropertyRef Name="PLPSID" />
+          </Key>
+          <Property Name="PLPSID" Type="Int32" Nullable="false" />
+          <Property Name="PlantID" Type="Int32" />
+          <Property Name="LineID" Type="Int32" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="SectionID" Type="Int32" />
+          <Property Name="STD" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="PercentSTD" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="PercentYield" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="Size" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="QTYPerQRCode" Type="Int32" />
+          <Property Name="Unit" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="View_PLPS">
+          <Key>
+            <PropertyRef Name="PLPSID" />
+          </Key>
+          <Property Name="PLPSID" Type="Int32" Nullable="false" />
+          <Property Name="PlantName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ProductName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LineName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="STD" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="PercentSTD" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="PercentYield" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="Size" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="QTYPerQRCode" Type="Int32" />
+          <Property Name="Unit" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TbEmptransaction">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+          </Key>
+          <Property Name="TransactionNo" Type="Int32" Nullable="false" />
+          <Property Name="TransactionDate" Type="DateTime" Precision="7" />
+          <Property Name="EmployeeID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Shift" Type="Int32" />
+          <Property Name="Line" Type="Int32" />
+          <Property Name="Section" Type="Int32" />
+          <Property Name="WorkingStatus" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ClockIn" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="ClockOut" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="View_EmployeeClocktime">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="WorkingStatus" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="7" />
+          <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="7" />
+          <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PlantName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LineName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ShiftName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StartTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="EndTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ClockIn" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="ClockOut" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="WorkingStatus" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="QRCodePerUnit" Type="Int32" />
+          <Property Name="QRCodePerEmployee" Type="Int32" />
+          <Property Name="TransactionNo" Type="Int32" />
+          <Property Name="TransactionDate" Type="DateTime" Precision="7" />
+        </EntityType>
+        <EntityType Name="View_ServicesClocktime">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="WorkingStatus" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="7" />
+          <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="7" />
+          <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PlantName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LineName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ShiftName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StartTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="EndTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ClockIn" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="ClockOut" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="WorkingStatus" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="QRCodePerUnit" Type="Int32" />
+          <Property Name="QRCodePerEmployee" Type="Int32" />
+          <Property Name="TransactionNo" Type="Int32" />
+          <Property Name="TransactionDate" Type="DateTime" Precision="7" />
+        </EntityType>
+        <EntityType Name="TbPage">
+          <Key>
+            <PropertyRef Name="PageID" />
+          </Key>
+          <Property Name="PageID" Type="Int32" Nullable="false" />
+          <Property Name="PageName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PageStatus" Type="Int32" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="TbRole">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoleStatus" Type="Int32" />
+          <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="TbPermission">
+          <Key>
+            <PropertyRef Name="PermissionID" />
+          </Key>
+          <Property Name="PermissionID" Type="Int32" Nullable="false" />
+          <Property Name="RoleID" Type="Int32" />
+          <Property Name="PageID" Type="Int32" />
+          <Property Name="RoleAction" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="View_PagePermission">
+          <Key>
+            <PropertyRef Name="PermissionID" />
+          </Key>
+          <Property Name="PermissionID" Type="Int32" Nullable="false" />
+          <Property Name="PageName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoleAction" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PhlimsDatabaseModelStoreContainer" CdmEntityContainer="PhlimsDatabaseEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TbProducts">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.TbProduct">
+              <MappingFragment StoreEntitySet="TbProduct">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TbSections">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.TbSection">
+              <MappingFragment StoreEntitySet="TbSection">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Delaytime" ColumnName="Delaytime" />
+                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+                <ScalarProperty Name="SectionID" ColumnName="SectionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TbShifts">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.TbShift">
+              <MappingFragment StoreEntitySet="TbShift">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
+                <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TbServices">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.TbService">
+              <MappingFragment StoreEntitySet="TbServices">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ServicesStatus" ColumnName="ServicesStatus" />
+                <ScalarProperty Name="ServicesRate" ColumnName="ServicesRate" />
+                <ScalarProperty Name="MonthYear" ColumnName="MonthYear" />
+                <ScalarProperty Name="Ser_LineID" ColumnName="Ser_LineID" />
+                <ScalarProperty Name="Ser_PlantID" ColumnName="Ser_PlantID" />
+                <ScalarProperty Name="ServicesName" ColumnName="ServicesName" />
+                <ScalarProperty Name="ServicesID" ColumnName="ServicesID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Services">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.View_Services">
+              <MappingFragment StoreEntitySet="View_Services">
+                <ScalarProperty Name="Ser_LineName" ColumnName="Ser_LineName" />
+                <ScalarProperty Name="Ser_PlantName" ColumnName="Ser_PlantName" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="MonthYear" ColumnName="MonthYear" />
+                <ScalarProperty Name="ServicesStatus" ColumnName="ServicesStatus" />
+                <ScalarProperty Name="ServicesRate" ColumnName="ServicesRate" />
+                <ScalarProperty Name="ServicesName" ColumnName="ServicesName" />
+                <ScalarProperty Name="ServicesID" ColumnName="ServicesID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TbPlants">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.TbPlant">
+              <MappingFragment StoreEntitySet="TbPlant">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PlantName" ColumnName="PlantName" />
+                <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TbIncentiveMasters">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.TbIncentiveMaster">
+              <MappingFragment StoreEntitySet="TbIncentiveMaster">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="MonthYear" ColumnName="MonthYear" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="Max" ColumnName="Max" />
+                <ScalarProperty Name="Min" ColumnName="Min" />
+                <ScalarProperty Name="SectionID" ColumnName="SectionID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="LineID" ColumnName="LineID" />
+                <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+                <ScalarProperty Name="IncentiveName" ColumnName="IncentiveName" />
+                <ScalarProperty Name="IncentiveID" ColumnName="IncentiveID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TbUsers">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.TbUser">
+              <MappingFragment StoreEntitySet="TbUser">
+                <ScalarProperty Name="Lineconcern" ColumnName="Lineconcern" />
+                <ScalarProperty Name="PasswordLastUpdate" ColumnName="PasswordLastUpdate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UserEmpID" ColumnName="UserEmpID" />
+                <ScalarProperty Name="UserPermission" ColumnName="UserPermission" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="UserLastName" ColumnName="UserLastName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TbDefects">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.TbDefect">
+              <MappingFragment StoreEntitySet="TbDefect">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="DefectSection" ColumnName="DefectSection" />
+                <ScalarProperty Name="DefectLine" ColumnName="DefectLine" />
+                <ScalarProperty Name="DefectPlant" ColumnName="DefectPlant" />
+                <ScalarProperty Name="DefectName" ColumnName="DefectName" />
+                <ScalarProperty Name="DefectId" ColumnName="DefectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Incentive">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.View_Incentive">
+              <MappingFragment StoreEntitySet="View_Incentive">
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="Max" ColumnName="Max" />
+                <ScalarProperty Name="Min" ColumnName="Min" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="LineName" ColumnName="LineName" />
+                <ScalarProperty Name="PlantName" ColumnName="PlantName" />
+                <ScalarProperty Name="IncentiveName" ColumnName="IncentiveName" />
+                <ScalarProperty Name="IncentiveID" ColumnName="IncentiveID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TbReasons">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.TbReason">
+              <MappingFragment StoreEntitySet="TbReason">
+                <ScalarProperty Name="SectionID" ColumnName="SectionID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="LineID" ColumnName="LineID" />
+                <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ReasonName" ColumnName="ReasonName" />
+                <ScalarProperty Name="ReasonID" ColumnName="ReasonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Reason">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.View_Reason">
+              <MappingFragment StoreEntitySet="View_Reason">
+                <ScalarProperty Name="SectionID" ColumnName="SectionID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="LineID" ColumnName="LineID" />
+                <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="LineName" ColumnName="LineName" />
+                <ScalarProperty Name="PlantName" ColumnName="PlantName" />
+                <ScalarProperty Name="ReasonName" ColumnName="ReasonName" />
+                <ScalarProperty Name="ReasonID" ColumnName="ReasonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TbLines">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.TbLine">
+              <MappingFragment StoreEntitySet="TbLine">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="LineName" ColumnName="LineName" />
+                <ScalarProperty Name="LineID" ColumnName="LineID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TbEmployeeMasters">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.TbEmployeeMaster">
+              <MappingFragment StoreEntitySet="TbEmployeeMaster">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="QRCodePerEmployee" ColumnName="QRCodePerEmployee" />
+                <ScalarProperty Name="QRCodePerUnit" ColumnName="QRCodePerUnit" />
+                <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+                <ScalarProperty Name="SectionID" ColumnName="SectionID" />
+                <ScalarProperty Name="LineID" ColumnName="LineID" />
+                <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Employee">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.View_Employee">
+              <MappingFragment StoreEntitySet="View_Employee">
+                <ScalarProperty Name="QRCodePerEmployee" ColumnName="QRCodePerEmployee" />
+                <ScalarProperty Name="QRCodePerUnit" ColumnName="QRCodePerUnit" />
+                <ScalarProperty Name="WorkingStatus" ColumnName="WorkingStatus" />
+                <ScalarProperty Name="ClockOut" ColumnName="ClockOut" />
+                <ScalarProperty Name="ClockIn" ColumnName="ClockIn" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
+                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+                <ScalarProperty Name="LineName" ColumnName="LineName" />
+                <ScalarProperty Name="PlantName" ColumnName="PlantName" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_PermissionMaster">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.View_PermissionMaster">
+              <MappingFragment StoreEntitySet="View_PermissionMaster">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="UserEmpID" ColumnName="UserEmpID" />
+                <ScalarProperty Name="PageName" ColumnName="PageName" />
+                <ScalarProperty Name="PageID" ColumnName="PageID" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="UserPermission" ColumnName="UserPermission" />
+                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+                <ScalarProperty Name="LineName" ColumnName="LineName" />
+                <ScalarProperty Name="PlantName" ColumnName="PlantName" />
+                <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="UserLastName" ColumnName="UserLastName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_User">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.View_User">
+              <MappingFragment StoreEntitySet="View_User">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="UserEmpID" ColumnName="UserEmpID" />
+                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+                <ScalarProperty Name="LineName" ColumnName="LineName" />
+                <ScalarProperty Name="PlantName" ColumnName="PlantName" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="UserLastName" ColumnName="UserLastName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_EmployeeJoin">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.View_EmployeeJoin">
+              <MappingFragment StoreEntitySet="View_EmployeeJoin">
+                <ScalarProperty Name="ClockOut" ColumnName="ClockOut" />
+                <ScalarProperty Name="ClockIn" ColumnName="ClockIn" />
+                <ScalarProperty Name="WorkingStatus" ColumnName="WorkingStatus" />
+                <ScalarProperty Name="Line" ColumnName="Line" />
+                <ScalarProperty Name="Shift" ColumnName="Shift" />
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="QRCode" ColumnName="QRCode" />
+                <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+                <ScalarProperty Name="SectionID" ColumnName="SectionID" />
+                <ScalarProperty Name="LineID" ColumnName="LineID" />
+                <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TbPLPS">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.TbPLPS">
+              <MappingFragment StoreEntitySet="TbPLPS">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="QTYPerQRCode" ColumnName="QTYPerQRCode" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="PercentYield" ColumnName="PercentYield" />
+                <ScalarProperty Name="PercentSTD" ColumnName="PercentSTD" />
+                <ScalarProperty Name="STD" ColumnName="STD" />
+                <ScalarProperty Name="SectionID" ColumnName="SectionID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="LineID" ColumnName="LineID" />
+                <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+                <ScalarProperty Name="PLPSID" ColumnName="PLPSID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_PLPS">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.View_PLPS">
+              <MappingFragment StoreEntitySet="View_PLPS">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="QTYPerQRCode" ColumnName="QTYPerQRCode" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="PercentYield" ColumnName="PercentYield" />
+                <ScalarProperty Name="PercentSTD" ColumnName="PercentSTD" />
+                <ScalarProperty Name="STD" ColumnName="STD" />
+                <ScalarProperty Name="LineName" ColumnName="LineName" />
+                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="PlantName" ColumnName="PlantName" />
+                <ScalarProperty Name="PLPSID" ColumnName="PLPSID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TbEmptransactions">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.TbEmptransaction">
+              <MappingFragment StoreEntitySet="TbEmptransaction">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ClockOut" ColumnName="ClockOut" />
+                <ScalarProperty Name="ClockIn" ColumnName="ClockIn" />
+                <ScalarProperty Name="WorkingStatus" ColumnName="WorkingStatus" />
+                <ScalarProperty Name="Section" ColumnName="Section" />
+                <ScalarProperty Name="Line" ColumnName="Line" />
+                <ScalarProperty Name="Shift" ColumnName="Shift" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_EmployeeClocktime">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.View_EmployeeClocktime">
+              <MappingFragment StoreEntitySet="View_EmployeeClocktime">
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
+                <ScalarProperty Name="QRCodePerEmployee" ColumnName="QRCodePerEmployee" />
+                <ScalarProperty Name="QRCodePerUnit" ColumnName="QRCodePerUnit" />
+                <ScalarProperty Name="WorkingStatus" ColumnName="WorkingStatus" />
+                <ScalarProperty Name="ClockOut" ColumnName="ClockOut" />
+                <ScalarProperty Name="ClockIn" ColumnName="ClockIn" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
+                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+                <ScalarProperty Name="LineName" ColumnName="LineName" />
+                <ScalarProperty Name="PlantName" ColumnName="PlantName" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_ServicesClocktime">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.View_ServicesClocktime">
+              <MappingFragment StoreEntitySet="View_ServicesClocktime">
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
+                <ScalarProperty Name="QRCodePerEmployee" ColumnName="QRCodePerEmployee" />
+                <ScalarProperty Name="QRCodePerUnit" ColumnName="QRCodePerUnit" />
+                <ScalarProperty Name="WorkingStatus" ColumnName="WorkingStatus" />
+                <ScalarProperty Name="ClockOut" ColumnName="ClockOut" />
+                <ScalarProperty Name="ClockIn" ColumnName="ClockIn" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
+                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+                <ScalarProperty Name="LineName" ColumnName="LineName" />
+                <ScalarProperty Name="PlantName" ColumnName="PlantName" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TbPages">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.TbPage">
+              <MappingFragment StoreEntitySet="TbPage">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="PageStatus" ColumnName="PageStatus" />
+                <ScalarProperty Name="PageName" ColumnName="PageName" />
+                <ScalarProperty Name="PageID" ColumnName="PageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TbRoles">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.TbRole">
+              <MappingFragment StoreEntitySet="TbRole">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="RoleStatus" ColumnName="RoleStatus" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TbPermissions">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.TbPermission">
+              <MappingFragment StoreEntitySet="TbPermission">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="RoleAction" ColumnName="RoleAction" />
+                <ScalarProperty Name="PageID" ColumnName="PageID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_PagePermission">
+            <EntityTypeMapping TypeName="PhlimsDatabaseModel.View_PagePermission">
+              <MappingFragment StoreEntitySet="View_PagePermission">
+                <ScalarProperty Name="RoleAction" ColumnName="RoleAction" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="PageName" ColumnName="PageName" />
+                <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

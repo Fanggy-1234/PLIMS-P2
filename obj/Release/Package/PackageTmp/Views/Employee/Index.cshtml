@@ -1,0 +1,9 @@
+﻿@using PLIMS.Models
+@{
+    ViewBag.Title = "Index";
+    TbUser user = Utilities.GetCurrentUser();
+}
+
+<h2>Indexs</h2>
+
+@user.UserName @user.UserLastName

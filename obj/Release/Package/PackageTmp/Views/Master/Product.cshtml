@@ -1,0 +1,471 @@
+﻿@model List<PLIMS.Models.TbProduct>
+
+@{
+    ViewBag.Title = "Product";
+}
+
+
+
+
+@*Include Area*@
+<script src="~/Scripts/jquery-3.7.1.js"></script>
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.css">
+
+<!-- jQuery -->
+<script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+
+<!-- DataTables -->
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.js">
+</script>
+
+<link href="~/Content/main.css" rel="stylesheet" />
+<style type="text/css">
+
+
+    .form-control {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inProduct-block;
+        border: 1px solid #808080;
+        border-radius: 2px;
+        box-sizing: border-box;
+    }
+
+    .create-button, .clear-button, .import-button {
+        background-color: #A4ADB3;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+        color: white;
+        width: 100%;
+        height: 100%;
+    }
+
+    .search-button {
+        border: 0.4px solid black;
+        background-color: white;
+        border-radius: 2px;
+        cursor: pointer;
+        color: black;
+        width: 100%;
+        height: 100%;
+    }
+    .page-table-head, .page-table-data {
+        border: solid 1px grey;
+        text-align: center;
+    }
+</style>
+
+
+<script type="text/javascript" charset="utf8">
+
+
+
+
+    //trick data
+    function eventFired(type) {
+        let n = document.querySelector('#Product_info');
+        //n.innerHTML +=
+        //    '<div>' + type + ' event - ' + new Date().getTime() + '</div>';
+        //n.scrollTop = n.scrollHeight;
+    }
+
+    $(document).ready(function () {
+        $("#table_Product #checkall").click(function () {
+            if ($("#table_Product #checkall").is(':checked')) {
+                $("#table_Product input[type=checkbox]").each(function () {
+                    $(this).prop("checked", true);
+                });
+
+            } else {
+                $("#table_Product input[type=checkbox]").each(function () {
+                    $(this).prop("checked", false);
+                });
+            }
+        });
+
+        $("[data-toggle=tooltip]").tooltip();
+    });
+
+    new DataTable('#table_Product')
+        .on('search.dt', () => eventFired('Search'))
+        .on('page.dt', () => eventFired('Page'));
+    //.on('order.dt', () => eventFired('Order'))
+
+
+
+
+
+    //Edit to modal
+    function EditFn(id) {
+        $.ajax({
+            url: '/Master/ProductEdit/' + id,
+            type: 'GET',
+            contentType: 'application/json;charset=UTF-8',
+            dataType: 'json',
+            success: function (response) {
+                if (response == null || response == undefined) {
+
+                    alert("This data can't read1!")
+                }
+                else if (response.length == 0) {
+
+                    alert("This data can't id!" + id)
+                }
+                else {
+                    alert("id =" + response.ProductID + " , ProductName = " + response.ProductName + ",Status = " + response.Status)
+                    $('#ModalProductID').val(response.ProductID);
+                    $('#ModalProductName').val(response.ProductName);
+                    $('#ModalStatus').prop('checked', response.Status == 1)
+                    $('#EditModal').modal('show');
+
+
+                }
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+
+        });
+    }
+
+
+
+
+    //Function Inactive
+    function InactiveFn(id) {
+        $.ajax({
+            url: '/Master/ProductInactive/' + id,
+            type: 'GET',
+            contentType: 'application/json;charset=UTF-8',
+            dataType: 'json',
+            success: function (response) {
+                alert("Inactive Finish");
+            },
+            error: function (response) {
+                alert("Inactive something went wrong.");
+            }
+
+        });
+    }
+
+
+</script>
+
+
+<div class="row"style="height:10px"></div>
+<h2 class="page-name">Product Management</h2>
+
+@* Textbox for search *@
+@*@using (Html.BeginForm("Product", "Master", FormMethod.Post))
+    {*@
+<form method="GET" asp-controller="Master" action="Product">
+
+    <div style="background-color: #fcfcfc; border-radius: 2px; padding: 10px;">
+        <div class="row">
+
+            <div class="col-6">
+                Product ID:
+                <input class="form-control" list="BrowsersID" name="ProductID" id="ProductID">
+                <datalist id="BrowsersID">
+                    @foreach (var item in Model)
+                    {
+
+                        <option>@Html.DisplayFor(modelItem => item.ProductID) </option>
+                    }
+                </datalist>
+            </div>
+
+            <div class="col-6">
+                Product Name :
+                <input class="form-control" list="BrowsersName" name="ProductName" id="ProductName">
+                <datalist id="BrowsersName">
+                    @foreach (var item in Model)
+                    {
+                        <option>@Html.DisplayFor(modelItem => item.ProductName)</option>
+                    }
+                </datalist>
+            </div>
+
+        </div>
+
+        <br />
+
+
+    </div>
+
+    <div class="row" style="height:40px">
+        <div class="col" style="width:15% ">
+            <button id="Clear" type="submit" action="" ProductClear" class="clear-button">
+                Clear
+            </button>
+        </div>
+        <div class="col-3" style="width:55% ">
+
+        </div>
+        <div class="col" style="width:15% ">
+            <button id="Search" type="submit" action="Product" class="search-button">
+                Search
+            </button>
+        </div>
+        <div class="col" style="width:15% ">
+            @*<button id="Create" type="button" class="btnme" data-bs-toggle="modal" data-target="" style="width: 100%; background-color: firebrick; justify-content: flex-end " onclick="modalcreate();">
+                    Create
+                </button>*@
+            <button type="button" class="create-button" data-bs-toggle="modal" data-bs-target="#CreateModal" style=" justify-content: flex-end ">Create</button>
+
+        </div>
+    </div>
+</form>
+
+
+<br />
+
+@*}*@
+
+
+@*<div id="Product_info" class="box"></div>*@
+
+@*Diaplay data*@
+<table id="table_id" class="page-table">
+    <thead>
+        <tr>
+
+            <th class="page-table-head">
+                Product ID
+            </th>
+            <th class="page-table-head">
+                Product Name
+            </th>
+            <th class="page-table-head">
+                Status
+            </th>
+            <th class="page-table-head" colspan="2">
+                Action
+ 
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @Html.HiddenFor(modelItem => item.ProductID)
+
+                <td id="ProductId"  class="page-table-data" style="border:solid 1px grey">
+                    @Html.DisplayFor(modelItem => item.ProductID)
+                </td>
+                <td id="ProductName" class="page-table-data" style="border:solid 1px grey">
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+
+                <td class="page-table-data" style="border:solid 1px grey">
+
+                    @if (item.Status == 1)
+                    {
+                        <span id="open">Active</span>
+
+                    }
+                    @if (item.Status == 0)
+                    {
+                        <span id="closed">Inactive</span>
+
+                    }
+
+                </td>
+
+                <td class="page-table-data" style="border:solid 1px grey">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#EditModal" id="Edit" onclick="EditFn(@item.ProductID)">Edit</a>
+
+
+                </td>
+                <td class="page-table-data" style="border:solid 1px grey">
+                    <a href="#" id="Inactive" onclick="InactiveFn(@item.ProductID)">Inactive</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<div style=" background-color: #fcfcfc; border-radius: 2px; padding: 10px;">
+    <h6> Import/Export Product  </h6>
+</div>
+<div data-ride="carousel" data-interval="6000" style="background-color: #fcfcfc; border-radius: 2px; padding: 10px;">
+
+    @using (Html.BeginForm("ProducrUpload", "Master", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return myFunction()" }))
+    {
+        <div class="row">
+            <div class="col-2" style="width:10% ">
+                Export File :
+            </div>
+            <div class="col-2" style="width:15% ">
+                <a type="button" id="btnExport" class="export-button" href="@Url.Action("ProductDownloadExcel", "Master")">Export Master</a>
+            </div>
+        </div>
+
+        <div class="row" style="height:10px">
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-2" style="width:10% ">
+                Import File :
+            </div>
+            <div class="col" style="width:15% ">
+                <input type="file" id="FileUpload" name="FileUpload" class="" />
+                @*<input type="file" name="file" id="file" onclick="myFunction()" />*@
+            </div>
+        </div>
+
+        <div class="row" style="height:10px">
+        </div>
+        <div class="row" style="height:20px">
+            <div class="col-2" style="width:10% ">
+                <span class="text-danger">@ViewBag.Message</span>
+            </div>
+            <div class="col-2" style="width: 15%">
+                <button type="submit" value="Upload" id="btnSubmit" name="submit" class="import-button"> Import Master</button>
+            </div>
+        </div>
+
+
+    }
+</div>
+
+<div class="row" style="height:10px">
+
+</div>
+
+@*Modal Create*@
+<div class="modal fade" id="CreateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" controller="Master" action="ProductCreate">
+                <div class="modal-header" style="background-color:blue">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Product Create</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Product ID:</label>
+                        @{
+                            int value = @Model.Count + 1;
+
+                            <input type="text" class="form-control" name="Productid" id="ModalProductid" style="background-color:gainsboro" readonly value="@value">
+                        }
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Product Name:</label>
+                        <input type="text" class="form-control" name="Productname" id="ModelProductname">
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" Name="Status" id="ModalStatus" checked>
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Status</label>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="Submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+@*Modal Edit*@
+<div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" controller="Master" action="CreateProduct">
+                <div class="modal-header" style="background-color:blue">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Product Create</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Product ID:</label>
+                        @{
+
+                            <input type="text" class="form-control" id="ModalProductID" Name="ProductID" readonly style="background-color:gainsboro" value="">
+                        }
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Product Name:</label>
+                        <input type="text" class="form-control" id="ModalProductName" name="ProductName">
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" name="Status" id="ModalStatus" checked>
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Status</label>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="Submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@*Modal Inactive*@
+<div class="modal fade" id="InactiveModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" controller="Master" action="CreateProduct">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Product Inactive</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Product ID:</label>
+                        @{
+
+                            <input type="text" class="form-control" id="ModalProductID" Name="ProductID" disabled value="">
+                        }
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Product Name:</label>
+                        <input type="text" class="form-control" id="ModalProductname" Name="ProductName" disabled>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="ModalStatus" name="Status" checked>
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Status</label>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="Submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+

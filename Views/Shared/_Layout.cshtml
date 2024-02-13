@@ -1,0 +1,395 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
+    <style>
+        .nav-images {
+            width: 14px;
+            height: 14px;
+            margin-right: 10px;
+            display: inline-block;
+        }
+        .nav-text{
+            font-size:10px;
+            color:white;
+            font-style:normal;
+        }
+        a , button {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    @*<div id="sidebar">
+            <div id="company-name">
+                <img class="company-logo"  src="~/Picture/logo.jpg" alt="Thai union logo">
+            </div>
+            <ul class="has-arrow nav-categories">
+                <li class="nav-category">
+                    <div class="nav-image-and-text-container">
+                        <img class="nav-images" src="~/Picture/flaticon-user-management-white.png" alt="User management photo">
+                        <a href="@Url.Action("UserInformation", "Employee")" class="nav-text">User Infotmation</a>
+                    </div>
+                </li>
+                <li class="nav-category">
+                    <div class="nav-image-and-text-container">
+                        <img class="nav-images" src="~/Picture/flaticon-user-management-white.png" alt="User management photo">
+                        <a href="@Url.Action("UserManagement", "Home")" class="nav-text">User Management</a>
+                    </div>
+                </li>
+
+                <li class="nav-category">
+                    <div class="nav-image-and-text-container">
+                        <img src="~/Picture/flaticon-user-white.png" class="nav-images" alt="Role management photo">
+                        <a href="@Url.Action("RoleManagement", "Home")" class="nav-text">Role Management</a>
+                    </div>
+                </li>
+
+
+                <li class="nav-category">
+                    <div class="nav-image-and-text-container">
+                        <img src="~/Picture/flaticon-employee-management-white.png" class="nav-images" alt="Employee management photo">
+                        <a href="@Url.Action("EmployeeManagement", "Employee")" class="nav-text">Employee Management</a>
+                    </div>
+                </li>
+
+
+                <li class="nav-category">
+                    <div class="nav-image-and-text-container">
+                        <img src="~/Picture/flaticon-master-white.png" class="nav-images" alt="Master management photo">
+                        <a class="nav-text" href="#">Master Management</a>
+                        <div class="has-dropdown"></div>
+                    </div>
+                    <ul class="submenu">
+                        <li class="submenu-category">
+                            <a href="@Url.Action("Plant", "Master")" class="submenu-text">Plant Management</a>
+                        </li>
+                        <li class="submenu-category">
+                            <a href="@Url.Action("Line", "Master")" class="submenu-text">Line Management</a>
+
+                        </li>
+                        <li class="submenu-category">
+                            <a href="@Url.Action("Product", "Master")" class="submenu-text">Product/Material Management</a>
+                        </li>
+                        <li class="submenu-category">
+                            <a href="@Url.Action("Section", "Master")" class="submenu-text">Section Management</a>
+                        </li>
+                        <li class="submenu-category">
+                            <a href="@Url.Action("Shift", "Master")" class="submenu-text">Shift Management</a>
+
+                        </li>
+                        <li class="submenu-category">
+                            <a href="@Url.Action("Incentive", "Master")" class="submenu-text">Incentive Management</a>
+                        </li>
+                        <li class="submenu-category">
+                            <a href="@Url.Action("Service", "Master")" class="submenu-text">Service Management</a>
+                        </li>
+                    </ul>
+                </li>
+
+
+                <li class="nav-category">
+                    <div class="nav-image-and-text-container">
+                        <img src="~/Picture/flaticon-employee-clock-in-white.png"class="nav-images" alt="Employee clock in photo">
+                        <a class="nav-text" href="#">Employee Management</a>
+                        <div class="has-dropdown"></div>
+                    </div>
+                    <ul class="submenu">
+                        <li class="submenu-category">
+                            <a href="@Url.Action("EmployeeClockin", "Employee")" class="submenu-text">Employee Clock in</a>
+
+                        </li>
+                        <li class="submenu-category">
+                            <a href="@Url.Action("EmployeeClockout", "Employee")" class="submenu-text">Employee Clock out</a>
+                        </li>
+                        <li class="submenu-category">
+                            <a href="@Url.Action("ServiceClockin", "Employee")" class="submenu-text">Service Clock in</a>
+                            <a class="submenu-text" href="#">Service Clock in</a>
+                        </li>
+                        <li class="submenu-category">
+                            <a href="@Url.Action("ServiceClocout", "Employee")" class="submenu-text">Service Clock out</a>
+                        </li>
+                        <li class="submenu-category">
+                            <a href="@Url.Action("EmployeeAdjust", "Employee")" class="submenu-text">Employee Adjust Line</a>
+                        </li>
+                        <li class="submenu-category">
+                            <a href="@Url.Action("EmployeeleaveHoliday", "Employee")" class="submenu-text">Employee Leave/Holiday</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-category">
+                    <div class="nav-image-and-text-container">
+                        <img src="~/Picture/flaticon-pd-incentive-scan-white.png" class="nav-images" alt="PD incentive scan photo">
+                        <a class="nav-text" href="@Url.Action("ProductionScan", "Working")">PD Incentive Scan</a>
+                    </div>
+                </li>
+
+                <li class="nav-category">
+                    <div class="nav-image-and-text-container">
+                        <img src="~/Picture/flaticon-report-white.png" class="nav-images"  alt="Reports photo">
+                        <a class="nav-text" href="#">Reports</a>
+                        <div class="has-dropdown"></div>
+                    </div>
+                    <ul class="submenu">
+                        <li class="submenu-category-dropdown">
+                            <div class="submenu-text-and-arrow">
+                                <a class="submenu-dropdown-text">Sushi incentive</a>
+                                <div class="has-blue-dropdown"></div>
+                            </div>
+                            <ul class="sub-submenu">
+                                <li class="sub-submenu-category">
+                                    <a class="nav-text" href="@Url.Action("DailyReport", "Report")">Daily Report</a>
+                                </li>
+                                <li class="sub-submenu-category">
+                                    <a class="nav-text" href="@Url.Action("FinancialReport", "Report")">Financial Report</a>
+                                </li>
+                                <li class="sub-submenu-category">
+                                    <a class="nav-text" href="@Url.Action("EfficiencyReport", "Report")">Efficiency Report</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="submenu-category-dropdown">
+                            <div class="submenu-text-and-arrow">
+                                <a class="submenu-dropdown-text">Breaded incentive</a>
+                                <div class="has-blue-dropdown"></div>
+                            </div>
+                            <ul class="sub-submenu">
+                                <li class="sub-submenu-category">
+                                    <a class="nav-text" href="@Url.Action("DailyReport", "Report")">Daily Report</a>
+                                </li>
+                                <li class="sub-submenu-category">
+                                    <a class="nav-text" href="@Url.Action("FinancialReport", "Report")">Financial Report</a>
+                                </li>
+                                <li class="sub-submenu-category">
+                                    <a class="nav-text" href="@Url.Action("EfficiencyReport", "Report")">Efficiency Report</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="submenu-category-dropdown">
+                            <div class="submenu-text-and-arrow">
+                                <a class="submenu-dropdown-text">Pre-fried incentive</a>
+                                <div class="has-blue-dropdown"></div>
+                            </div>
+                            <ul class="sub-submenu">
+                                <li class="sub-submenu-category">
+                                    <a class="nav-text" href="@Url.Action("DailyReport", "Report")">Daily Report</a>
+                                </li>
+                                <li class="sub-submenu-category">
+                                    <a class="nav-text" href="@Url.Action("FinancialReport", "Report")">Financial Report</a>
+                                </li>
+                                <li class="sub-submenu-category">
+                                    <a class="nav-text" href="@Url.Action("EfficiencyReport", "Report")">Efficiency Report</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-category">
+                    <div class="nav-image-and-text-container">
+                        <img class="nav-images" src="~/Picture/flaticon-dashboard-white.png" alt="Dashboard photo">
+                        <a class="nav-text" href="#">Dashboard</a>
+                        <div class="has-dropdown"></div>
+                    </div>
+                    <ul class="submenu">
+                        <li class="submenu-category">
+                            <a class="submenu-text" href="#">Overview Production</a>
+                        </li>
+                        <li class="submenu-category">
+                            <a class="submenu-text" href="#">Employee Top Grade</a>
+                        </li>
+                        <li class="submenu-category">
+                            <a class="submenu-text" href="#">Production Yield</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-category">
+                    <div class="nav-image-and-text-container">
+                        <img class="nav-images" src="~/Picture/flaticon-set-up-refresh-white.png" alt="System Managementh photo">
+                        <a class="nav-text" href="#">System Management</a>
+                    </div>
+                    <ul class="submenu">
+                        <li class="submenu-category">
+                            <a class="submenu-text" href="#">Roll Back Data</a>
+                        </li>
+                        <li class="submenu-category">
+                            <a class="submenu-text" href="#">Manual Import Data</a>
+                        </li>
+                        <li class="submenu-category">
+                            <a class="submenu-text" href="#">Set Up Refresh time</a>
+                        </li>
+                        <li class="submenu-category">
+                            <a class="submenu-text" href="#">Incentive Maintenace</a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>*@
+
+
+
+    <div class="w3-sidebar w3-bar-block w3-card w3-animate-left" style="display: none; background-color: #0F40F5" id="mySidebar">
+
+        <div class="logos">
+            <img style="width:100%  ; height:100% ; background-color: #0F40F5" src="~/Picture/logo.jpg" onclick="w3_close()">
+        </div>
+
+        @*<button class="w3-bar-item w3-button w3-large" style="background-color: #0F40F5"
+                onclick="w3_close()">
+            Close &times;
+        </button>*@
+        <div>
+
+            <a href="@Url.Action("UserInformation", "Employee")" class="w3-bar-item w3-button w3-hover-blue" style="color:white">
+                <img class="nav-images" src="~/Picture/flaticon-user-management-white.png" alt="User management photo"> User Information
+            </a>
+        </div>
+
+        <a href="@Url.Action("UserManagement", "Home")" class="w3-bar-item w3-button w3-hover-blue" style="color:white">
+            <img class="nav-images" src="~/Picture/flaticon-user-management-white.png" alt="User management photo"> User Management
+        </a>
+        <a href="@Url.Action("RoleManagement", "Home")" class="w3-bar-item w3-button w3-hover-blue" style="color:white">
+            <img src="~/Picture/flaticon-user-white.png" class="nav-images" alt="Role management photo"> Role Management
+        </a>
+        <a href="@Url.Action("EmployeeManagement", "Employee")" class="w3-bar-item w3-button w3-hover-blue" style="color:white">
+            <img src="~/Picture/flaticon-employee-management-white.png" class="nav-images" alt="Employee management photo"> Employee Management
+        </a>
+        <div class="w3-dropdown-hover w3-hover-black">
+            <button class="w3-button" style="color:white">
+                <img src="~/Picture/flaticon-master-white.png" class="nav-images" alt="Master management photo"> Master Management
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="w3-dropdown-content w3-bar-block w3-white">
+                <a href="@Url.Action("Plant", "Master")" class="w3-bar-item w3-button w3-hover-blue">Plant Management </a>
+                <a href="@Url.Action("Line", "Master")" class="w3-bar-item w3-button w3-hover-blue">Line Manangement </a>
+                <a href="@Url.Action("Product", "Master")" class="w3-bar-item w3-button w3-hover-blue">Product Manangement </a>
+                <a href="@Url.Action("Section", "Master")" class="w3-bar-item w3-button w3-hover-blue">Section Management</a>
+                <a href="@Url.Action("Shift", "Master")" class="w3-bar-item w3-button w3-hover-blue">Shift Management</a>
+                <a href="@Url.Action("Incentive", "Master")" class="w3-bar-item w3-button w3-hover-blue">Incentive Management</a>
+                <a href="@Url.Action("Services", "Master")" class="w3-bar-item w3-button w3-hover-blue">Service Management</a>
+                <a href="@Url.Action("Reason", "Master")" class="w3-bar-item w3-button w3-hover-blue">Reason Management</a>
+            </div>
+        </div>
+        <div class="w3-dropdown-hover w3-hover-black">
+            <button class="w3-button" style="color:white">
+                <img src="~/Picture/flaticon-employee-clock-in-white.png" class="nav-images" alt="Employee clock in photo">Employee Function
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="w3-dropdown-content w3-bar-block w3-White">
+                <a href="@Url.Action("EmployeeClockIn", "Employee")" class="w3-bar-item w3-button w3-hover-blue">Employee Clock-In</a>
+                <a href="@Url.Action("EmployeeClockOut", "Employee")" class="w3-bar-item w3-button w3-hover-blue">Employee Clock-Out</a>
+                <a href="@Url.Action("ServicesClockIn", "Employee")" class="w3-bar-item w3-button w3-hover-blue">Service Clock-In</a>
+                <a href="@Url.Action("ServicesClockOut", "Employee")" class="w3-bar-item w3-button w3-hover-blue">Service Clock-Out</a>
+                <a href="@Url.Action("EmployeeAdjustLine", "Employee")" class="w3-bar-item w3-button w3-hover-blue">Employee Adjust Line</a>
+                <a href="@Url.Action("EmployeeLeaveHoliday", "Employee")" class="w3-bar-item w3-button w3-hover-blue">Employee Time Attendence</a>
+            </div>
+        </div>
+        <a href="@Url.Action("WorkingFunction", "Working")" class="w3-bar-item w3-button w3-hover-blue" style="color:white">
+            <img src="~/Picture/flaticon-pd-incentive-scan-white.png" class="nav-images" alt="PD incentive scan photo"> Product Working
+        </a>
+
+        <div class="w3-dropdown-hover w3-hover-White">
+            <button class="w3-button" style="color:white">
+                <img src="~/Picture/flaticon-report-white.png" class="nav-images" alt="Reports photo"> Report
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="w3-dropdown-content w3-bar-block w3-hover-white">
+                <a href="@Url.Action("DailyReport", "Report")" class="w3-bar-item w3-button w3-hover-blue">Daily Report</a>
+                <a href="@Url.Action("Financial", "Report")" class="w3-bar-item w3-button w3-hover-blue">Finacial Report</a>
+                <a href="@Url.Action("Efficiency", "Report")" class="w3-bar-item w3-button w3-hover-blue">Efficiency Report</a>
+            </div>
+        </div>
+
+        <div class="w3-dropdown-hover w3-hover-While">
+            <button class="w3-button" style="color:white">
+                <img class="nav-images" src="~/Picture/flaticon-dashboard-white.png" alt="Dashboard photo">Dashboard
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="w3-dropdown-content w3-bar-block w3-white">
+                <a href="@Url.Action("OverviewDashBoard", "Report")" class="w3-bar-item w3-button w3-hover-blue">Overview Production Line</a>
+                <a href="@Url.Action("EmployeeDashBaord", "Report")" class="w3-bar-item w3-button w3-hover-blue">Employee Top Grade</a>
+
+            </div>
+        </div>
+        <div class="w3-dropdown-hover w3-hover-While">
+            <button class="w3-button" style="color:white">
+                <img class="nav-images" src="~/Picture/flaticon-set-up-refresh-white.png" alt="System Managementh photo">System Management
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="w3-dropdown-content w3-bar-block w3-whitw">
+                <a href="@Url.Action("SetUpRefreshtime", "Home")" class="w3-bar-item w3-button w3-hover-blue">Set Up Refresh time </a>
+                <a href="@Url.Action("RollBackDataProduction", "Home")" class="w3-bar-item w3-button w3-hover-blue">Roll Back Data</a>
+                <a href="@Url.Action("ManualImport", "Home")" class="w3-bar-item w3-button w3-hover-blue">Manual Import Data </a>
+            </div>
+        </div>
+    </div>
+
+        <div id="main">
+           
+            <div style=" height: 100px; background-color: #0F40F5">
+                <button id="openNav" class="w3-bar-item w3-button w3-large" style="background-color: #0F40F5" onclick="w3_open()">&#9776;</button>
+                <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last" align="right">
+                    <a href="javascript:void(0)" id="setTH">
+                        <span class="text-white">THAI</span>
+                    </a> |
+                    <a href="javascript:void(0)" id="setEN">
+                        <span class="text-white">ENGLIST</span>
+
+                    </a>
+                </div>
+                <span>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <p align="right"><a href="/Home/Logout" style="color:white">Sign out  </a></p>
+                    }
+                </span>
+
+            </div>
+
+            <div class="w3-container">
+
+                @RenderBody()
+            </div>
+
+        </div>
+
+
+        <script>
+
+            function w3_open() {
+                document.getElementById("main").style.marginLeft = "20%";
+                document.getElementById("mySidebar").style.width = "20%";
+                document.getElementById("mySidebar").style.display = "block";
+                document.getElementById("openNav").style.display = 'none';
+            }
+            function w3_close() {
+                document.getElementById("main").style.marginLeft = "0%";
+                document.getElementById("mySidebar").style.display = "none";
+                document.getElementById("openNav").style.display = "inline-block";
+            }
+
+
+            $("#setEN").click(function (e) {
+                e.stopImmediatePropagation();
+                gbLang = "enlang";
+                $(".thlang").addClass("d-none");
+                $(".enlang").removeClass("d-none");
+            });
+            $("#setTH").click(function (e) {
+                e.stopImmediatePropagation();
+                gbLang = "thlang";
+                $(".thlang").removeClass("d-none");
+                $(".enlang").addClass("d-none");
+            });
+        </script>
+
+        @RenderSection("scripts", false)
+
+</body>
+</html>

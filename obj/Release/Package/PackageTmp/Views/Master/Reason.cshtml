@@ -1,0 +1,525 @@
+﻿@model PLIMS.ViewModel.ViewModelAll
+
+@{
+    ViewBag.Title = "Reason";
+    //TbUser user = Utilities.GetCurrentUser();
+}
+
+
+
+@*Include Area*@
+<script src="~/Scripts/jquery-3.7.1.js"></script>
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- DataTables CSS -->
+<script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
+
+<!-- DataTables -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<!-- jQuery -->
+<script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+<link href="~/Content/main.css" rel="stylesheet" />
+
+
+
+
+<style type="text/css">
+
+
+    .form-control {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #808080;
+        border-radius: 2px;
+        box-sizing: border-box;
+    }
+
+    .create-button, .clear-button {
+        background-color: #A4ADB3;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+        color: white;
+        width: 100%;
+        height: 100%;
+    }
+
+    .search-button {
+        border: 0.4px solid black;
+        background-color: white;
+        border-radius: 2px;
+        cursor: pointer;
+        color: black;
+        width: 100%;
+        height: 100%;
+    }
+
+
+    .page-table-head, .page-table-data {
+        border: solid 1px grey;
+        text-align: center;
+    }
+</style>
+
+
+
+<div class="row" style="height:10px"></div>
+<h2 class="page-name" Reason Management</h2>
+@* Textbox for search *@
+<form method="GET" asp-controller="Master">
+
+    <div style="background-color: #fcfcfc; border-radius: 2px; padding: 10px;">
+        <div class="row">
+
+            <div class="col-6">
+                Plant Name:
+                <input class="form-control" name="PlantName" id="PlantName">
+                <datalist id="PlantName">
+                    @foreach (var item in Model.tbPlants)
+                    {
+
+                        <option>@Html.DisplayFor(modelItem => item.PlantName) </option>
+                    }
+                </datalist>
+            </div>
+
+            <div class="col-6">
+                Line Name :
+                <input class="form-control" name="LineName" id="LineName">
+                <datalist id="LineName">
+                    @foreach (var item in Model.tbLine)
+                    {
+                        <option>@Html.DisplayFor(modelItem => item.LineName)</option>
+                    }
+                </datalist>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-6">
+                Product ID:
+                <input class="form-control" name="ProductName" id="ProductName">
+                <datalist id="ProductName">
+                    @foreach (var item in Model.tbProduct)
+                    {
+
+                        <option>@Html.DisplayFor(modelItem => item.ProductName) </option>
+                    }
+                </datalist>
+            </div>
+
+            <div class="col-6">
+                Section Name :
+                <input class="form-control" name="SectionName" id="SectionName">
+                <datalist id="SectionName">
+                    @foreach (var item in Model.tbSection)
+                    {
+                        <option>@Html.DisplayFor(modelItem => item.SectionName)</option>
+                    }
+                </datalist>
+            </div>
+
+        </div>
+
+
+
+        <br />
+
+
+    </div>
+
+    <div class="row" style="height:35px">
+
+        <div class="col" style="width:15% ">
+            <button id="Clear" type="submit" action="PlantClear" class="clear-button">
+                Clear
+            </button>
+        </div>
+        <div class="col-3" style="width:55% ">
+
+        </div>
+        <div class="col" style="width:15% ">
+            <button id="Search" type="submit" action="Plant" class="search-button">
+                Search
+            </button>
+        </div>
+        <div class="col" style="width:15% ">
+            <button type="button" action="CreatePlant" class="create-button" data-bs-toggle="modal" data-bs-target="#CreateModal">Create</button>
+
+        </div>
+    </div>
+</form>
+
+
+<br />
+
+
+<div id="table_info" class="box"></div>
+
+@*Diaplay data*@
+<table id="table_id" class="page-table">
+    <thead style="background-color: gainsboro;">
+        <tr>
+
+            <th class="page-table-head">
+                Reason ID
+            </th>
+            <th class="page-table-head">
+                Reason Name
+            </th>
+            <th class="page-table-head">
+                Plant Name
+            </th>
+
+            <th class="page-table-head">
+                Line Name
+            </th>
+            <th class="page-table-head">
+                Product Name
+            </th>
+            <th class="page-table-head">
+                Section Name
+            </th>
+            <th class="page-table-head">
+                Status
+            </th>
+            <th class="page-table-head">
+                Action
+            </th>
+            <th class="page-table-head">
+                Action
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.view_Reason)
+        {
+            <tr>
+                @Html.HiddenFor(modelItem => item.ReasonID)
+
+                <td id="ReasonID" class="page-table-data" style="  border: solid 1px grey ">
+                    @Html.DisplayFor(modelItem => item.ReasonID)
+                </td>
+                <td id="ReasonName" class="page-table-data" style="  border: solid 1px grey ">
+                    @Html.DisplayFor(modelItem => item.ReasonName)
+                </td>
+                <td id="ReasonName" class="page-table-data" style="  border: solid 1px grey ">
+                    @Html.DisplayFor(modelItem => item.PlantName)
+                </td>
+                <td id="ReasonName" class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.LineName)
+                </td>
+                <td id="ReasonName" class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td id="ReasonName" class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.SectionName)
+                </td>
+
+                <td id="Status" class="page-table-data">
+
+                    @if (item.Status == 1)
+                    {
+                        <span id="open">Active</span>
+
+                    }
+                    @if (item.Status == 0)
+                    {
+                        <span id="closed">Inactive</span>
+
+                    }
+
+                </td>
+
+                <td class="page-table-data">
+
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#EditModal" id="btnEdit" data-id="@item.ReasonID" onclick="EditFn(@item.ReasonID)">Edit</a>
+
+
+                </td>
+                <td class="page-table-data">
+                    <a href="#" id="Inactive" onclick="InactiveFn(@item.ReasonID)">Inactive</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+<div style="height:20px">
+
+</div>
+
+
+@*Modal Create*@
+<div class="modal fade" id="CreateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" controller="Master" action="ReasonCreate">
+                <div class="modal-header" style="background-color:blue">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Reason Create</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Reason ID:</label>
+                        @{
+                            int value = @Model.tbReason.Count() + 1;
+
+                            <input type="text" class="form-control" style="background-color:gainsboro" name="ReasonID" id="ReasonID" readonly value="@value">
+                        }
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Reason Name:</label>
+                        <input type="text" class="form-control" name="ReasonName" id="ReasonName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Plant Name:</label>
+                        <input type="text" class="form-control" name="PlantName" id="PlantName">
+                        <datalist id="PlantName">
+                            @foreach (var item in Model.tbPlants)
+                            {
+                                <option>@Html.DisplayFor(modelItem => item.PlantName)</option>
+                            }
+                        </datalist>
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Line Name:</label>
+                        <input type="text" class="form-control" name="LineName" id="LineName">
+                        <datalist id="LineName">
+                            @foreach (var item in Model.tbLine)
+                            {
+                                <option>@Html.DisplayFor(modelItem => item.LineName)</option>
+                            }
+                        </datalist>
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Product Name:</label>
+                        <input type="text" class="form-control" name="ProductName" id="ProductName">
+                        <datalist id="ProductName">
+                            @foreach (var item in Model.tbProduct)
+                            {
+                                <option>@Html.DisplayFor(modelItem => item.ProductName)</option>
+                            }
+                        </datalist>
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Section Name:</label>
+                        <input type="text" class="form-control" name="SectionName" id="SectionName">
+                        <datalist id="SectionName">
+                            @foreach (var item in Model.tbSection)
+                            {
+                                <option>@Html.DisplayFor(modelItem => item.SectionName)</option>
+                            }
+                        </datalist>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Status</label>
+                        <input class="form-check-input" name="Status" id="Status">
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="Submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+@*Modal Edit*@
+<div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="post" action="ReasonUpdate" controller="Master">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:blue">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Reason Edit</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Reason ID:</label>
+                        <input type="text" class="form-control" style="background-color:gainsboro" name="ReasonID" id="ModalReasonID" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Reason Name:</label>
+                        <input type="text" class="form-control" name="ReasonName" id="ModalReasonName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Plant Name:</label>
+                        <input type="text" class="form-control" name="PlantName" id="ModalPlantName">
+                        <datalist id="PlantName">
+                            @foreach (var item in Model.tbPlants)
+                            {
+                                <option>@Html.DisplayFor(modelItem => item.PlantID, item.PlantName)</option>
+                            }
+                        </datalist>
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Line Name:</label>
+                        <input type="text" class="form-control" name="LineName" id="ModalLineName">
+                        <datalist id="LineName">
+                            @foreach (var item in Model.tbLine)
+                            {
+                                <option>@Html.DisplayFor(modelItem => item.LineName)</option>
+                            }
+                        </datalist>
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Product Name:</label>
+                        <input type="text" class="form-control" name="ProductID" id="ModalProductName">
+                        <datalist id="ProductName">
+                            @foreach (var item in Model.tbProduct)
+                            {
+                                <option>@Html.DisplayFor(modelItem => item.ProductName)</option>
+                            }
+                        </datalist>
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Section Name:</label>
+                        <input type="text" class="form-control" name="SectionName" id="ModalSectionName">
+                        <datalist id="SectionName">
+                            @foreach (var item in Model.tbSection)
+                            {
+                                <option>@Html.DisplayFor(modelItem => item.SectionName)</option>
+                            }
+                        </datalist>
+                    </div>
+                    <div class="mb-3">
+                        <input class="form-check-input" type="checkbox" id="ModalStatus" name="Status" value="True">
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Status</label>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="Submit" class="btn btn-primary" id="save">Submit</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<script type="text/javascript" charset="utf8">
+
+    //trick data
+    function eventFired(type) {
+        let n = document.querySelector('#table_info');
+        //n.innerHTML +=
+        //    '<div>' + type + ' event - ' + new Date().getTime() + '</div>';
+        //n.scrollTop = n.scrollHeight;
+    }
+
+    $(document).ready(function () {
+        $("#table_id #checkall").click(function () {
+            if ($("#table_id #checkall").is(':checked')) {
+                $("#table_id input[type=checkbox]").each(function () {
+                    $(this).prop("checked", true);
+                });
+
+            } else {
+                $("#table_id input[type=checkbox]").each(function () {
+                    $(this).prop("checked", false);
+                });
+            }
+        });
+
+        $("[data-toggle=tooltip]").tooltip();
+    });
+
+    new DataTable('#table_id')
+        .on('search.dt', () => eventFired('Search'))
+        .on('page.dt', () => eventFired('Page'));
+    //.on('order.dt', () => eventFired('Order'))
+
+
+
+
+    new DataTable('#table_id')
+        .on('order.dt', () => eventFired('Order'))
+        .on('search.dt', () => eventFired('Search'))
+        .on('page.dt', () => eventFired('Page'));
+
+
+    //Edit to modal
+    function EditFn(id) {
+        $.ajax({
+            url: '/Master/ReasonEdit/' + id,
+            type: 'GET',
+            contentType: 'application/json;charset=UTF-8',
+            dataType: 'json',
+            success: function (response) {
+                if (response == null || response == undefined) {
+
+                    alert("This data can't read1!")
+                }
+                else if (response.length == 0) {
+
+                    alert("This data can't id!" + id)
+                }
+
+                $('#ModalReasonID').val(response.ReasonID);
+                $('#ModalReasonName').val(response.ReasonName);
+                $('#ModalPlantName').val(response.PlantName);
+                $('#ModalLineName').val(response.LineName);
+                $('#ModalProductName').val(response.ProductName);
+                $('#ModalSectionName').val(response.SectionName);
+                $('#ModalStatus').prop('checked', response.Status == 1)
+                $('#EditModal').modal('show');
+
+
+            }
+        },
+            error: function (response) {
+                alert(response.responseText);
+            }
+
+        });
+    }
+
+
+    //Function Inactive
+    function InactiveFn(id) {
+        $.ajax({
+            url: '/Master/ReasonInactive/' + id,
+            type: 'GET',
+            contentType: 'application/json;charset=UTF-8',
+            dataType: 'json',
+            success: function (response) {
+                alert("Inactive Finish");
+            },
+            error: function (response) {
+                alert("Inactive something went wrong.");
+            }
+
+        });
+    }
+
+</script>

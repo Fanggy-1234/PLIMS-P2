@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3b581e0306cf4c738a8392f2d2e5d66a" Name="Diagram1" ZoomLevel="82">
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.sysdiagram" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.TbProduct" Width="1.5" PointX="4.75" PointY="8.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.TbSection" Width="1.5" PointX="6.75" PointY="8.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.TbShift" Width="1.5" PointX="12.375" PointY="0.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.TbService" Width="1.5" PointX="9.375" PointY="9.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.View_Services" Width="1.5" PointX="11.375" PointY="9.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.TbPlant" Width="1.5" PointX="12.375" PointY="4.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.TbIncentiveMaster" Width="1.5" PointX="5.375" PointY="12.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.TbUser" Width="1.5" PointX="13.375" PointY="8.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.TbDefect" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.View_Incentive" Width="1.5" PointX="3.375" PointY="4.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.TbReason" Width="1.5" PointX="9.375" PointY="13.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.View_Reason" Width="1.5" PointX="11.375" PointY="13.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.TbLine" Width="1.5" PointX="8.375" PointY="4.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.TbEmployeeMaster" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.View_Employee" Width="1.5" PointX="0.75" PointY="12.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.View_PermissionMaster" Width="1.5" PointX="13.375" PointY="13.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.View_User" Width="1.5" PointX="14.375" PointY="0.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.View_EmployeeJoin" Width="1.5" PointX="15.375" PointY="4.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.TbPLPS" Width="1.5" PointX="15.375" PointY="9.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.View_PLPS" Width="1.5" PointX="15.375" PointY="14.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.TbEmptransaction" Width="1.5" PointX="17.375" PointY="0.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.View_EmployeeClocktime" Width="1.5" PointX="3.375" PointY="17.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.View_ServicesClocktime" Width="1.5" PointX="17.375" PointY="5.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.TbPage" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.TbRole" Width="1.5" PointX="5.375" PointY="4.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.TbPermission" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="PhlimsDatabaseModel.View_PagePermission" Width="1.5" PointX="7.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

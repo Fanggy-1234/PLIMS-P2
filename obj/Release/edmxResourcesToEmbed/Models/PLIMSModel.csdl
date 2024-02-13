@@ -1,0 +1,507 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PhlimsDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="PhlimsDatabaseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="sysdiagrams" EntityType="PhlimsDatabaseModel.sysdiagram" />
+    <EntitySet Name="TbProducts" EntityType="PhlimsDatabaseModel.TbProduct" />
+    <EntitySet Name="TbSections" EntityType="PhlimsDatabaseModel.TbSection" />
+    <EntitySet Name="TbShifts" EntityType="PhlimsDatabaseModel.TbShift" />
+    <EntitySet Name="TbServices" EntityType="PhlimsDatabaseModel.TbService" />
+    <EntitySet Name="View_Services" EntityType="PhlimsDatabaseModel.View_Services" />
+    <EntitySet Name="TbPlants" EntityType="PhlimsDatabaseModel.TbPlant" />
+    <EntitySet Name="TbIncentiveMasters" EntityType="PhlimsDatabaseModel.TbIncentiveMaster" />
+    <EntitySet Name="TbUsers" EntityType="PhlimsDatabaseModel.TbUser" />
+    <EntitySet Name="TbDefects" EntityType="PhlimsDatabaseModel.TbDefect" />
+    <EntitySet Name="View_Incentive" EntityType="PhlimsDatabaseModel.View_Incentive" />
+    <EntitySet Name="TbReasons" EntityType="PhlimsDatabaseModel.TbReason" />
+    <EntitySet Name="View_Reason" EntityType="PhlimsDatabaseModel.View_Reason" />
+    <EntitySet Name="TbLines" EntityType="PhlimsDatabaseModel.TbLine" />
+    <EntitySet Name="TbEmployeeMasters" EntityType="PhlimsDatabaseModel.TbEmployeeMaster" />
+    <EntitySet Name="View_Employee" EntityType="PhlimsDatabaseModel.View_Employee" />
+    <EntitySet Name="View_PermissionMaster" EntityType="PhlimsDatabaseModel.View_PermissionMaster" />
+    <EntitySet Name="View_User" EntityType="PhlimsDatabaseModel.View_User" />
+    <EntitySet Name="View_EmployeeJoin" EntityType="PhlimsDatabaseModel.View_EmployeeJoin" />
+    <EntitySet Name="TbPLPS" EntityType="PhlimsDatabaseModel.TbPLPS" />
+    <EntitySet Name="View_PLPS" EntityType="PhlimsDatabaseModel.View_PLPS" />
+    <EntitySet Name="TbEmptransactions" EntityType="PhlimsDatabaseModel.TbEmptransaction" />
+    <EntitySet Name="View_EmployeeClocktime" EntityType="PhlimsDatabaseModel.View_EmployeeClocktime" />
+    <EntitySet Name="View_ServicesClocktime" EntityType="PhlimsDatabaseModel.View_ServicesClocktime" />
+    <EntitySet Name="TbPages" EntityType="PhlimsDatabaseModel.TbPage" />
+    <EntitySet Name="TbRoles" EntityType="PhlimsDatabaseModel.TbRole" />
+    <EntitySet Name="TbPermissions" EntityType="PhlimsDatabaseModel.TbPermission" />
+    <EntitySet Name="View_PagePermission" EntityType="PhlimsDatabaseModel.View_PagePermission" />
+  </EntityContainer>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TbProduct">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="ProductName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TbSection">
+    <Key>
+      <PropertyRef Name="SectionID" />
+    </Key>
+    <Property Name="SectionID" Type="Int32" Nullable="false" />
+    <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Delaytime" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TbShift">
+    <Key>
+      <PropertyRef Name="ShiftID" />
+    </Key>
+    <Property Name="ShiftID" Type="Int32" Nullable="false" />
+    <Property Name="ShiftName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="StartTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="EndTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TbService">
+    <Key>
+      <PropertyRef Name="ServicesID" />
+    </Key>
+    <Property Name="ServicesID" Type="Int32" Nullable="false" />
+    <Property Name="ServicesName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Ser_PlantID" Type="Int32" />
+    <Property Name="Ser_LineID" Type="Int32" />
+    <Property Name="MonthYear" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="ServicesRate" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="ServicesStatus" Type="Int32" />
+    <Property Name="CreateDate" Type="DateTime" Precision="7" />
+    <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="7" />
+    <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="View_Services">
+    <Key>
+      <PropertyRef Name="ServicesID" />
+    </Key>
+    <Property Name="ServicesID" Type="Int32" Nullable="false" />
+    <Property Name="ServicesName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="ServicesRate" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="ServicesStatus" Type="Int32" />
+    <Property Name="MonthYear" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="7" />
+    <Property Name="CreateDate" Type="DateTime" Precision="7" />
+    <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Ser_PlantName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Ser_LineName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TbPlant">
+    <Key>
+      <PropertyRef Name="PlantID" />
+    </Key>
+    <Property Name="PlantID" Type="Int32" Nullable="false" />
+    <Property Name="PlantName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TbIncentiveMaster">
+    <Key>
+      <PropertyRef Name="IncentiveID" />
+    </Key>
+    <Property Name="IncentiveID" Type="Int32" Nullable="false" />
+    <Property Name="IncentiveName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="PlantID" Type="Int32" />
+    <Property Name="LineID" Type="Int32" />
+    <Property Name="ProductID" Type="Int32" />
+    <Property Name="SectionID" Type="Int32" />
+    <Property Name="Min" Type="Decimal" Precision="8" Scale="2" />
+    <Property Name="Max" Type="Decimal" Precision="8" Scale="2" />
+    <Property Name="Rate" Type="Decimal" Precision="6" Scale="4" />
+    <Property Name="Grade" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="MonthYear" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="CreateDate" Type="DateTime" Precision="7" />
+    <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="7" />
+    <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TbUser">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserPassword" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="UserPermission" Type="Int32" />
+    <Property Name="UserEmpID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="UserEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="PasswordLastUpdate" Type="DateTime" Precision="0" />
+    <Property Name="Lineconcern" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TbDefect">
+    <Key>
+      <PropertyRef Name="DefectId" />
+    </Key>
+    <Property Name="DefectId" Type="Int32" Nullable="false" />
+    <Property Name="DefectName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="DefectPlant" Type="Int32" />
+    <Property Name="DefectLine" Type="Int32" />
+    <Property Name="DefectSection" Type="Int32" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="View_Incentive">
+    <Key>
+      <PropertyRef Name="IncentiveID" />
+    </Key>
+    <Property Name="IncentiveID" Type="Int32" Nullable="false" />
+    <Property Name="IncentiveName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="PlantName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="LineName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ProductName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="Min" Type="Decimal" Precision="8" Scale="2" />
+    <Property Name="Max" Type="Decimal" Precision="8" Scale="2" />
+    <Property Name="Rate" Type="Decimal" Precision="6" Scale="4" />
+    <Property Name="Grade" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TbReason">
+    <Key>
+      <PropertyRef Name="ReasonID" />
+    </Key>
+    <Property Name="ReasonID" Type="Int32" Nullable="false" />
+    <Property Name="ReasonName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="PlantID" Type="Int32" />
+    <Property Name="LineID" Type="Int32" />
+    <Property Name="ProductID" Type="Int32" />
+    <Property Name="SectionID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="View_Reason">
+    <Key>
+      <PropertyRef Name="ReasonID" />
+    </Key>
+    <Property Name="ReasonID" Type="Int32" Nullable="false" />
+    <Property Name="ReasonName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="PlantName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="LineName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ProductName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="PlantID" Type="Int32" />
+    <Property Name="LineID" Type="Int32" />
+    <Property Name="ProductID" Type="Int32" />
+    <Property Name="SectionID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TbLine">
+    <Key>
+      <PropertyRef Name="LineID" />
+    </Key>
+    <Property Name="LineID" Type="Int32" Nullable="false" />
+    <Property Name="LineName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TbEmployeeMaster">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="EmployeeID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="EmployeeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="PlantID" Type="Int32" />
+    <Property Name="LineID" Type="Int32" />
+    <Property Name="SectionID" Type="Int32" />
+    <Property Name="ShiftID" Type="Int32" />
+    <Property Name="QRCodePerUnit" Type="Int32" />
+    <Property Name="QRCodePerEmployee" Type="Int32" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="CreateDate" Type="DateTime" Precision="7" />
+    <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="7" />
+    <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="View_Employee">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="ClockIn" />
+      <PropertyRef Name="ClockOut" />
+      <PropertyRef Name="WorkingStatus" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="EmployeeID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="EmployeeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="CreateDate" Type="DateTime" Precision="7" />
+    <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="7" />
+    <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PlantName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="LineName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ShiftName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="StartTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="EndTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="ClockIn" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="ClockOut" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="WorkingStatus" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="QRCodePerUnit" Type="Int32" />
+    <Property Name="QRCodePerEmployee" Type="Int32" />
+  </EntityType>
+  <EntityType Name="View_PermissionMaster">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="EmployeeID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="PlantID" Type="Int32" />
+    <Property Name="PlantName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="LineName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="UserPermission" Type="Int32" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PageID" Type="Int32" />
+    <Property Name="PageName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="UserEmpID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="UserEmail" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+  </EntityType>
+  <EntityType Name="View_User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserEmail" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="PlantName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="LineName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="UserEmpID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+  </EntityType>
+  <EntityType Name="View_EmployeeJoin">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="EmployeeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="PlantID" Type="Int32" />
+    <Property Name="LineID" Type="Int32" />
+    <Property Name="SectionID" Type="Int32" />
+    <Property Name="ShiftID" Type="Int32" />
+    <Property Name="QRCode" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="TransactionDate" Type="DateTime" Precision="7" />
+    <Property Name="Expr1" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Shift" Type="Int32" />
+    <Property Name="Line" Type="Int32" />
+    <Property Name="WorkingStatus" Type="Int32" />
+    <Property Name="ClockIn" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="ClockOut" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TbPLPS">
+    <Key>
+      <PropertyRef Name="PLPSID" />
+    </Key>
+    <Property Name="PLPSID" Type="Int32" Nullable="false" />
+    <Property Name="PlantID" Type="Int32" />
+    <Property Name="LineID" Type="Int32" />
+    <Property Name="ProductID" Type="Int32" />
+    <Property Name="SectionID" Type="Int32" />
+    <Property Name="STD" Type="Decimal" Precision="8" Scale="2" />
+    <Property Name="PercentSTD" Type="Decimal" Precision="8" Scale="2" />
+    <Property Name="PercentYield" Type="Decimal" Precision="8" Scale="2" />
+    <Property Name="Size" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="QTYPerQRCode" Type="Int32" />
+    <Property Name="Unit" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="View_PLPS">
+    <Key>
+      <PropertyRef Name="PLPSID" />
+    </Key>
+    <Property Name="PLPSID" Type="Int32" Nullable="false" />
+    <Property Name="PlantName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ProductName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="LineName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="STD" Type="Decimal" Precision="8" Scale="2" />
+    <Property Name="PercentSTD" Type="Decimal" Precision="8" Scale="2" />
+    <Property Name="PercentYield" Type="Decimal" Precision="8" Scale="2" />
+    <Property Name="Size" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="QTYPerQRCode" Type="Int32" />
+    <Property Name="Unit" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdateBy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TbEmptransaction">
+    <Key>
+      <PropertyRef Name="TransactionNo" />
+    </Key>
+    <Property Name="TransactionNo" Type="Int32" Nullable="false" />
+    <Property Name="TransactionDate" Type="DateTime" Precision="7" />
+    <Property Name="EmployeeID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Shift" Type="Int32" />
+    <Property Name="Line" Type="Int32" />
+    <Property Name="Section" Type="Int32" />
+    <Property Name="WorkingStatus" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="ClockIn" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="ClockOut" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="View_EmployeeClocktime">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="WorkingStatus" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="EmployeeID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="EmployeeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="CreateDate" Type="DateTime" Precision="7" />
+    <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="7" />
+    <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PlantName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="LineName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ShiftName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="StartTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="EndTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="ClockIn" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="ClockOut" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="WorkingStatus" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="QRCodePerUnit" Type="Int32" />
+    <Property Name="QRCodePerEmployee" Type="Int32" />
+    <Property Name="TransactionNo" Type="Int32" />
+    <Property Name="TransactionDate" Type="DateTime" Precision="7" />
+  </EntityType>
+  <EntityType Name="View_ServicesClocktime">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="WorkingStatus" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="EmployeeID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="EmployeeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="CreateDate" Type="DateTime" Precision="7" />
+    <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="7" />
+    <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PlantName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="LineName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ShiftName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="StartTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="EndTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="ClockIn" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="ClockOut" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="WorkingStatus" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="QRCodePerUnit" Type="Int32" />
+    <Property Name="QRCodePerEmployee" Type="Int32" />
+    <Property Name="TransactionNo" Type="Int32" />
+    <Property Name="TransactionDate" Type="DateTime" Precision="7" />
+  </EntityType>
+  <EntityType Name="TbPage">
+    <Key>
+      <PropertyRef Name="PageID" />
+    </Key>
+    <Property Name="PageID" Type="Int32" Nullable="false" />
+    <Property Name="PageName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="PageStatus" Type="Int32" />
+    <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="TbRole">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RoleStatus" Type="Int32" />
+    <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="TbPermission">
+    <Key>
+      <PropertyRef Name="PermissionID" />
+    </Key>
+    <Property Name="PermissionID" Type="Int32" Nullable="false" />
+    <Property Name="RoleID" Type="Int32" />
+    <Property Name="PageID" Type="Int32" />
+    <Property Name="RoleAction" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+    <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="View_PagePermission">
+    <Key>
+      <PropertyRef Name="PermissionID" />
+    </Key>
+    <Property Name="PermissionID" Type="Int32" Nullable="false" />
+    <Property Name="PageName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RoleAction" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>

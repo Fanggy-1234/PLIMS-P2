@@ -1,0 +1,567 @@
+﻿@model PLIMS.ViewModel.ViewModelAll
+
+@{
+    ViewBag.Title = "Sevices";
+    //TbUser user = Utilities.GetCurrentUser();
+}
+
+
+@*Include Area*@
+<script src="~/Scripts/jquery-3.7.1.js"></script>
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.css">
+
+<!-- jQuery -->
+<script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+
+<!-- DataTables -->
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.js">
+</script>
+<link href="~/Content/main.css" rel="stylesheet" />
+
+
+<style type="text/css">
+
+
+    .form-control {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #808080;
+        border-radius: 2px;
+        box-sizing: border-box;
+    }
+
+    .create-button, .clear-button, .import-button {
+        background-color: #A4ADB3;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+        color: white;
+        width: 100%;
+        height: 100%;
+    }
+
+    .search-button {
+        border: 0.4px solid black;
+        background-color: white;
+        border-radius: 2px;
+        cursor: pointer;
+        color: black;
+        width: 100%;
+        height: 100%;
+    }
+
+    .export-excel {
+        border: 0.4px solid black;
+        background-color: white;
+        border-radius: 2px;
+        cursor: pointer;
+        color: black;
+        width: 100%;
+        height: 100%;
+    }
+
+
+    .page-table-head, .page-table-data {
+        border: solid 1px grey;
+        text-align: center;
+    }
+</style>
+
+
+<div class="row" style="height:10px"></div>
+<h2 class="page-name">Services Management</h2>
+
+@* Textbox for search *@
+
+<form method="GET" asp-controller="Master" action="Services">
+
+    <div style="background-color: #fcfcfc; border-radius: 2px; padding: 10px;">
+        <div class="row">
+
+            <div class="col-6">
+                Plant Name:
+                <input class="form-control" list="PlantName" name="Ser_PlantName" id="PlantName">
+                <datalist id="PlantName">
+
+                    @foreach (var item in Model.tbPlants)
+                    {
+
+                        <option>@Html.DisplayFor(modelItem => item.PlantName) </option>
+                    }
+                </datalist>
+            </div>
+
+            <div class="col-6">
+                Line Name :
+                <input class="form-control" list="LineName" name="Ser_LineName" id="LineName">
+                <datalist id="LineName">
+                    @foreach (var item in Model.tbLine)
+                    {
+                        <option>@Html.DisplayFor(modelItem => item.LineName)</option>
+                    }
+                </datalist>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-6">
+                Services Name:
+                <input class="form-control" list="ServicesName" name="ServicesName" id="ServicesName">
+                <datalist id="ServicesName">
+                    @foreach (var item in Model.tbService)
+                    {
+
+                        <option>@Html.DisplayFor(modelItem => item.ServicesName) </option>
+                    }
+                </datalist>
+            </div>
+
+
+        </div>
+
+
+
+        <br />
+
+
+    </div>
+
+    <div class="row" style="height:35px">
+
+        <div class="col" style="width:15% ">
+            <button class="clear-button" type="submit" action="ServicesClear">
+                Clear
+            </button>
+        </div>
+        <div class="col-3" style="width:55% ">
+
+        </div>
+        <div class="col" style="width:15% ">
+            <button class="search-button" type="submit">
+                Search
+            </button>
+        </div>
+        <div class="col" style="width:15% ">
+            @*<button id="Create" type="button" class="btnme" data-bs-toggle="modal" data-target="" style="width: 100%; background-color: firebrick; justify-content: flex-end " onclick="modalcreate();">
+                    Create
+                </button>*@
+            <button type="button" class="create-button" data-bs-toggle="modal" data-bs-target="#CreateModal" style="justify-content: flex-end">Create</button>
+
+        </div>
+    </div>
+</form>
+</br>
+
+<div class="row" style="height:10px"></div>
+<div id="table_info" class="box"></div>
+
+@*Diaplay data*@
+<table id="table_id" class="page-table">
+    <thead>
+        <tr>
+            @* <th><input type="checkbox" id="checkall" /></th>*@
+            <th class="page-table-head">
+                Services ID
+            </th>
+            <th class="page-table-head">
+                Services Name
+            </th>
+            <th class="page-table-head">
+                Plant Name
+            </th>
+            <th class="page-table-head">
+                Line Name
+            </th>
+            <th class="page-table-head">
+                Rate
+            </th>
+
+            <th class="page-table-head">
+                Status
+            </th>
+            <th class="page-table-head">
+                Action
+            </th>
+            <th class="page-table-head">
+                Action
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.view_Services)
+        {
+            <tr>
+                @Html.HiddenFor(modelItem => item.ServicesID)
+                @* <td><input type="checkbox" class="checkthis" /></td>*@
+                <td id="ServicesID" class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.ServicesID)
+                </td>
+                <td id="ServicesName" class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.ServicesName)
+                </td>
+                <td id="PlantName" class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.Ser_PlantName)
+                </td>
+                <td id="LineName" class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.Ser_LineName)
+                </td>
+                <td id="Rate" class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.ServicesRate)
+                </td>
+
+                <td class="page-table-data">
+
+                    @if (item.ServicesStatus.Equals(1))
+                    {
+                        <span id="open">Active</span>
+
+                    }
+                    @if (item.ServicesStatus.Equals(0))
+                    {
+                        <span id="closed" style="color:red">Inactive</span>
+
+                    }
+
+
+                    @* @Html.DisplayFor(modelItem => item.Status)*@
+                </td>
+
+                <td class="page-table-data">
+                    @*   @Html.ActionLink("Edit", "Edit", new { id = item.IncentiveID })*@
+
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#EditModal" id="Edit" onclick="EditFn(@item.ServicesID)">Edit</a>
+
+
+                </td>
+                <td class="page-table-data">
+                    <a href="#" id="Inactive" onclick="InactiveFn(@item.ServicesID)">Inactive</a>
+
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<div style=" background-color: #fcfcfc; border-radius: 2px; padding: 10px;">
+    <h6> Import/Export Services  </h6>
+</div>
+<div data-ride="carousel" data-interval="6000" style="background-color: #fcfcfc; border-radius: 2px; padding: 10px;">
+
+    @using (Html.BeginForm("ServicesUpload", "Master", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return myFunction()" }))
+    {
+        <div class="row">
+            <div class="col-2" style="width:10% ">
+                Export File :
+            </div>
+            <div class="col" style="width:15% ">
+                <a type="button" id="btnExport" class="export-button" href="@Url.Action("ServicesDownloadExcel", "Master")">Export Master</a>
+            </div>
+        </div>
+
+        <div class="row" style="height:10px">
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-2" style="width:10% ">
+                Import File :
+            </div>
+            <div class="col" style="width:15% ">
+                <input type="file" id="FileUpload" name="FileUpload" class="" />
+                @*<input type="file" name="file" id="file" onclick="myFunction()" />*@
+            </div>
+        </div>
+
+        <div class="row" style="height:10px">
+        </div>
+        <div class="row" style="height:10px">
+            <div class="col-2" style="width:10% ">
+                <span class="text-danger">@ViewBag.Message</span>
+            </div>
+            <div class="col-2" style="width: 15%">
+                <button type="submit" value="Upload" id="btnSubmit" name="submit" class="import-button"> Import Master</button>
+            </div>
+        </div>
+
+
+    }
+</div>
+
+<div class="row" style="height:10px">
+
+</div>
+
+
+
+@*Modal Create*@
+<div class="modal fade" id="CreateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" controller="Master" action="ServicesCreate">
+                <div class="modal-header" style="background-color:blue">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Services Create</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @* Services ID *@
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Services ID:</label>
+                        @{
+                            int value = Model.tbService.Count() + 1;
+
+                            <input type="text" class="form-control" id="ServicesID" name="ServicesID" readonly style="background-color:gainsboro" value="@value">
+                        }
+                    </div>
+
+                    @* Services Name*@
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Services Name:</label>
+                        <input class="form-control" list="BrowsersID" name="ServicesName" id="ServicesName">
+                    </div>
+
+                    @* Plant Name*@
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Plant Name:</label>
+                        <input class="form-control" list="PlantName" name="PlantName" id="PlantName">
+                        <datalist id="PlantName">
+                            @foreach (var item in Model.tbPlants)
+                            {
+                                <option value="@item.PlantID">@item.PlantName</option>
+                                @*<option>@Html.DisplayFor(modelItem => item.tbLine.LineName) </option>*@
+                            }
+                        </datalist>
+                    </div>
+
+                    @* Line Name*@
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Line Name:</label>
+                        <input class="form-control" list="BrowsersID" name="Ser_LineID" id="Ser_LineID">
+                        <datalist id="Ser_LineID">
+                            @foreach (var item in Model.tbLine)
+                            {
+                                <option value="@item.LineID">@item.LineName</option>
+                                @*<option>@Html.DisplayFor(modelItem => item.tbLine.LineName) </option>*@
+                            }
+                        </datalist>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="recipient-Rate" class="col-form-label">Rate:</label>
+                        <input type="text" class="form-control" id="Rate" name="ServicesRate">
+                    </div>
+
+
+
+                    <div class="mb-3">
+
+                        @*<div class="form-check form-switch">*@
+                        <input class="form-check-input" type="checkbox" Name="ServicesStatus" id="ServicesStatus" checked>
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Status</label>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="Submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@*Modal Edit*@
+<div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="post" action="ServicesUpdate" controller="Master">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:blue">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Services Edit</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                @* Services ID *@
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Services ID:</label>
+                        <input type="text" class="form-control" Name="ServicesID" id="ModalServicesID" readonly style="background-color:gainsboro">
+                    </div>
+
+
+                    @* Services Name*@
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Services Name:</label>
+                        <input class="form-control" list="BrowsersID" name="ServicesName" id="ModalServicesName">
+                    </div>
+
+                    @* Plant Name*@
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Plant Name:</label>
+                        <input class="form-control" list="BrowsersID" name="Ser_PlantID" id="ModalSer_PlantName">
+                        <datalist id="PlantName">
+                            @foreach (var item in Model.tbPlants)
+                            {
+
+                                <option>@Html.DisplayFor(modelItem => item.PlantName) </option>
+                            }
+                        </datalist>
+                    </div>
+
+                    @* Line Name*@
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Line Name:</label>
+                        <input class="form-control" list="BrowsersID" name="Ser_LineID" id="ModalSer_LineName">
+                        <datalist id="LineName">
+                            @foreach (var item in Model.tbLine)
+                            {
+
+                                <option>@Html.DisplayFor(modelItem => item.LineName) </option>
+                            }
+                        </datalist>
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label for="recipient-Rate" class="col-form-label">Rate:</label>
+                        <input type="text" class="form-control" id="ModalServicesRate" name="ServicesRate">
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        @*<div class="form-check form-switch">*@
+                        <input class="form-check-input" type="checkbox" id="ModatlServicesStatus" Name="ServicesStatus" checked>
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Status</label>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="Submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" charset="utf8">
+
+
+    //trick data
+    function eventFired(type) {
+        let n = document.querySelector('#table_info');
+        //n.innerHTML +=
+        //    '<div>' + type + ' event - ' + new Date().getTime() + '</div>';
+        //n.scrollTop = n.scrollHeight;
+    }
+
+    $(document).ready(function () {
+        $("#table_id #checkall").click(function () {
+            if ($("#table_id #checkall").is(':checked')) {
+                $("#table_id input[type=checkbox]").each(function () {
+                    $(this).prop("checked", true);
+                });
+
+            } else {
+                $("#table_id input[type=checkbox]").each(function () {
+                    $(this).prop("checked", false);
+                });
+            }
+        });
+
+        $("[data-toggle=tooltip]").tooltip();
+    });
+
+    new DataTable('#table_id')
+        .on('search.dt', () => eventFired('Search'))
+        .on('page.dt', () => eventFired('Page'));
+    //.on('order.dt', () => eventFired('Order'))
+
+
+
+
+
+
+    //Edit to modal
+    function EditFn(id) {
+        $.ajax({
+            url: '/Master/ServicesEdit/' + id,
+            type: 'GET',
+            contentType: 'application/json;charset=UTF-8',
+            dataType: 'json',
+            success: function (response) {
+                if (response == null || response == undefined) {
+
+                    alert("This data can't read1!")
+                }
+                else if (response.length == 0) {
+
+                    alert("This data can't id!" + id)
+                }
+                else {
+
+                    //  alert("ModalServicesMonthYear =" + response.MonthYear + " , PlantName = " + response.PlantName + ",Status = " + response.Status)
+                    $('#ModalServicesID').val(response.ServicesID);
+                    $('#ModalServicesName').val(response.ServicesName);
+                    $('#ModalSer_PlantName').val(response.Ser_PlantName);
+                    $('#ModalSer_LineName').val(response.Ser_LineName);
+                    $('#ModalServicesRate').val(response.ServicesRate);
+                    //var formattedDate = moment(startDate, 'YYYY-MM-DD').format('YYYY/MM/DD');
+                    var d = response.MonthYear.split("/");;
+                    const formattedDate = "01" + '/' + d[0] + '/' + d[1]
+                    //  alert(formattedDate)
+                    $('.calendar').fullCalendar('renderEvent', response.teacher, true);
+                    // $('#ModalMonthYear').val(formattedDate);
+                    $('#ModaServicesStatus').prop('checked', response.ServicesStatus == 1);
+                    $('#EditModal').modal('show');
+
+
+                }
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+
+        });
+    }
+
+
+
+
+    //Function Inactive
+    function InactiveFn(id) {
+        $.ajax({
+            url: '/Master/ServicesInactive/' + id,
+            type: 'GET',
+            contentType: 'application/json;charset=UTF-8',
+            dataType: 'json',
+            success: function (response) {
+                alert("Inactive Finish");
+            },
+            error: function (response) {
+                alert("Inactive something went wrong.");
+            }
+
+        });
+    }
+
+
+
+</script>

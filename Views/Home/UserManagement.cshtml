@@ -1,0 +1,445 @@
+﻿@model PLIMS.ViewModel.ViewModelAll
+@*@using PLIMS.Models*@
+@{
+
+    ViewBag.Title = "UserManagement";
+    //TbUser user = Utilities.GetCurrentUser();
+
+}
+<script src="~/Scripts/jquery-3.7.1.js"></script>
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.css">
+
+<!-- jQuery -->
+<script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+
+<!-- DataTables -->
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.js">
+</script>
+<link href="~/Content/main.css" rel="stylesheet" />
+<style>
+
+    .create-button, .clear-button {
+        background-color: #A4ADB3;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+        color: white;
+        width: 100%;
+        height: 100%;
+    }
+
+    .search-button {
+        border: 0.4px solid black;
+        background-color: white;
+        border-radius: 2px;
+        cursor: pointer;
+        color: black;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+
+<h2> User Management </h2>
+<div id="demo_info" class="box"></div>
+
+<form method="GET" asp-controller="Home" action="UserManagement">
+    <div style="background-color: #fcfcfc; border-radius: 2px; padding: 10px;">
+        <div class="row">
+            <div class="col-6">
+                Employee ID:
+                <input class="form-control" list="EmployeeID" name="EmployeeID" id="EmployeeID">
+                <datalist id="EmployeeID">
+                    @foreach (var item in Model.tbEmployeeMaster)
+                    {
+
+                        <option>@Html.DisplayFor(modelItem => item.EmployeeID) </option>
+                    }
+                </datalist>
+            </div>
+
+            <div class="col-6">
+                Role :
+                <input class="form-control" list="RoleName" name="RoleName" id="RoleName">
+                <datalist id="RoleName">
+                    @foreach (var item in Model.tbRole)
+                    {
+                        <option>@Html.DisplayFor(modelItem => item.RoleName)</option>
+                    }
+                </datalist>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                First Name:
+                <input class="form-control" list="UserName" name="UserName" id="UserName">
+                <datalist id="UserName">
+                    @foreach (var item in Model.tbUser)
+                    {
+
+                        <option>@Html.DisplayFor(modelItem => item.UserName) </option>
+                    }
+                </datalist>
+            </div>
+
+            <div class="col-6">
+                Last Namme :
+                <input class="form-control" list="UserLastName" name="UserLastName" id="UserLastName">
+                <datalist id="UserLastName">
+                    @foreach (var item in Model.tbUser)
+                    {
+                        <option>@Html.DisplayFor(modelItem => item.UserLastName)</option>
+                    }
+                </datalist>
+            </div>
+
+        </div>
+
+
+
+        <br />
+
+
+    </div>
+
+    <div class="row" style="height:35px">
+
+        <div class="col" style="width:15% ">
+            <button id="Clear" type="submit" action="PlantClear" class="clear-button">
+                Clear
+            </button>
+        </div>
+        <div class="col-3" style="width:55% ">
+
+        </div>
+        <div class="col" style="width:15% ">
+            <button id="Search" type="submit" action="Plant" class="search-button">
+                Search
+            </button>
+        </div>
+        <div class="col" style="width:15% ">
+            <button type="button" action="CreateModal" class="create-button" data-bs-toggle="modal" data-bs-target="#CreateModal">Create</button>
+            
+        </div>
+    </div>
+</form>
+
+
+<br />
+<hr />
+
+
+
+
+@*Diaplay data*@
+<table id="table_id" class="page-table">
+    <thead style="background-color:gainsboro ;color:black">
+        <tr>
+            @*<th><input type="checkbox" id="checkall" /></th>*@
+            <th class="page-table-head">
+                Employee ID
+            </th>
+            <th class="page-table-head">
+                EmployeeName
+            </th>
+            <th class="page-table-head">
+                Permission
+            </th>
+            <th class="page-table-head">
+                Email
+            </th>
+            <th class="page-table-head">
+                Status
+            </th>
+            <th class="page-table-head">
+                Action
+            </th>
+            <th class="page-table-head">
+                Action
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.view_User)
+        {
+            <tr>
+                @Html.HiddenFor(modelItem => item.ID)
+                @*<td><input type="checkbox" class="checkthis" /></td>*@
+                <td class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.UserEmpID)
+                </td>
+                <td class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.UserName) @Html.DisplayFor(modelItem => item.UserLastName)
+                </td>
+                <td class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.RoleName)
+                </td>
+                <td class="page-table-data">
+                    @Html.DisplayFor(modelItem => item.UserEmail)
+                </td>
+                <td class="page-table-data">
+                    @if (item.Status == 1)
+                    {
+                        <span id="open">Active</span>
+
+                    }
+                    @if (item.Status == 0)
+                    {
+                        <span id="closed">Inactive</span>
+
+                    }
+                </td>
+
+                <td class="page-table-data">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#EditModal" id="btnEdit" data-id="@item.ID" onclick="EditFn(@item.ID)">Edit</a>
+
+                </td>
+                <td class="page-table-data">
+                    <a href="#" id="Inactive" onclick="InactiveFn(@item.ID)">Inactive</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@*Modal Create*@
+<div class="modal fade" id="CreateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="post" action="UserCreate" controller="Home">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">User Create</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label for="EmployeeID" class="col-form-label">Employee ID:</label>
+                        <input type="text" list="EmployeeID" class="form-control" name="EmployeeID" id="EmployeeID" />
+                        <datalist id="EmployeeID">
+                            @foreach (var item in Model.tbEmployeeMaster)
+                            {
+                                <option>@Html.DisplayFor(modelItem => item.EmployeeID)</option>
+                            }
+                        </datalist>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="UserName" class="col-form-label">First Name:</label>
+                        <input type="text" class="form-control" name="UserName" id="UserName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="UserLastName" class="col-form-label">Last Name:</label>
+                        <input type="text" class="form-control" name="UserLastName" id="LastName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="RoleName" class="col-form-label">Role:</label>
+                        <input type="text" class="form-control" name="RoleName" id="RoleName">
+                        <datalist id="RoleName">
+                            @foreach (var item in Model.tbRole)
+                            {
+                                <option>@Html.DisplayFor(modelItem => item.RoleName)</option>
+                            }
+                        </datalist>
+                    </div>
+                    <div class="mb-3">
+                        <label for="UserEmail" class="col-form-label">Email:</label>
+                        <input type="text" class="form-control" name="UserEmail" id="UserEmail">
+                    </div>
+                    <div class="mb-3">
+                        <label for="UserPassword" class="col-form-label">Password:</label>
+                        <input type="password" class="form-control" name="UserPassword" id="ModalUserPassword">
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" Name="Status" id="ModalStatus" checked>
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Status</label>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="Submit" class="btn btn-primary" id="save">Submit</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+@*Modal Edit*@
+<div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="post" action="UserUpdate" controller="Home">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">User Edit</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label for="UserEmpID" class="col-form-label">Employee ID:</label>
+                        <input type="text" class="form-control" style="background-color:gainsboro" name="UserEmpID" id="ModalUserEmpID" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="UserName" class="col-form-label">First Name:</label>
+                        <input type="text" class="form-control" name="UserName" id="ModalUserName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="UserLastName" class="col-form-label">Last Name:</label>
+                        <input type="text" class="form-control" name="UserLastName" id="ModalLastName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="RoleName" class="col-form-label">Role:</label>
+                        <input type="text" class="form-control" name="RoleName" id="ModalRoleName">
+                        <datalist id="RoleName">
+                            @foreach (var item in Model.tbRole)
+                            {
+                                <option>@Html.DisplayFor(modelItem => item.RoleName)</option>
+                            }
+                        </datalist>
+                    </div>
+                    <div class="mb-3">
+                        <label for="UserEmail" class="col-form-label">Email:</label>
+                        <input type="text" class="form-control" name="UserEmail" id="ModalUserEmail">
+                    </div>
+                    <div class="mb-3">
+                        <label for="UserPassword" class="col-form-label">Password:</label>
+                        <input type="password" class="form-control" name="UserPassword" id="ModalUserPassword">
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" Name="Status" id="ModalStatus" checked>
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Status</label>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="save">Reset Password</button>
+                    <button type="Submit" class="btn btn-primary" id="save">Submit</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<script type="text/javascript" charset="utf8">
+    //$(document).ready(function () {
+    //    $('#products').DataTable();
+    //});
+
+    function eventFired(type) {
+        let n = document.querySelector('#demo_info');
+        //n.innerHTML +=
+        //    '<div>' + type + ' event - ' + new Date().getTime() + '</div>';
+        //n.scrollTop = n.scrollHeight;
+    }
+
+    $(document).ready(function () {
+        $("#table_id #checkall").click(function () {
+            if ($("#table_id #checkall").is(':checked')) {
+                $("#table_id input[type=checkbox]").each(function () {
+                    $(this).prop("checked", true);
+                });
+
+            } else {
+                $("#table_id input[type=checkbox]").each(function () {
+                    $(this).prop("checked", false);
+                });
+            }
+        });
+
+        $("[data-toggle=tooltip]").tooltip();
+    });
+
+
+    new DataTable('#table_id')
+        .on('order.dt', () => eventFired('Order'))
+        .on('search.dt', () => eventFired('Search'))
+        .on('page.dt', () => eventFired('Page'));
+
+
+
+
+
+    //Edit to modal
+    function EditFn(id) {
+        $.ajax({
+            url: '/Home/UserEdit/' + id,
+            type: 'GET',
+            contentType: 'application/json;charset=UTF-8',
+            dataType: 'json',
+            success: function (response) {
+                if (response == null || response == undefined) {
+
+                    alert("This data can't read1!")
+                }
+                else if (response.length == 0) {
+
+                    alert("This data can't id!" + id)
+                }
+                else {
+
+                    //alert("id =" + response.UserEmpID + " , UserName = " + response.UserName + ",UserLastName = " + response.UserLastName)
+                    $('#ModalUserEmpID').val(response.UserEmpID);
+                    $('#ModalUserName').val(response.UserName);
+                    $('#ModalLastName').val(response.UserLastName);
+                    $('#ModalRoleName').val(response.RoleName);
+                    $('#ModalUserEmail').val(response.UserEmail);
+                    $('#ModalPassword').val(response.Password);
+                    $('#ModalStatus').prop('checked', response.Status == 1)
+                    $('#EditModal').modal('show');
+
+
+                }
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+
+        });
+    }
+
+
+
+    //Function Inactive
+    function InactiveFn(id) {
+        $.ajax({
+            url: '/Home/UserInactive/' + id,
+            type: 'GET',
+            contentType: 'application/json;charset=UTF-8',
+            dataType: 'json',
+            success: function (response) {
+                alert("Inactive Finish");
+                $("body").html(result);
+            },
+            error: function (response) {
+                alert("Inactive something went wrong.");
+            }
+
+        });
+    }
+
+
+</script>

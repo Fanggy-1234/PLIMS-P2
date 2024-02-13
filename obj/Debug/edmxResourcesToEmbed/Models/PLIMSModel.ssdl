@@ -1,0 +1,721 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PhlimsDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TbDefect">
+    <Key>
+      <PropertyRef Name="DefectId" />
+    </Key>
+    <Property Name="DefectId" Type="int" Nullable="false" />
+    <Property Name="DefectName" Type="nvarchar" MaxLength="255" />
+    <Property Name="DefectPlant" Type="int" />
+    <Property Name="DefectLine" Type="int" />
+    <Property Name="DefectSection" Type="int" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="10" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="UpdateBy" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="TbEmployeeMaster">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="EmployeeID" Type="nvarchar" MaxLength="20" />
+    <Property Name="EmployeeName" Type="nvarchar" MaxLength="100" />
+    <Property Name="PlantID" Type="int" />
+    <Property Name="LineID" Type="int" />
+    <Property Name="SectionID" Type="int" />
+    <Property Name="ShiftID" Type="int" />
+    <Property Name="QRCodePerUnit" Type="int" />
+    <Property Name="QRCodePerEmployee" Type="int" />
+    <Property Name="Type" Type="nvarchar" MaxLength="8" />
+    <Property Name="Status" Type="int" />
+    <Property Name="CreateDate" Type="datetime2" Precision="7" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="UpdateDate" Type="datetime2" Precision="7" />
+    <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TbEmptransaction">
+    <Key>
+      <PropertyRef Name="TransactionNo" />
+    </Key>
+    <Property Name="TransactionNo" Type="int" Nullable="false" />
+    <Property Name="TransactionDate" Type="datetime2" Precision="7" />
+    <Property Name="EmployeeID" Type="nvarchar" MaxLength="15" />
+    <Property Name="Shift" Type="int" />
+    <Property Name="Line" Type="int" />
+    <Property Name="Section" Type="int" />
+    <Property Name="WorkingStatus" Type="nvarchar" MaxLength="10" />
+    <Property Name="ClockIn" Type="nvarchar" MaxLength="5" />
+    <Property Name="ClockOut" Type="nvarchar" MaxLength="5" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TbIncentiveMaster">
+    <Key>
+      <PropertyRef Name="IncentiveID" />
+    </Key>
+    <Property Name="IncentiveID" Type="int" Nullable="false" />
+    <Property Name="IncentiveName" Type="nvarchar" MaxLength="100" />
+    <Property Name="PlantID" Type="int" />
+    <Property Name="LineID" Type="int" />
+    <Property Name="ProductID" Type="int" />
+    <Property Name="SectionID" Type="int" />
+    <Property Name="Min" Type="decimal" Precision="8" Scale="2" />
+    <Property Name="Max" Type="decimal" Precision="8" Scale="2" />
+    <Property Name="Rate" Type="decimal" Precision="6" Scale="4" />
+    <Property Name="Grade" Type="nvarchar" MaxLength="2" />
+    <Property Name="MonthYear" Type="nvarchar" MaxLength="10" />
+    <Property Name="Status" Type="int" />
+    <Property Name="CreateDate" Type="datetime2" Precision="7" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="UpdateDate" Type="datetime2" Precision="7" />
+    <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TbLine">
+    <Key>
+      <PropertyRef Name="LineID" />
+    </Key>
+    <Property Name="LineID" Type="int" Nullable="false" />
+    <Property Name="LineName" Type="nvarchar" MaxLength="200" />
+    <Property Name="Status" Type="int" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="UpdateBy" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="TbPage">
+    <Key>
+      <PropertyRef Name="PageID" />
+    </Key>
+    <Property Name="PageID" Type="int" Nullable="false" />
+    <Property Name="PageName" Type="nvarchar" MaxLength="200" />
+    <Property Name="PageStatus" Type="int" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateBy" Type="nvarchar" MaxLength="20" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TbPermission">
+    <Key>
+      <PropertyRef Name="PermissionID" />
+    </Key>
+    <Property Name="PermissionID" Type="int" Nullable="false" />
+    <Property Name="RoleID" Type="int" />
+    <Property Name="PageID" Type="int" />
+    <Property Name="RoleAction" Type="nvarchar" MaxLength="4" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateBy" Type="nvarchar" MaxLength="20" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TbPlant">
+    <Key>
+      <PropertyRef Name="PlantID" />
+    </Key>
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="PlantName" Type="nvarchar" MaxLength="100" />
+    <Property Name="Status" Type="int" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="UpdateBy" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="TbPLPS">
+    <Key>
+      <PropertyRef Name="PLPSID" />
+    </Key>
+    <Property Name="PLPSID" Type="int" Nullable="false" />
+    <Property Name="PlantID" Type="int" />
+    <Property Name="LineID" Type="int" />
+    <Property Name="ProductID" Type="int" />
+    <Property Name="SectionID" Type="int" />
+    <Property Name="STD" Type="decimal" Precision="8" Scale="2" />
+    <Property Name="PercentSTD" Type="decimal" Precision="8" Scale="2" />
+    <Property Name="PercentYield" Type="decimal" Precision="8" Scale="2" />
+    <Property Name="Size" Type="nvarchar" MaxLength="1" />
+    <Property Name="QTYPerQRCode" Type="int" />
+    <Property Name="Unit" Type="nvarchar" MaxLength="3" />
+    <Property Name="Status" Type="int" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="10" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="UpdateBy" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="TbProduct">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="ProductName" Type="nvarchar" MaxLength="200" />
+    <Property Name="Status" Type="int" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="UpdateBy" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="TbReason">
+    <Key>
+      <PropertyRef Name="ReasonID" />
+    </Key>
+    <Property Name="ReasonID" Type="int" Nullable="false" />
+    <Property Name="ReasonName" Type="nvarchar" MaxLength="255" />
+    <Property Name="PlantID" Type="int" />
+    <Property Name="LineID" Type="int" />
+    <Property Name="ProductID" Type="int" />
+    <Property Name="SectionID" Type="int" />
+    <Property Name="Status" Type="int" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="10" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="UpdateBy" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="TbRole">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="int" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
+    <Property Name="RoleStatus" Type="int" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TbSection">
+    <Key>
+      <PropertyRef Name="SectionID" />
+    </Key>
+    <Property Name="SectionID" Type="int" Nullable="false" />
+    <Property Name="SectionName" Type="nvarchar" MaxLength="200" />
+    <Property Name="Delaytime" Type="nvarchar" MaxLength="1" />
+    <Property Name="Status" Type="int" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="UpdateBy" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="TbServices">
+    <Key>
+      <PropertyRef Name="ServicesID" />
+    </Key>
+    <Property Name="ServicesID" Type="int" Nullable="false" />
+    <Property Name="ServicesName" Type="nchar" MaxLength="10" />
+    <Property Name="Ser_PlantID" Type="int" />
+    <Property Name="Ser_LineID" Type="int" />
+    <Property Name="MonthYear" Type="nvarchar" MaxLength="10" />
+    <Property Name="ServicesRate" Type="nchar" MaxLength="10" />
+    <Property Name="ServicesStatus" Type="int" />
+    <Property Name="CreateDate" Type="datetime2" Precision="7" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="UpdateDate" Type="datetime2" Precision="7" />
+    <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TbShift">
+    <Key>
+      <PropertyRef Name="ShiftID" />
+    </Key>
+    <Property Name="ShiftID" Type="int" Nullable="false" />
+    <Property Name="ShiftName" Type="nvarchar" MaxLength="200" />
+    <Property Name="StartTime" Type="varchar" MaxLength="5" />
+    <Property Name="EndTime" Type="varchar" MaxLength="5" />
+    <Property Name="Status" Type="int" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="UpdateBy" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="TbUser">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserLastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserPassword" Type="nvarchar" MaxLength="10" />
+    <Property Name="UserPermission" Type="int" />
+    <Property Name="UserEmpID" Type="nvarchar" MaxLength="20" />
+    <Property Name="Status" Type="int" />
+    <Property Name="UserEmail" Type="nvarchar" MaxLength="50" />
+    <Property Name="PasswordLastUpdate" Type="date" />
+    <Property Name="Lineconcern" Type="nvarchar" MaxLength="255" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="10" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="UpdateBy" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PhlimsDatabase.dbo.View_Employee' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_Employee">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="ClockIn" />
+      <PropertyRef Name="ClockOut" />
+      <PropertyRef Name="WorkingStatus" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="EmployeeID" Type="nvarchar" MaxLength="15" />
+    <Property Name="EmployeeName" Type="nvarchar" MaxLength="100" />
+    <Property Name="Status" Type="int" />
+    <Property Name="CreateDate" Type="datetime2" Precision="7" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="UpdateDate" Type="datetime2" Precision="7" />
+    <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="PlantName" Type="nvarchar" MaxLength="100" />
+    <Property Name="LineName" Type="nvarchar" MaxLength="200" />
+    <Property Name="SectionName" Type="nvarchar" MaxLength="200" />
+    <Property Name="ShiftName" Type="nvarchar" MaxLength="200" />
+    <Property Name="StartTime" Type="varchar" MaxLength="5" />
+    <Property Name="EndTime" Type="varchar" MaxLength="5" />
+    <Property Name="ClockIn" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="ClockOut" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="WorkingStatus" Type="varchar" MaxLength="7" Nullable="false" />
+    <Property Name="QRCodePerUnit" Type="int" />
+    <Property Name="QRCodePerEmployee" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PhlimsDatabase.dbo.View_EmployeeClocktime' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_EmployeeClocktime">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="WorkingStatus" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="EmployeeID" Type="nvarchar" MaxLength="15" />
+    <Property Name="EmployeeName" Type="nvarchar" MaxLength="100" />
+    <Property Name="Status" Type="int" />
+    <Property Name="CreateDate" Type="datetime2" Precision="7" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="UpdateDate" Type="datetime2" Precision="7" />
+    <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="PlantName" Type="nvarchar" MaxLength="100" />
+    <Property Name="LineName" Type="nvarchar" MaxLength="200" />
+    <Property Name="SectionName" Type="nvarchar" MaxLength="200" />
+    <Property Name="ShiftName" Type="nvarchar" MaxLength="200" />
+    <Property Name="StartTime" Type="varchar" MaxLength="5" />
+    <Property Name="EndTime" Type="varchar" MaxLength="5" />
+    <Property Name="ClockIn" Type="nvarchar" MaxLength="5" />
+    <Property Name="ClockOut" Type="nvarchar" MaxLength="5" />
+    <Property Name="WorkingStatus" Type="varchar" MaxLength="7" Nullable="false" />
+    <Property Name="QRCodePerUnit" Type="int" />
+    <Property Name="QRCodePerEmployee" Type="int" />
+    <Property Name="TransactionNo" Type="int" />
+    <Property Name="TransactionDate" Type="datetime2" Precision="7" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PhlimsDatabase.dbo.View_EmployeeJoin' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_EmployeeJoin">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="nvarchar" MaxLength="15" Nullable="false" />
+    <Property Name="EmployeeName" Type="nvarchar" MaxLength="100" />
+    <Property Name="PlantID" Type="int" />
+    <Property Name="LineID" Type="int" />
+    <Property Name="SectionID" Type="int" />
+    <Property Name="ShiftID" Type="int" />
+    <Property Name="QRCode" Type="nvarchar" MaxLength="1" />
+    <Property Name="TransactionDate" Type="datetime2" Precision="7" />
+    <Property Name="Expr1" Type="nchar" MaxLength="10" />
+    <Property Name="Shift" Type="int" />
+    <Property Name="Line" Type="int" />
+    <Property Name="WorkingStatus" Type="int" />
+    <Property Name="ClockIn" Type="nvarchar" MaxLength="5" />
+    <Property Name="ClockOut" Type="nvarchar" MaxLength="5" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PhlimsDatabase.dbo.View_Incentive' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_Incentive">
+    <Key>
+      <PropertyRef Name="IncentiveID" />
+    </Key>
+    <Property Name="IncentiveID" Type="int" Nullable="false" />
+    <Property Name="IncentiveName" Type="nvarchar" MaxLength="100" />
+    <Property Name="PlantName" Type="nvarchar" MaxLength="100" />
+    <Property Name="LineName" Type="nvarchar" MaxLength="200" />
+    <Property Name="ProductName" Type="nvarchar" MaxLength="200" />
+    <Property Name="SectionName" Type="nvarchar" MaxLength="200" />
+    <Property Name="Status" Type="int" />
+    <Property Name="Min" Type="decimal" Precision="8" Scale="2" />
+    <Property Name="Max" Type="decimal" Precision="8" Scale="2" />
+    <Property Name="Rate" Type="decimal" Precision="6" Scale="4" />
+    <Property Name="Grade" Type="nvarchar" MaxLength="2" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PhlimsDatabase.dbo.View_PagePermission' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_PagePermission">
+    <Key>
+      <PropertyRef Name="PermissionID" />
+    </Key>
+    <Property Name="PermissionID" Type="int" Nullable="false" />
+    <Property Name="PageName" Type="nvarchar" MaxLength="200" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
+    <Property Name="RoleAction" Type="nvarchar" MaxLength="4" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PhlimsDatabase.dbo.View_PermissionMaster' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_PermissionMaster">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="UserEmpID" Type="nvarchar" MaxLength="15" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserLastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserPassword" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserEmail" Type="nvarchar" MaxLength="150" />
+    <Property Name="EmployeeID" Type="nvarchar" MaxLength="15" />
+    <Property Name="PlantID" Type="int" />
+    <Property Name="PlantName" Type="nvarchar" MaxLength="100" />
+    <Property Name="LineName" Type="nvarchar" MaxLength="200" />
+    <Property Name="SectionName" Type="nvarchar" MaxLength="200" />
+    <Property Name="UserPermission" Type="int" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
+    <Property Name="PageID" Type="int" />
+    <Property Name="PageName" Type="nvarchar" MaxLength="200" />
+    <Property Name="Status" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PhlimsDatabase.dbo.View_PLPS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_PLPS">
+    <Key>
+      <PropertyRef Name="PLPSID" />
+    </Key>
+    <Property Name="PLPSID" Type="int" Nullable="false" />
+    <Property Name="PlantName" Type="nvarchar" MaxLength="100" />
+    <Property Name="ProductName" Type="nvarchar" MaxLength="200" />
+    <Property Name="SectionName" Type="nvarchar" MaxLength="200" />
+    <Property Name="LineName" Type="nvarchar" MaxLength="200" />
+    <Property Name="STD" Type="decimal" Precision="8" Scale="2" />
+    <Property Name="PercentSTD" Type="decimal" Precision="8" Scale="2" />
+    <Property Name="PercentYield" Type="decimal" Precision="8" Scale="2" />
+    <Property Name="Size" Type="nvarchar" MaxLength="1" />
+    <Property Name="QTYPerQRCode" Type="int" />
+    <Property Name="Unit" Type="nvarchar" MaxLength="3" />
+    <Property Name="Status" Type="int" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="10" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="UpdateBy" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PhlimsDatabase.dbo.View_Reason' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_Reason">
+    <Key>
+      <PropertyRef Name="ReasonID" />
+    </Key>
+    <Property Name="ReasonID" Type="int" Nullable="false" />
+    <Property Name="ReasonName" Type="nvarchar" MaxLength="255" />
+    <Property Name="PlantName" Type="nvarchar" MaxLength="100" />
+    <Property Name="LineName" Type="nvarchar" MaxLength="200" />
+    <Property Name="ProductName" Type="nvarchar" MaxLength="200" />
+    <Property Name="SectionName" Type="nvarchar" MaxLength="200" />
+    <Property Name="Status" Type="int" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="10" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="UpdateBy" Type="nvarchar" MaxLength="10" />
+    <Property Name="PlantID" Type="int" />
+    <Property Name="LineID" Type="int" />
+    <Property Name="ProductID" Type="int" />
+    <Property Name="SectionID" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PhlimsDatabase.dbo.View_Services' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_Services">
+    <Key>
+      <PropertyRef Name="ServicesID" />
+    </Key>
+    <Property Name="ServicesID" Type="int" Nullable="false" />
+    <Property Name="ServicesName" Type="nchar" MaxLength="10" />
+    <Property Name="ServicesRate" Type="nchar" MaxLength="10" />
+    <Property Name="ServicesStatus" Type="int" />
+    <Property Name="MonthYear" Type="nvarchar" MaxLength="10" />
+    <Property Name="UpdateDate" Type="datetime2" Precision="7" />
+    <Property Name="CreateDate" Type="datetime2" Precision="7" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="Ser_PlantName" Type="nvarchar" MaxLength="100" />
+    <Property Name="Ser_LineName" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PhlimsDatabase.dbo.View_ServicesClocktime' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_ServicesClocktime">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="WorkingStatus" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="EmployeeID" Type="nvarchar" MaxLength="15" />
+    <Property Name="EmployeeName" Type="nvarchar" MaxLength="100" />
+    <Property Name="Status" Type="int" />
+    <Property Name="CreateDate" Type="datetime2" Precision="7" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="UpdateDate" Type="datetime2" Precision="7" />
+    <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="PlantName" Type="nvarchar" MaxLength="100" />
+    <Property Name="LineName" Type="nvarchar" MaxLength="200" />
+    <Property Name="SectionName" Type="nvarchar" MaxLength="200" />
+    <Property Name="ShiftName" Type="nvarchar" MaxLength="200" />
+    <Property Name="StartTime" Type="varchar" MaxLength="5" />
+    <Property Name="EndTime" Type="varchar" MaxLength="5" />
+    <Property Name="ClockIn" Type="nvarchar" MaxLength="5" />
+    <Property Name="ClockOut" Type="nvarchar" MaxLength="5" />
+    <Property Name="WorkingStatus" Type="varchar" MaxLength="7" Nullable="false" />
+    <Property Name="QRCodePerUnit" Type="int" />
+    <Property Name="QRCodePerEmployee" Type="int" />
+    <Property Name="TransactionNo" Type="int" />
+    <Property Name="TransactionDate" Type="datetime2" Precision="7" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PhlimsDatabase.dbo.View_User' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="UserEmpID" Type="nvarchar" MaxLength="15" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserLastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserPassword" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserEmail" Type="nvarchar" MaxLength="150" />
+    <Property Name="PlantName" Type="nvarchar" MaxLength="100" />
+    <Property Name="LineName" Type="nvarchar" MaxLength="200" />
+    <Property Name="SectionName" Type="nvarchar" MaxLength="200" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Status" Type="int" />
+  </EntityType>
+  <EntityContainer Name="PhlimsDatabaseModelStoreContainer">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TbDefect" EntityType="Self.TbDefect" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TbEmployeeMaster" EntityType="Self.TbEmployeeMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TbEmptransaction" EntityType="Self.TbEmptransaction" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TbIncentiveMaster" EntityType="Self.TbIncentiveMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TbLine" EntityType="Self.TbLine" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TbPage" EntityType="Self.TbPage" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TbPermission" EntityType="Self.TbPermission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TbPlant" EntityType="Self.TbPlant" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TbPLPS" EntityType="Self.TbPLPS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TbProduct" EntityType="Self.TbProduct" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TbReason" EntityType="Self.TbReason" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TbRole" EntityType="Self.TbRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TbSection" EntityType="Self.TbSection" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TbServices" EntityType="Self.TbServices" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TbShift" EntityType="Self.TbShift" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TbUser" EntityType="Self.TbUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="View_Employee" EntityType="Self.View_Employee" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_Employee].[ID] AS [ID], 
+    [View_Employee].[EmployeeID] AS [EmployeeID], 
+    [View_Employee].[EmployeeName] AS [EmployeeName], 
+    [View_Employee].[Status] AS [Status], 
+    [View_Employee].[CreateDate] AS [CreateDate], 
+    [View_Employee].[CreateBy] AS [CreateBy], 
+    [View_Employee].[UpdateDate] AS [UpdateDate], 
+    [View_Employee].[UpdateBy] AS [UpdateBy], 
+    [View_Employee].[PlantName] AS [PlantName], 
+    [View_Employee].[LineName] AS [LineName], 
+    [View_Employee].[SectionName] AS [SectionName], 
+    [View_Employee].[ShiftName] AS [ShiftName], 
+    [View_Employee].[StartTime] AS [StartTime], 
+    [View_Employee].[EndTime] AS [EndTime], 
+    [View_Employee].[ClockIn] AS [ClockIn], 
+    [View_Employee].[ClockOut] AS [ClockOut], 
+    [View_Employee].[WorkingStatus] AS [WorkingStatus], 
+    [View_Employee].[QRCodePerUnit] AS [QRCodePerUnit], 
+    [View_Employee].[QRCodePerEmployee] AS [QRCodePerEmployee]
+    FROM [dbo].[View_Employee] AS [View_Employee]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_EmployeeClocktime" EntityType="Self.View_EmployeeClocktime" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_EmployeeClocktime].[ID] AS [ID], 
+    [View_EmployeeClocktime].[EmployeeID] AS [EmployeeID], 
+    [View_EmployeeClocktime].[EmployeeName] AS [EmployeeName], 
+    [View_EmployeeClocktime].[Status] AS [Status], 
+    [View_EmployeeClocktime].[CreateDate] AS [CreateDate], 
+    [View_EmployeeClocktime].[CreateBy] AS [CreateBy], 
+    [View_EmployeeClocktime].[UpdateDate] AS [UpdateDate], 
+    [View_EmployeeClocktime].[UpdateBy] AS [UpdateBy], 
+    [View_EmployeeClocktime].[PlantName] AS [PlantName], 
+    [View_EmployeeClocktime].[LineName] AS [LineName], 
+    [View_EmployeeClocktime].[SectionName] AS [SectionName], 
+    [View_EmployeeClocktime].[ShiftName] AS [ShiftName], 
+    [View_EmployeeClocktime].[StartTime] AS [StartTime], 
+    [View_EmployeeClocktime].[EndTime] AS [EndTime], 
+    [View_EmployeeClocktime].[ClockIn] AS [ClockIn], 
+    [View_EmployeeClocktime].[ClockOut] AS [ClockOut], 
+    [View_EmployeeClocktime].[WorkingStatus] AS [WorkingStatus], 
+    [View_EmployeeClocktime].[QRCodePerUnit] AS [QRCodePerUnit], 
+    [View_EmployeeClocktime].[QRCodePerEmployee] AS [QRCodePerEmployee], 
+    [View_EmployeeClocktime].[TransactionNo] AS [TransactionNo], 
+    [View_EmployeeClocktime].[TransactionDate] AS [TransactionDate]
+    FROM [dbo].[View_EmployeeClocktime] AS [View_EmployeeClocktime]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_EmployeeJoin" EntityType="Self.View_EmployeeJoin" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_EmployeeJoin].[EmployeeID] AS [EmployeeID], 
+    [View_EmployeeJoin].[EmployeeName] AS [EmployeeName], 
+    [View_EmployeeJoin].[PlantID] AS [PlantID], 
+    [View_EmployeeJoin].[LineID] AS [LineID], 
+    [View_EmployeeJoin].[SectionID] AS [SectionID], 
+    [View_EmployeeJoin].[ShiftID] AS [ShiftID], 
+    [View_EmployeeJoin].[QRCode] AS [QRCode], 
+    [View_EmployeeJoin].[TransactionDate] AS [TransactionDate], 
+    [View_EmployeeJoin].[Expr1] AS [Expr1], 
+    [View_EmployeeJoin].[Shift] AS [Shift], 
+    [View_EmployeeJoin].[Line] AS [Line], 
+    [View_EmployeeJoin].[WorkingStatus] AS [WorkingStatus], 
+    [View_EmployeeJoin].[ClockIn] AS [ClockIn], 
+    [View_EmployeeJoin].[ClockOut] AS [ClockOut]
+    FROM [dbo].[View_EmployeeJoin] AS [View_EmployeeJoin]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_Incentive" EntityType="Self.View_Incentive" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_Incentive].[IncentiveID] AS [IncentiveID], 
+    [View_Incentive].[IncentiveName] AS [IncentiveName], 
+    [View_Incentive].[PlantName] AS [PlantName], 
+    [View_Incentive].[LineName] AS [LineName], 
+    [View_Incentive].[ProductName] AS [ProductName], 
+    [View_Incentive].[SectionName] AS [SectionName], 
+    [View_Incentive].[Status] AS [Status], 
+    [View_Incentive].[Min] AS [Min], 
+    [View_Incentive].[Max] AS [Max], 
+    [View_Incentive].[Rate] AS [Rate], 
+    [View_Incentive].[Grade] AS [Grade]
+    FROM [dbo].[View_Incentive] AS [View_Incentive]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_PagePermission" EntityType="Self.View_PagePermission" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_PagePermission].[PermissionID] AS [PermissionID], 
+    [View_PagePermission].[PageName] AS [PageName], 
+    [View_PagePermission].[RoleName] AS [RoleName], 
+    [View_PagePermission].[RoleAction] AS [RoleAction]
+    FROM [dbo].[View_PagePermission] AS [View_PagePermission]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_PermissionMaster" EntityType="Self.View_PermissionMaster" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_PermissionMaster].[ID] AS [ID], 
+    [View_PermissionMaster].[UserEmpID] AS [UserEmpID], 
+    [View_PermissionMaster].[UserName] AS [UserName], 
+    [View_PermissionMaster].[UserLastName] AS [UserLastName], 
+    [View_PermissionMaster].[UserPassword] AS [UserPassword], 
+    [View_PermissionMaster].[UserEmail] AS [UserEmail], 
+    [View_PermissionMaster].[EmployeeID] AS [EmployeeID], 
+    [View_PermissionMaster].[PlantID] AS [PlantID], 
+    [View_PermissionMaster].[PlantName] AS [PlantName], 
+    [View_PermissionMaster].[LineName] AS [LineName], 
+    [View_PermissionMaster].[SectionName] AS [SectionName], 
+    [View_PermissionMaster].[UserPermission] AS [UserPermission], 
+    [View_PermissionMaster].[RoleName] AS [RoleName], 
+    [View_PermissionMaster].[PageID] AS [PageID], 
+    [View_PermissionMaster].[PageName] AS [PageName], 
+    [View_PermissionMaster].[Status] AS [Status]
+    FROM [dbo].[View_PermissionMaster] AS [View_PermissionMaster]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_PLPS" EntityType="Self.View_PLPS" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_PLPS].[PLPSID] AS [PLPSID], 
+    [View_PLPS].[PlantName] AS [PlantName], 
+    [View_PLPS].[ProductName] AS [ProductName], 
+    [View_PLPS].[SectionName] AS [SectionName], 
+    [View_PLPS].[LineName] AS [LineName], 
+    [View_PLPS].[STD] AS [STD], 
+    [View_PLPS].[PercentSTD] AS [PercentSTD], 
+    [View_PLPS].[PercentYield] AS [PercentYield], 
+    [View_PLPS].[Size] AS [Size], 
+    [View_PLPS].[QTYPerQRCode] AS [QTYPerQRCode], 
+    [View_PLPS].[Unit] AS [Unit], 
+    [View_PLPS].[Status] AS [Status], 
+    [View_PLPS].[CreateDate] AS [CreateDate], 
+    [View_PLPS].[CreateBy] AS [CreateBy], 
+    [View_PLPS].[UpdateDate] AS [UpdateDate], 
+    [View_PLPS].[UpdateBy] AS [UpdateBy]
+    FROM [dbo].[View_PLPS] AS [View_PLPS]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_Reason" EntityType="Self.View_Reason" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_Reason].[ReasonID] AS [ReasonID], 
+    [View_Reason].[ReasonName] AS [ReasonName], 
+    [View_Reason].[PlantName] AS [PlantName], 
+    [View_Reason].[LineName] AS [LineName], 
+    [View_Reason].[ProductName] AS [ProductName], 
+    [View_Reason].[SectionName] AS [SectionName], 
+    [View_Reason].[Status] AS [Status], 
+    [View_Reason].[CreateDate] AS [CreateDate], 
+    [View_Reason].[CreateBy] AS [CreateBy], 
+    [View_Reason].[UpdateDate] AS [UpdateDate], 
+    [View_Reason].[UpdateBy] AS [UpdateBy], 
+    [View_Reason].[PlantID] AS [PlantID], 
+    [View_Reason].[LineID] AS [LineID], 
+    [View_Reason].[ProductID] AS [ProductID], 
+    [View_Reason].[SectionID] AS [SectionID]
+    FROM [dbo].[View_Reason] AS [View_Reason]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_Services" EntityType="Self.View_Services" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_Services].[ServicesID] AS [ServicesID], 
+    [View_Services].[ServicesName] AS [ServicesName], 
+    [View_Services].[ServicesRate] AS [ServicesRate], 
+    [View_Services].[ServicesStatus] AS [ServicesStatus], 
+    [View_Services].[MonthYear] AS [MonthYear], 
+    [View_Services].[UpdateDate] AS [UpdateDate], 
+    [View_Services].[CreateDate] AS [CreateDate], 
+    [View_Services].[CreateBy] AS [CreateBy], 
+    [View_Services].[UpdateBy] AS [UpdateBy], 
+    [View_Services].[Ser_PlantName] AS [Ser_PlantName], 
+    [View_Services].[Ser_LineName] AS [Ser_LineName]
+    FROM [dbo].[View_Services] AS [View_Services]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_ServicesClocktime" EntityType="Self.View_ServicesClocktime" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_ServicesClocktime].[ID] AS [ID], 
+    [View_ServicesClocktime].[EmployeeID] AS [EmployeeID], 
+    [View_ServicesClocktime].[EmployeeName] AS [EmployeeName], 
+    [View_ServicesClocktime].[Status] AS [Status], 
+    [View_ServicesClocktime].[CreateDate] AS [CreateDate], 
+    [View_ServicesClocktime].[CreateBy] AS [CreateBy], 
+    [View_ServicesClocktime].[UpdateDate] AS [UpdateDate], 
+    [View_ServicesClocktime].[UpdateBy] AS [UpdateBy], 
+    [View_ServicesClocktime].[PlantName] AS [PlantName], 
+    [View_ServicesClocktime].[LineName] AS [LineName], 
+    [View_ServicesClocktime].[SectionName] AS [SectionName], 
+    [View_ServicesClocktime].[ShiftName] AS [ShiftName], 
+    [View_ServicesClocktime].[StartTime] AS [StartTime], 
+    [View_ServicesClocktime].[EndTime] AS [EndTime], 
+    [View_ServicesClocktime].[ClockIn] AS [ClockIn], 
+    [View_ServicesClocktime].[ClockOut] AS [ClockOut], 
+    [View_ServicesClocktime].[WorkingStatus] AS [WorkingStatus], 
+    [View_ServicesClocktime].[QRCodePerUnit] AS [QRCodePerUnit], 
+    [View_ServicesClocktime].[QRCodePerEmployee] AS [QRCodePerEmployee], 
+    [View_ServicesClocktime].[TransactionNo] AS [TransactionNo], 
+    [View_ServicesClocktime].[TransactionDate] AS [TransactionDate]
+    FROM [dbo].[View_ServicesClocktime] AS [View_ServicesClocktime]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_User" EntityType="Self.View_User" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_User].[ID] AS [ID], 
+    [View_User].[UserEmpID] AS [UserEmpID], 
+    [View_User].[UserName] AS [UserName], 
+    [View_User].[UserLastName] AS [UserLastName], 
+    [View_User].[UserPassword] AS [UserPassword], 
+    [View_User].[UserEmail] AS [UserEmail], 
+    [View_User].[PlantName] AS [PlantName], 
+    [View_User].[LineName] AS [LineName], 
+    [View_User].[SectionName] AS [SectionName], 
+    [View_User].[RoleName] AS [RoleName], 
+    [View_User].[Status] AS [Status]
+    FROM [dbo].[View_User] AS [View_User]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

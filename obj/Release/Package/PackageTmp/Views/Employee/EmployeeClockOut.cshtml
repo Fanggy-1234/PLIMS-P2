@@ -1,0 +1,437 @@
+﻿@model PLIMS.ViewModel.ViewModelAll
+@{
+    ViewBag.Title = "Employee Clock-Out";
+}
+
+
+<link href="https://cdn.datatables.net/v/dt/dt-1.13.8/datatables.min.css" rel="stylesheet">
+<script src="https://cdn.datatables.net/v/dt/dt-1.13.8/datatables.min.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<script src="~/Scripts/jquery-3.7.1.js"></script>
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+<link href="~/Content/main.css" rel="stylesheet" />
+
+
+<style type="text/css">
+
+    .btnme {
+        background-color: #04AA6D; /* Green */
+        border: none;
+        color: white;
+        padding: 12px 26px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        width: 100px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #808080;
+        border-radius: 2px;
+        box-sizing: border-box;
+    }
+
+    .create-button, .clear-button {
+        background-color: #A4ADB3;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+        color: white;
+        width: 100%;
+        height: 100%;
+    }
+
+    .search-button {
+        border: 0.4px solid black;
+        background-color: white;
+        border-radius: 2px;
+        cursor: pointer;
+        color: black;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+
+
+
+<h2>Employee Clock-Out Function</h2>
+<div class="row" style="height:10px"></div>
+
+@*Button Link*@
+<div class="employee-button-container">
+    <a href="@Url.Action("EmployeeClockIn", "Employee")" class="clock-in-button clock-in-button-text">Clock in</a>
+    <a href="@Url.Action("EmployeeClockOut", "Employee")" class="clock-out-button clock-out-button-text">Clock out</a>
+    <a href="@Url.Action("EmployeeClockIn", "Employee")" class="break-time-button break-time-button-text">Break time</a>
+    <a href="@Url.Action("EmployeeClockIn", "Employee")" class="leave-holiday-button leave-holiday-button-text">Leave/Holiday</a>
+    <a href="@Url.Action("EmployeeClockIn", "Employee")" class="service-clock-in-button service-clock-in-button-text">Service clock in</a>
+    <a href="@Url.Action("EmployeeClockIn", "Employee")" class="service-clock-out-button service-clock-out-button-text">Service clock out</a>
+</div>
+
+<div class="row" style="height:10px"></div>
+
+<div class="row" style="height:10px"></div>
+
+<form method="get" asp-controller="Employee">
+
+    <div class="row" style="background-color: #fcfcfc; border-radius: 2px; padding: 10px;">
+
+        <div class="col left" style="border: solid 1px #d5d5d5 ;position: relative; margin-left:2em;">
+            <div class="row" style="height:10px">
+            </div>
+
+            @*Fillter Process*@
+            <div class="row" style="padding-right:2em ">
+                <div class="col-3 label">
+                    <label> Line Name:</label>
+                </div>
+                <div class="col">
+                    <input class="form-control" name="LineName" id="LineName" placeholder="Please select">
+                    <datalist id="LineName">
+
+                        @foreach (var item in Model.tbLine)
+                        {
+
+                            <option>@Html.DisplayFor(modelItem => item.LineName) </option>
+                        }
+                    </datalist>
+                </div>
+
+            </div>
+
+
+            <div class="row" style=" padding-right:2em">
+                <div class="col-3 label">
+                    <label> Employee ID:</label>
+                </div>
+                <div class="col">
+                    <input class="form-control" list="EmployeeID" name="EmployeeID" id="EmployeeID" placeholder="Please select">
+                    <datalist id="EmployeeID">
+                        @foreach (var item in Model.tbEmployeeMaster)
+                        {
+                            <option>@Html.DisplayFor(modelItem => item.EmployeeID)</option>
+                        }
+                    </datalist>
+                </div>
+
+            </div>
+
+            <div class="row" style="height:40px ;">
+                <div class="col-4"></div>
+                <div class="col-4">
+                    <button class="clear-button" type="submit" action="EmployeeClockOutClear">
+                        Clear
+                    </button>
+                </div>
+
+                <div class="col-4">
+                    <button class="clear-button" type="submit" action="EmployeeClockOut">
+                        Fillter
+                    </button>
+                </div>
+            </div>
+
+            <div class="row" style="height:10px;"></div>
+        </div>
+
+        @*<div class="col-md-1"></div>*@
+
+        @*Services Clock - In  Process*@
+        <div class="col right" style="border: solid 1px #d5d5d5; margin-left: 2em ">
+
+            <div class="row" style="height:10px">
+            </div>
+
+            <div class="row" style="padding-left:2em ; padding-right:2em">
+                <div class="col-3 label">
+                    <label> Clock In Time : </label>
+                </div>
+                <div class="col">
+                    <input class="form-control" type="time" list="BrowsersID" name="ClockOut" id="ClockOut">
+                </div>
+
+            </div>
+
+
+            <div class="row" style="padding-left:2em ; padding-right:2em">
+                <div class="col-3 label">
+                    <label> Clock In Date : </label>
+                </div>
+                <div class="col">
+                    <input class="form-control" type="Date" list="BrowsersName" name="TransactionDate" id="TransactionDate">
+                </div>
+
+
+            </div>
+
+
+            <div class="row" style="height:40px ;">
+                <div class="col-8"></div>
+                <div class="col-4">
+
+                    <button type="submit" class="clear-button" action="EmployeeClockOut" onclick="return confirm('Are you sure?')">Create</button>
+
+
+                </div>
+
+            </div>
+
+            <div class="row" style="height:10px;"></div>
+        </div>
+    </div>
+
+
+    <br />
+
+
+
+
+    <div class="row" style="height:55px">
+    </div>
+
+
+    @*Diaplay data*@
+    <table id="table_id" class="page-table">
+        <thead>
+            <tr>
+                <th class="page-table-head"><input type="checkbox" id="checkall" /></th>
+                <th class="page-table-head">
+                    Employee ID
+                </th>
+                <th class="page-table-head">
+                    Employee Name
+                </th>
+                <th class="page-table-head">
+                    Line
+                </th>
+                <th class="page-table-head">
+                    Section
+                </th>
+                <th class="page-table-head">
+                    Date
+                </th>
+                <th class="page-table-head">
+                    Start Time
+                </th>
+                <th class="page-table-head">
+                    End Time
+                </th>
+                <th class="page-table-head">
+                    Clock -Out
+                </th>
+                <th class="page-table-head">
+                    Working Status
+                </th>
+                <th class="page-table-head">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.view_EmployeeClocktime)
+            {
+                <tr>
+                    @Html.HiddenFor(modelItem => item.ID)
+                    <td class="page-table-data">
+                        <input type="checkbox" id="@item.EmployeeID" value="@item.EmployeeID" class="checkthis" Name="EmployeeID" />
+                        @*<input type="checkbox" id="checkthis" class="checkthis" Name="EmployeeID" />*@
+                    </td>
+                    <td class="page-table-data">
+                        @Html.DisplayFor(modelItem => item.EmployeeID, new { @class = "EmployeeID", Name = "EmployeeID" })
+                    </td>
+                    <td class="page-table-data">
+                        @Html.DisplayFor(modelItem => item.EmployeeName)
+                    </td>
+                    <td class="page-table-data">
+                        @Html.DisplayFor(modelItem => item.PlantName)
+                    </td>
+                    <td class="page-table-data">
+                        @Html.DisplayFor(modelItem => item.LineName)
+                    </td>
+                    <td class="page-table-data">
+                        @Html.DisplayFor(modelItem => item.SectionName)
+                    </td>
+
+                    <td class="page-table-data">
+                        @Html.DisplayFor(modelItem => item.StartTime)
+                    </td>
+                    <td class="page-table-data">
+                        @Html.DisplayFor(modelItem => item.EndTime)
+                    </td>
+                    <td class="page-table-data">
+                        @Html.DisplayFor(modelItem => item.ClockOut)
+                    </td>
+                    <td class="page-table-data">
+                        @Html.DisplayFor(modelItem => item.WorkingStatus)
+                    </td>
+
+
+                    <td class="page-table-data">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#EditModal" id="btnEdit" data-id="@item.EmployeeID" onclick="EditFns(@item.ID)">Edits</a>
+
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+<div class="row" style="height:100px"></div>
+
+
+
+
+@*Modal Edit*@
+<div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="post" action="EmployeeClockOutEdit" controller="Employee">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Plant Edit</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Employee ID -->
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Employee ID:</label>
+                        <input type="text" class="form-control" style="background-color:gainsboro" name="EmployeeID" id="ModalEmployeeID" readonly>
+                    </div>i
+
+                    <!-- Employee Name -->
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Employee Name:</label>
+                        <input type="text" class="form-control" style="background-color:gainsboro" name="EmployeeName" id="ModalEmployeeName" readonly>
+                    </div>
+
+                    <!-- Line -->
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Line Name:</label>
+                        <input type="text" class="form-control" name="LineName" id="ModalLineName">
+                    </div>
+
+                    <!-- Section -->
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Section Name:</label>
+                        <input type="text" class="form-control" name="SectionName" id="ModalSectiontName">
+                    </div>
+
+
+                    <!-- Clock-In -->
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Clock Out Time:</label>
+                        <input type="time" class="form-control" name="ClockOut" id="ModalClockOut">
+                    </div>
+
+
+                    <!-- Transaction Date -->
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Clock Out Date:</label>
+                        <input type="date" class="form-control" name="TransactionDate" id="ModalTransactionDate">
+                    </div>
+
+
+
+                    <div class="mb-3">
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Working Status</label>
+                        <input class="form-check-input" name="WorkingStatus" id="ModalWorkingStatus">
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="Submit" class="btn btn-primary" id="save">Submit</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+<script>
+
+
+    function eventFired(type) {
+        let n = document.querySelector('#demo_info');
+    }
+
+    $(document).ready(function () {
+        $("#table_id #checkall").click(function () {
+            if ($("#table_id #checkall").is(':checked')) {
+                $("#table_id input[type=checkbox]").each(function () {
+                    $(this).prop("checked", true);
+                });
+
+            } else {
+                $("#table_id input[type=checkbox]").each(function () {
+                    $(this).prop("checked", false);
+                });
+            }
+        });
+
+        $("[data-toggle=tooltip]").tooltip();
+    });
+
+
+    new DataTable('#table_id')
+        .on('page.dt', () => eventFired('Page'));
+
+
+    //Edit to modal
+    function EditFns(ID) {
+        $.ajax({
+            url: '/Employee/EmployeeClockOutEdit/' + ID,
+            type: 'GET',
+            contentType: 'application/json;charset=UTF-8',
+            dataType: 'json',
+            success: function (response) {
+                if (response == null || response == undefined) {
+
+                    alert("This data can't read1!")
+                }
+                else if (response.length == 0) {
+
+                    alert("This data can't id!" + id)
+                }
+                else {
+                    var today = new Date();
+                    var thisdate = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
+                    // alert("id =" + response.id + " , PlantName = " + response.EmployeeID + ",Status = " + response.EmployeeID)
+                    $('#ModalEmployeeID').val(response.EmployeeID);
+                    $('#ModalEmployeeName').val(response.EmployeeName);
+                    $('#ModalLineName').val(response.LineName);
+                    $('#ModalSectiontName').val(response.SectionName);
+                    $('#ModalClockOut').val(response.ClockOut);
+                    $('#ModalTransactionDate').val(thisdate);
+                    $('#ModalWorkingStatus').val("Workings")
+                    $('#EditModal').modal('show');
+
+
+                }
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+
+        });
+    }
+
+</script>
